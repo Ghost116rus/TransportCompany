@@ -30,6 +30,6 @@ namespace TransportCompany.Domain.Entities
 
         public IEnumerable<Product_exmp> Product_Exmps { get; set; } = new List<Product_exmp>();
 
-        public IEnumerable<Product> Products { get; set; } = new List<Product>();
+        //public IEnumerable<Product> Products { get; set; } = new List<Product>();
     }
 }

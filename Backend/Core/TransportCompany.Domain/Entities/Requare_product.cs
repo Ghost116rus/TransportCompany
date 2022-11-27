@@ -6,7 +6,6 @@ namespace TransportCompany.Domain.Entities
     [Table("Requare_product")]
     public class Requare_product
     {
-
         [Required]
         public int RequestID { get; set; }
 

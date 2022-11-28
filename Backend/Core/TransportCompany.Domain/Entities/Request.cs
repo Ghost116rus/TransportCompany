@@ -57,6 +57,6 @@ namespace TransportCompany.Domain.Entities
 
         public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
 
-        public IEnumerable<Product> Products { get; set; } = new List<Product>();
+        //public IEnumerable<Product> Products { get; set; } = new List<Product>();
     }
 }

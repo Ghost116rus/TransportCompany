@@ -12,7 +12,7 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    [Migration("20221127234716_InitMigration")]
+    [Migration("20221128003742_InitMigration")]
     partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,14 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Driver_license_number");
 
+                    b.HasIndex("Phone_number")
+                        .IsUnique();
+
                     b.ToTable("Driver");
+
+                    b.HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'На больничном'");
+
+                    b.HasCheckConstraint("Year_of_start_work", "Year_of_start_work LIKE '[1-2][0,9][0-9][0-9]'");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product", b =>
@@ -105,6 +112,18 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("RequestNumber");
 
                     b.ToTable("Product");
+
+                    b.HasCheckConstraint("Cost", "Cost > 0");
+
+                    b.HasCheckConstraint("Height", "Height > 0");
+
+                    b.HasCheckConstraint("Length", "Length > 0");
+
+                    b.HasCheckConstraint("Type", "Type LIKE 'крупногабаритный' OR Type LIKE 'малогабаритный'");
+
+                    b.HasCheckConstraint("Weight", "Weight > 0");
+
+                    b.HasCheckConstraint("Width", "Width > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product_exmp", b =>
@@ -123,6 +142,8 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("Сatalogue_number");
 
                     b.ToTable("Product_exmp");
+
+                    b.HasCheckConstraint("Storage_number", "Storage_number > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Requare_product", b =>
@@ -136,14 +157,13 @@ namespace TransportCompany.DAL.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductСatalogue_number")
-                        .HasColumnType("char(35)");
-
                     b.HasKey("RequestID", "Сatalogue_number");
 
-                    b.HasIndex("ProductСatalogue_number");
+                    b.HasIndex("Сatalogue_number");
 
                     b.ToTable("Requare_product");
+
+                    b.HasCheckConstraint("RequestID", "RequestID > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
@@ -154,23 +174,22 @@ namespace TransportCompany.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Number"), 1L, 1);
 
-                    b.Property<int>("Car_load")
+                    b.Property<int?>("Car_load")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date_dispatch")
+                    b.Property<DateTime?>("Date_dispatch")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Delivery_date")
+                    b.Property<DateTime?>("Delivery_date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DriverID")
-                        .IsRequired()
                         .HasColumnType("char(10)");
 
                     b.Property<int>("Num_Receiving_storage")
                         .HasColumnType("int");
 
-                    b.Property<int>("Num_Sending_storage")
+                    b.Property<int?>("Num_Sending_storage")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -181,20 +200,19 @@ namespace TransportCompany.DAL.Migrations
                     b.Property<int>("Total_cost")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_length")
+                    b.Property<int?>("Total_length")
                         .HasColumnType("int");
 
                     b.Property<int>("Total_mass")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_shipping_cost")
+                    b.Property<int?>("Total_shipping_cost")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_time")
+                    b.Property<int?>("Total_time")
                         .HasColumnType("int");
 
                     b.Property<string>("VehicleID")
-                        .IsRequired()
                         .HasColumnType("char(17)");
 
                     b.HasKey("Number");
@@ -205,16 +223,31 @@ namespace TransportCompany.DAL.Migrations
 
                     b.ToTable("Request");
 
+                    b.HasCheckConstraint("Car_load", "Car_load > 0");
+
+                    b.HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
+
+                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
+
                     b.HasCheckConstraint("Number", "Number > 0");
+
+                    b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена'");
+
+                    b.HasCheckConstraint("Total_cost", "Total_cost > 0");
+
+                    b.HasCheckConstraint("Total_length", "Total_length > 0");
+
+                    b.HasCheckConstraint("Total_mass", "Total_mass > 0");
+
+                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
+
+                    b.HasCheckConstraint("Total_time", "Total_time > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>
                 {
                     b.Property<int>("Storage_number")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Storage_number"), 1L, 1);
 
                     b.Property<string>("Addres")
                         .IsRequired()
@@ -237,7 +270,14 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Storage_number");
 
+                    b.HasIndex("Phone_number")
+                        .IsUnique();
+
                     b.ToTable("Storage");
+
+                    b.HasCheckConstraint("Requests", "Requests LIKE 'Отсутствуют' OR Requests LIKE 'Есть'");
+
+                    b.HasCheckConstraint("Storage_number", "Storage_number > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Transport_vehicle", b =>
@@ -277,6 +317,14 @@ namespace TransportCompany.DAL.Migrations
                     b.HasKey("Vehicle_identification_number");
 
                     b.ToTable("Transport_vehicle");
+
+                    b.HasCheckConstraint("Fuel_consumption", "Fuel_consumption > 0");
+
+                    b.HasCheckConstraint("Load_capacity", "Load_capacity > 0");
+
+                    b.HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'В ремонте'");
+
+                    b.HasCheckConstraint("Transported_volume", "Transported_volume > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product", b =>
@@ -307,15 +355,19 @@ namespace TransportCompany.DAL.Migrations
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Requare_product", b =>
                 {
-                    b.HasOne("TransportCompany.Domain.Entities.Product", null)
-                        .WithMany("Requare_Products")
-                        .HasForeignKey("ProductСatalogue_number");
-
                     b.HasOne("TransportCompany.Domain.Entities.Request", "Request")
                         .WithMany("Requare_Products")
                         .HasForeignKey("RequestID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("TransportCompany.Domain.Entities.Product", "Product")
+                        .WithMany("Requare_Products")
+                        .HasForeignKey("Сatalogue_number")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
 
                     b.Navigation("Request");
                 });
@@ -324,15 +376,11 @@ namespace TransportCompany.DAL.Migrations
                 {
                     b.HasOne("TransportCompany.Domain.Entities.Driver", "Driver")
                         .WithMany("Requests")
-                        .HasForeignKey("DriverID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DriverID");
 
                     b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", "vehicle")
                         .WithMany("Requests")
-                        .HasForeignKey("VehicleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleID");
 
                     b.Navigation("Driver");
 

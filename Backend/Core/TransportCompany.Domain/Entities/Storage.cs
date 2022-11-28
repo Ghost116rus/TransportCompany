@@ -9,6 +9,7 @@ namespace TransportCompany.Domain.Entities
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Storage_number { get; set; }
 
         [Required]

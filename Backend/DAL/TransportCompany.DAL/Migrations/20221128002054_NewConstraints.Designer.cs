@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportCompany.DAL;
 
@@ -11,9 +12,10 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    partial class TransportCompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221128002054_NewConstraints")]
+    partial class NewConstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,8 +70,6 @@ namespace TransportCompany.DAL.Migrations
                     b.ToTable("Driver");
 
                     b.HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'На больничном'");
-
-                    b.HasCheckConstraint("Year_of_start_work", "Year_of_start_work LIKE '[1-2][0,9][0-9][0-9]'");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product", b =>
@@ -140,8 +140,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("Сatalogue_number");
 
                     b.ToTable("Product_exmp");
-
-                    b.HasCheckConstraint("Storage_number", "Storage_number > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Requare_product", b =>
@@ -160,8 +158,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("Сatalogue_number");
 
                     b.ToTable("Requare_product");
-
-                    b.HasCheckConstraint("RequestID", "RequestID > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
@@ -245,7 +241,10 @@ namespace TransportCompany.DAL.Migrations
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>
                 {
                     b.Property<int>("Storage_number")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Storage_number"), 1L, 1);
 
                     b.Property<string>("Addres")
                         .IsRequired()
@@ -315,14 +314,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasKey("Vehicle_identification_number");
 
                     b.ToTable("Transport_vehicle");
-
-                    b.HasCheckConstraint("Fuel_consumption", "Fuel_consumption > 0");
-
-                    b.HasCheckConstraint("Load_capacity", "Load_capacity > 0");
-
-                    b.HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'В ремонте'");
-
-                    b.HasCheckConstraint("Transported_volume", "Transported_volume > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product", b =>

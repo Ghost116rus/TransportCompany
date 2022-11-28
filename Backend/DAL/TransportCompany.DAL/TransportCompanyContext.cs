@@ -47,8 +47,66 @@ namespace TransportCompany.DAL
             modelBuilder.Entity<Product_exmp>()
             .HasKey(m => new { m.Storage_number, m.Сatalogue_number });
 
+            // Ограничения заявки
 
             modelBuilder.Entity<Request>().HasCheckConstraint("Number", "Number > 0");
+
+            modelBuilder.Entity<Request>()
+                .HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена'");
+
+            modelBuilder.Entity<Request>().HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
+            modelBuilder.Entity<Request>().HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
+            modelBuilder.Entity<Request>().HasCheckConstraint("Total_time", "Total_time > 0");
+            modelBuilder.Entity<Request>().HasCheckConstraint("Total_length", "Total_length > 0");
+            modelBuilder.Entity<Request>().HasCheckConstraint("Car_load", "Car_load > 0");
+            modelBuilder.Entity<Request>().HasCheckConstraint("Total_mass", "Total_mass > 0");
+            modelBuilder.Entity<Request>().HasCheckConstraint("Total_cost", "Total_cost > 0");
+            modelBuilder.Entity<Request>().HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
+
+            // Ограничения товара
+            modelBuilder.Entity<Product>()
+                .HasCheckConstraint("Type", "Type LIKE 'крупногабаритный' OR Type LIKE 'малогабаритный'");
+            modelBuilder.Entity<Product>().HasCheckConstraint("Length", "Length > 0");
+            modelBuilder.Entity<Product>().HasCheckConstraint("Width", "Width > 0");
+            modelBuilder.Entity<Product>().HasCheckConstraint("Height", "Height > 0");
+            modelBuilder.Entity<Product>().HasCheckConstraint("Weight", "Weight > 0");
+            modelBuilder.Entity<Product>().HasCheckConstraint("Cost", "Cost > 0");
+
+
+            // Ограничения склада
+            modelBuilder.Entity<Storage>()
+                .HasCheckConstraint("Storage_number", "Storage_number > 0");
+            modelBuilder.Entity<Storage>()
+                .HasCheckConstraint("Requests", "Requests LIKE 'Отсутствуют' OR Requests LIKE 'Есть'");
+            modelBuilder.Entity<Storage>()
+                .HasIndex(u => u.Phone_number).IsUnique();
+
+            // Ограничения водителя
+            modelBuilder.Entity<Driver>()
+                .HasIndex(u => u.Phone_number).IsUnique();
+            modelBuilder.Entity<Driver>().
+                HasCheckConstraint("Year_of_start_work", "Year_of_start_work LIKE '[1-2][0,9][0-9][0-9]'");
+            modelBuilder.Entity<Driver>()
+                .HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'На больничном'");
+
+
+
+            // Ограничения тс
+            modelBuilder.Entity<Transport_vehicle>()
+                .HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'В ремонте'");
+            modelBuilder.Entity<Transport_vehicle>()
+                .HasCheckConstraint("Transported_volume", "Transported_volume > 0");
+            modelBuilder.Entity<Transport_vehicle>()
+                .HasCheckConstraint("Load_capacity", "Load_capacity > 0");
+            modelBuilder.Entity<Transport_vehicle>()
+                .HasCheckConstraint("Fuel_consumption", "Fuel_consumption > 0");
+
+
+            modelBuilder.Entity<Product_exmp>()
+                .HasCheckConstraint("Storage_number", "Storage_number > 0");
+
+            modelBuilder.Entity<Requare_product>().HasCheckConstraint("RequestID", "RequestID > 0");
         }
+
     }
 }

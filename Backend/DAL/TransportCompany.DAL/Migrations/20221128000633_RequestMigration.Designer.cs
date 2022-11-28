@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportCompany.DAL;
 
@@ -11,9 +12,10 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    partial class TransportCompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221128000633_RequestMigration")]
+    partial class RequestMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,14 +64,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Driver_license_number");
 
-                    b.HasIndex("Phone_number")
-                        .IsUnique();
-
                     b.ToTable("Driver");
-
-                    b.HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'На больничном'");
-
-                    b.HasCheckConstraint("Year_of_start_work", "Year_of_start_work LIKE '[1-2][0,9][0-9][0-9]'");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product", b =>
@@ -110,18 +105,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("RequestNumber");
 
                     b.ToTable("Product");
-
-                    b.HasCheckConstraint("Cost", "Cost > 0");
-
-                    b.HasCheckConstraint("Height", "Height > 0");
-
-                    b.HasCheckConstraint("Length", "Length > 0");
-
-                    b.HasCheckConstraint("Type", "Type LIKE 'крупногабаритный' OR Type LIKE 'малогабаритный'");
-
-                    b.HasCheckConstraint("Weight", "Weight > 0");
-
-                    b.HasCheckConstraint("Width", "Width > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product_exmp", b =>
@@ -140,8 +123,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("Сatalogue_number");
 
                     b.ToTable("Product_exmp");
-
-                    b.HasCheckConstraint("Storage_number", "Storage_number > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Requare_product", b =>
@@ -160,8 +141,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("Сatalogue_number");
 
                     b.ToTable("Requare_product");
-
-                    b.HasCheckConstraint("RequestID", "RequestID > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
@@ -182,6 +161,7 @@ namespace TransportCompany.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DriverID")
+                        .IsRequired()
                         .HasColumnType("char(10)");
 
                     b.Property<int>("Num_Receiving_storage")
@@ -221,31 +201,34 @@ namespace TransportCompany.DAL.Migrations
 
                     b.ToTable("Request");
 
-                    b.HasCheckConstraint("Car_load", "Car_load > 0");
+                    b.HasCheckConstraint("Car_load", "Number > 0");
 
-                    b.HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
+                    b.HasCheckConstraint("Num_Receiving_storage", "Number > 0");
 
-                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
+                    b.HasCheckConstraint("Num_Sending_storage", "Number > 0");
 
                     b.HasCheckConstraint("Number", "Number > 0");
 
                     b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена'");
 
-                    b.HasCheckConstraint("Total_cost", "Total_cost > 0");
+                    b.HasCheckConstraint("Total_cost", "Number > 0");
 
-                    b.HasCheckConstraint("Total_length", "Total_length > 0");
+                    b.HasCheckConstraint("Total_length", "Number > 0");
 
-                    b.HasCheckConstraint("Total_mass", "Total_mass > 0");
+                    b.HasCheckConstraint("Total_mass", "Number > 0");
 
-                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
+                    b.HasCheckConstraint("Total_shipping_cost", "Number > 0");
 
-                    b.HasCheckConstraint("Total_time", "Total_time > 0");
+                    b.HasCheckConstraint("Total_time", "Number > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>
                 {
                     b.Property<int>("Storage_number")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Storage_number"), 1L, 1);
 
                     b.Property<string>("Addres")
                         .IsRequired()
@@ -268,14 +251,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Storage_number");
 
-                    b.HasIndex("Phone_number")
-                        .IsUnique();
-
                     b.ToTable("Storage");
-
-                    b.HasCheckConstraint("Requests", "Requests LIKE 'Отсутствуют' OR Requests LIKE 'Есть'");
-
-                    b.HasCheckConstraint("Storage_number", "Storage_number > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Transport_vehicle", b =>
@@ -315,14 +291,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasKey("Vehicle_identification_number");
 
                     b.ToTable("Transport_vehicle");
-
-                    b.HasCheckConstraint("Fuel_consumption", "Fuel_consumption > 0");
-
-                    b.HasCheckConstraint("Load_capacity", "Load_capacity > 0");
-
-                    b.HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'В ремонте'");
-
-                    b.HasCheckConstraint("Transported_volume", "Transported_volume > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product", b =>
@@ -374,7 +342,9 @@ namespace TransportCompany.DAL.Migrations
                 {
                     b.HasOne("TransportCompany.Domain.Entities.Driver", "Driver")
                         .WithMany("Requests")
-                        .HasForeignKey("DriverID");
+                        .HasForeignKey("DriverID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", "vehicle")
                         .WithMany("Requests")

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportCompany.DAL;
 
@@ -11,9 +12,10 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    partial class TransportCompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221205154005_NewEntity")]
+    partial class NewEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,13 +186,10 @@ namespace TransportCompany.DAL.Migrations
                     b.Property<int>("Total_mass")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_volume")
-                        .HasColumnType("int");
-
                     b.Property<string>("Transport_vehicleVehicle_identification_number")
                         .HasColumnType("char(17)");
 
-                    b.Property<int?>("TransportationID")
+                    b.Property<int>("TransportationID")
                         .HasColumnType("int");
 
                     b.HasKey("Number");
@@ -203,15 +202,25 @@ namespace TransportCompany.DAL.Migrations
 
                     b.ToTable("Request");
 
+                    b.HasCheckConstraint("Car_load", "Car_load > 0");
+
                     b.HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
+
+                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
 
                     b.HasCheckConstraint("Number", "Number > 0");
 
-                    b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена' OR Status LIKE 'Отказана'");
+                    b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена'");
 
                     b.HasCheckConstraint("Total_cost", "Total_cost > 0");
 
+                    b.HasCheckConstraint("Total_length", "Total_length > 0");
+
                     b.HasCheckConstraint("Total_mass", "Total_mass > 0");
+
+                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
+
+                    b.HasCheckConstraint("Total_time", "Total_time > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>
@@ -346,16 +355,6 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("VehicleID");
 
                     b.ToTable("Transportation");
-
-                    b.HasCheckConstraint("Car_load", "Car_load > 0");
-
-                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
-
-                    b.HasCheckConstraint("Total_length", "Total_length > 0");
-
-                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
-
-                    b.HasCheckConstraint("Total_time", "Total_time > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product_exmp", b =>
@@ -408,7 +407,9 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasOne("TransportCompany.Domain.Entities.Transportation", "transportation")
                         .WithMany()
-                        .HasForeignKey("TransportationID");
+                        .HasForeignKey("TransportationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("transportation");
                 });

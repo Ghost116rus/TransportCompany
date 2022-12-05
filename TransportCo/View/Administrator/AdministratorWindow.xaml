@@ -5,63 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransportCo.View.Administrator"
         mc:Ignorable="d"
-        Title="AdministratorWindow" MinHeight="750" Height="800" Width="1400">
+        Title="FastTravel24" MinHeight="750" Height="800" MinWidth="1400" Width="1400">
     <Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF6E8FAB" Offset="0.088"/>
-                    <GradientStop Color="#FF00182C" Offset="1"/>
-                    <GradientStop Color="#FF2D5869" Offset="0.43"/>
-                    <GradientStop Color="#FF325767" Offset="0.221"/>
-                    <GradientStop Color="#FF014153" Offset="0.687"/>
-                    <GradientStop Color="White"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="550"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock FontFamily="Russo One" FontSize="35">
-                    <TextBlock.Foreground>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF94FF00"/>
-                            <GradientStop Color="#FFFF1111" Offset="1"/>
-                            <GradientStop Color="#FF2B3123" Offset="0.462"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Foreground>FastTravel.</TextBlock>
-                <TextBlock FontFamily="Russo One" FontSize="26" Margin="0,-5,0,0">
-                    <TextBlock.Foreground>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF5B5B43"/>
-                            <GradientStop Color="#FFFD6800" Offset="1"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Foreground>24</TextBlock>
-            </StackPanel>
-            <StackPanel Grid.Row="1">
-                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontFamily="Russo One" FontSize="25" Margin="15,0,15,0">Администратор 1</TextBlock>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,80,0,0" Foreground="#FFFB5100" >Главная</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFF70000" >Заявки</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >Все товары</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >Все склады</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все операторы</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все водители</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все машины</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >Активные перевозки</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >История перевозок</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFE4854E" >Журнал событий</Button>
-            </StackPanel>
-            <Button Grid.Row="2" Background="{x:Null}" FontFamily="Russo One" FontSize="20" VerticalAlignment="Bottom" Foreground="White" Margin="0,0,0,30">Добавить сотрудника</Button>
-        </Grid>
-        
-        
+        <Frame x:Name="MainFrame" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" NavigationUIVisibility="Hidden"/>
 
     </Grid>
 </Window>

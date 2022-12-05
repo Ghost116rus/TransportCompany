@@ -11,13 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{DAE4238D-8249-4C02-91DA-EA106219F869}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportCompany.Domain", "Backend\Core\TransportCompany.Domain\TransportCompany.Domain.csproj", "{B69E4D46-EB3E-4B2F-9E85-6B457E5A747D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportCompany.Domain", "Backend\Core\TransportCompany.Domain\TransportCompany.Domain.csproj", "{B69E4D46-EB3E-4B2F-9E85-6B457E5A747D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportCompany.Aplication", "Backend\Core\TransportCompany.Aplication\TransportCompany.Aplication.csproj", "{C5A538A1-D554-4780-82D4-833D70078564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportCompany.Aplication", "Backend\Core\TransportCompany.Aplication\TransportCompany.Aplication.csproj", "{C5A538A1-D554-4780-82D4-833D70078564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportCompany.DAL", "Backend\DAL\TransportCompany.DAL\TransportCompany.DAL.csproj", "{3FDEC5F0-7B33-42C7-826E-F643A20B573D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportCompany.DAL", "Backend\DAL\TransportCompany.DAL\TransportCompany.DAL.csproj", "{3FDEC5F0-7B33-42C7-826E-F643A20B573D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportCompany.WebApi", "Backend\Presentation\TransportCompany.WebApi\TransportCompany.WebApi.csproj", "{7BBBB745-0EC1-4831-9F1D-1DBE298FC5DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportCompany.WebApi", "Backend\Presentation\TransportCompany.WebApi\TransportCompany.WebApi.csproj", "{7BBBB745-0EC1-4831-9F1D-1DBE298FC5DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{6A722064-9672-46D5-ADD3-9BCEE55654D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportCo", "TransportCo\TransportCo.csproj", "{E81CFE6F-55D9-4BE5-BB3D-F7D4BF36B7C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{7BBBB745-0EC1-4831-9F1D-1DBE298FC5DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BBBB745-0EC1-4831-9F1D-1DBE298FC5DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BBBB745-0EC1-4831-9F1D-1DBE298FC5DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E81CFE6F-55D9-4BE5-BB3D-F7D4BF36B7C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E81CFE6F-55D9-4BE5-BB3D-F7D4BF36B7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E81CFE6F-55D9-4BE5-BB3D-F7D4BF36B7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E81CFE6F-55D9-4BE5-BB3D-F7D4BF36B7C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,7 @@ Global
 		{C5A538A1-D554-4780-82D4-833D70078564} = {420A7A52-F96B-4145-98E1-9823BFF5699A}
 		{3FDEC5F0-7B33-42C7-826E-F643A20B573D} = {4B550829-9D5D-402A-9873-62DBD18450F0}
 		{7BBBB745-0EC1-4831-9F1D-1DBE298FC5DF} = {FE4F6F33-9F92-4AA6-B137-858D0C164E7E}
+		{E81CFE6F-55D9-4BE5-BB3D-F7D4BF36B7C2} = {6A722064-9672-46D5-ADD3-9BCEE55654D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE0FA0A4-EDEA-403D-9B52-75D923015D84}

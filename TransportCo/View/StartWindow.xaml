@@ -1,0 +1,36 @@
+﻿<Window x:Class="TransportCo.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TransportCo"
+        mc:Ignorable="d"
+        Title="Быстро." Height="425" Width="350" ResizeMode="NoResize">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="White"/>
+                <GradientStop Color="#FF111A37" Offset="0.904"/>
+                <GradientStop Color="#FF5D77DA" Offset="0.43"/>
+                <GradientStop Color="#FF91BDC8" Offset="0.137"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.15*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontFamily="Teko SemiBold">Быстро.</TextBlock>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="0,80,0,0">Приложение для грузоперевозок</TextBlock>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBlock  Text="Логин" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Margin="0,80,0,0" FontFamily="Times New Roman" Foreground="White"/>
+            <TextBox Width="200" Background="#FFCDE0DA" FontSize="14" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock  Text="Пароль" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontFamily="Times New Roman" Foreground="#FFCACACA"/>
+            <TextBox Width="200" Background="#FFCDE0DA" FontSize="14" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Height="35" FontSize="20" Width="100" Background="#FF184C92" Margin="0,20,0,0" Command="{Binding Authorization}" IsDefault = "true" FontFamily="Times New Roman" Foreground="White">Войти</Button>
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Width="300" Text="{Binding Errorlog, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="16" Foreground="Red" FontFamily="Times New Roman" Margin="0,5,0,0" TextAlignment="Center"/>
+
+    </Grid>
+</Window>

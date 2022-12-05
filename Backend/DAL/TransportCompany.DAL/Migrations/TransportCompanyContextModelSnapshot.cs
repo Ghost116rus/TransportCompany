@@ -167,8 +167,11 @@ namespace TransportCompany.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Number"), 1L, 1);
 
-                    b.Property<string>("Driver_license_number")
-                        .HasColumnType("char(10)");
+                    b.Property<DateTime?>("DateOfComplete")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfCreate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Num_Receiving_storage")
                         .HasColumnType("int");
@@ -187,17 +190,10 @@ namespace TransportCompany.DAL.Migrations
                     b.Property<int>("Total_volume")
                         .HasColumnType("int");
 
-                    b.Property<string>("Transport_vehicleVehicle_identification_number")
-                        .HasColumnType("char(17)");
-
                     b.Property<int?>("TransportationID")
                         .HasColumnType("int");
 
                     b.HasKey("Number");
-
-                    b.HasIndex("Driver_license_number");
-
-                    b.HasIndex("Transport_vehicleVehicle_identification_number");
 
                     b.HasIndex("TransportationID");
 
@@ -398,14 +394,6 @@ namespace TransportCompany.DAL.Migrations
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
                 {
-                    b.HasOne("TransportCompany.Domain.Entities.Driver", null)
-                        .WithMany("Requests")
-                        .HasForeignKey("Driver_license_number");
-
-                    b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", null)
-                        .WithMany("Requests")
-                        .HasForeignKey("Transport_vehicleVehicle_identification_number");
-
                     b.HasOne("TransportCompany.Domain.Entities.Transportation", "transportation")
                         .WithMany()
                         .HasForeignKey("TransportationID");
@@ -416,13 +404,13 @@ namespace TransportCompany.DAL.Migrations
             modelBuilder.Entity("TransportCompany.Domain.Entities.Transportation", b =>
                 {
                     b.HasOne("TransportCompany.Domain.Entities.Driver", "Driver")
-                        .WithMany()
+                        .WithMany("Requests")
                         .HasForeignKey("DriverID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", "vehicle")
-                        .WithMany()
+                        .WithMany("Requests")
                         .HasForeignKey("VehicleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

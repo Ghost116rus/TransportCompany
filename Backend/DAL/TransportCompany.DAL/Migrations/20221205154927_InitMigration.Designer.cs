@@ -12,8 +12,8 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    [Migration("20221128065539_BugFixes")]
-    partial class BugFixes
+    [Migration("20221205154927_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -169,22 +169,10 @@ namespace TransportCompany.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Number"), 1L, 1);
 
-                    b.Property<int?>("Car_load")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Date_dispatch")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Delivery_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DriverID")
+                    b.Property<string>("Driver_license_number")
                         .HasColumnType("char(10)");
 
                     b.Property<int>("Num_Receiving_storage")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Num_Sending_storage")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -195,48 +183,37 @@ namespace TransportCompany.DAL.Migrations
                     b.Property<int>("Total_cost")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Total_length")
-                        .HasColumnType("int");
-
                     b.Property<int>("Total_mass")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Total_shipping_cost")
+                    b.Property<int>("Total_volume")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Total_time")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VehicleID")
+                    b.Property<string>("Transport_vehicleVehicle_identification_number")
                         .HasColumnType("char(17)");
+
+                    b.Property<int?>("TransportationID")
+                        .HasColumnType("int");
 
                     b.HasKey("Number");
 
-                    b.HasIndex("DriverID");
+                    b.HasIndex("Driver_license_number");
 
-                    b.HasIndex("VehicleID");
+                    b.HasIndex("Transport_vehicleVehicle_identification_number");
+
+                    b.HasIndex("TransportationID");
 
                     b.ToTable("Request");
 
-                    b.HasCheckConstraint("Car_load", "Car_load > 0");
-
                     b.HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
-
-                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
 
                     b.HasCheckConstraint("Number", "Number > 0");
 
-                    b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена'");
+                    b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена' OR Status LIKE 'Отказана'");
 
                     b.HasCheckConstraint("Total_cost", "Total_cost > 0");
 
-                    b.HasCheckConstraint("Total_length", "Total_length > 0");
-
                     b.HasCheckConstraint("Total_mass", "Total_mass > 0");
-
-                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
-
-                    b.HasCheckConstraint("Total_time", "Total_time > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>
@@ -322,6 +299,67 @@ namespace TransportCompany.DAL.Migrations
                     b.HasCheckConstraint("Transported_volume", "Transported_volume > 0");
                 });
 
+            modelBuilder.Entity("TransportCompany.Domain.Entities.Transportation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Car_load")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date_dispatch")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Delivery_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DriverID")
+                        .IsRequired()
+                        .HasColumnType("char(10)");
+
+                    b.Property<int>("Num_Sending_storage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Total_length")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_shipping_cost")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_time")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VehicleID")
+                        .IsRequired()
+                        .HasColumnType("char(17)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverID");
+
+                    b.HasIndex("VehicleID");
+
+                    b.ToTable("Transportation");
+
+                    b.HasCheckConstraint("Car_load", "Car_load > 0");
+
+                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
+
+                    b.HasCheckConstraint("Total_length", "Total_length > 0");
+
+                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
+
+                    b.HasCheckConstraint("Total_time", "Total_time > 0");
+                });
+
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product_exmp", b =>
                 {
                     b.HasOne("TransportCompany.Domain.Entities.Storage", "Storage")
@@ -362,13 +400,34 @@ namespace TransportCompany.DAL.Migrations
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
                 {
-                    b.HasOne("TransportCompany.Domain.Entities.Driver", "Driver")
+                    b.HasOne("TransportCompany.Domain.Entities.Driver", null)
                         .WithMany("Requests")
-                        .HasForeignKey("DriverID");
+                        .HasForeignKey("Driver_license_number");
+
+                    b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", null)
+                        .WithMany("Requests")
+                        .HasForeignKey("Transport_vehicleVehicle_identification_number");
+
+                    b.HasOne("TransportCompany.Domain.Entities.Transportation", "transportation")
+                        .WithMany()
+                        .HasForeignKey("TransportationID");
+
+                    b.Navigation("transportation");
+                });
+
+            modelBuilder.Entity("TransportCompany.Domain.Entities.Transportation", b =>
+                {
+                    b.HasOne("TransportCompany.Domain.Entities.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", "vehicle")
-                        .WithMany("Requests")
-                        .HasForeignKey("VehicleID");
+                        .WithMany()
+                        .HasForeignKey("VehicleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Driver");
 

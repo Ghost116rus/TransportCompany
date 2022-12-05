@@ -27,6 +27,9 @@ namespace TransportCompany.Domain.Entities
         [Required]
         public int Total_cost { get; set; }
 
+        [Required]
+        public DateTime DateOfCreate { get; set; }
+        public DateTime? DateOfComplete { get; set; }
 
         public int? TransportationID { get; set; }
 

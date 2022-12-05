@@ -12,8 +12,8 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    [Migration("20221205154005_NewEntity")]
-    partial class NewEntity
+    [Migration("20221205155740_AddDateOfCreate")]
+    partial class AddDateOfCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -169,8 +169,11 @@ namespace TransportCompany.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Number"), 1L, 1);
 
-                    b.Property<string>("Driver_license_number")
-                        .HasColumnType("char(10)");
+                    b.Property<DateTime?>("DateOfComplete")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfCreate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Num_Receiving_storage")
                         .HasColumnType("int");
@@ -186,41 +189,27 @@ namespace TransportCompany.DAL.Migrations
                     b.Property<int>("Total_mass")
                         .HasColumnType("int");
 
-                    b.Property<string>("Transport_vehicleVehicle_identification_number")
-                        .HasColumnType("char(17)");
+                    b.Property<int>("Total_volume")
+                        .HasColumnType("int");
 
-                    b.Property<int>("TransportationID")
+                    b.Property<int?>("TransportationID")
                         .HasColumnType("int");
 
                     b.HasKey("Number");
-
-                    b.HasIndex("Driver_license_number");
-
-                    b.HasIndex("Transport_vehicleVehicle_identification_number");
 
                     b.HasIndex("TransportationID");
 
                     b.ToTable("Request");
 
-                    b.HasCheckConstraint("Car_load", "Car_load > 0");
-
                     b.HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
-
-                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
 
                     b.HasCheckConstraint("Number", "Number > 0");
 
-                    b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена'");
+                    b.HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена' OR Status LIKE 'Отказана'");
 
                     b.HasCheckConstraint("Total_cost", "Total_cost > 0");
 
-                    b.HasCheckConstraint("Total_length", "Total_length > 0");
-
                     b.HasCheckConstraint("Total_mass", "Total_mass > 0");
-
-                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
-
-                    b.HasCheckConstraint("Total_time", "Total_time > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>
@@ -355,6 +344,16 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("VehicleID");
 
                     b.ToTable("Transportation");
+
+                    b.HasCheckConstraint("Car_load", "Car_load > 0");
+
+                    b.HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
+
+                    b.HasCheckConstraint("Total_length", "Total_length > 0");
+
+                    b.HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
+
+                    b.HasCheckConstraint("Total_time", "Total_time > 0");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product_exmp", b =>
@@ -397,19 +396,9 @@ namespace TransportCompany.DAL.Migrations
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
                 {
-                    b.HasOne("TransportCompany.Domain.Entities.Driver", null)
-                        .WithMany("Requests")
-                        .HasForeignKey("Driver_license_number");
-
-                    b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", null)
-                        .WithMany("Requests")
-                        .HasForeignKey("Transport_vehicleVehicle_identification_number");
-
                     b.HasOne("TransportCompany.Domain.Entities.Transportation", "transportation")
                         .WithMany()
-                        .HasForeignKey("TransportationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TransportationID");
 
                     b.Navigation("transportation");
                 });
@@ -417,13 +406,13 @@ namespace TransportCompany.DAL.Migrations
             modelBuilder.Entity("TransportCompany.Domain.Entities.Transportation", b =>
                 {
                     b.HasOne("TransportCompany.Domain.Entities.Driver", "Driver")
-                        .WithMany()
+                        .WithMany("Requests")
                         .HasForeignKey("DriverID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TransportCompany.Domain.Entities.Transport_vehicle", "vehicle")
-                        .WithMany()
+                        .WithMany("Requests")
                         .HasForeignKey("VehicleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

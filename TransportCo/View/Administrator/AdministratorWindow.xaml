@@ -60,6 +60,8 @@
             </StackPanel>
             <Button Grid.Row="2" Background="{x:Null}" FontFamily="Russo One" FontSize="20" VerticalAlignment="Bottom" Foreground="White" Margin="0,0,0,30">Добавить сотрудника</Button>
         </Grid>
+        
+        
 
     </Grid>
 </Window>

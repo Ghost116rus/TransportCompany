@@ -32,7 +32,7 @@
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
 
-            <Button FontFamily="Russo One" FontSize="22" Foreground="#FFF70000" Background="{x:Null}">Главная</Button>
+            <Button FontFamily="Russo One" FontSize="22" Foreground="#FFF70000" Background="{x:Null}" Command="{Binding MainP}">Главная</Button>
             <ToolBar Grid.Column="1" >
                 <ToolBar.Style>
                     <Style TargetType="ToolBar">

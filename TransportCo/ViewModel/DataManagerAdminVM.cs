@@ -128,6 +128,39 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Кнопки перехода между страницами
+
+        private RelayCommand? openOrdersPage;
+        public RelayCommand OpenOrdersPage
+        {
+            get
+            {
+                return openOrdersPage ??
+                    (openOrdersPage = new RelayCommand(obj =>
+                    {
+                        RefreshOrders();
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._ordersPage;
+                    }));
+            }
+        }
+
+        private RelayCommand? mainp;
+        public RelayCommand MainP
+        {
+            get
+            {
+                return mainp ??
+                    (mainp = new RelayCommand(obj =>
+                    {
+                        //
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._mainPage;
+                    }));
+            }
+        }
+
+        #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

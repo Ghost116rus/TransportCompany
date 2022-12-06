@@ -27,8 +27,8 @@ namespace TransportCo.View.Administrator
         public static AdministratorWindow _window { get; set; }
 
 
-        public static MainPage mainPage { get; set; }
-        public static OrdersPage ordersPage { get; set; }
+        public static MainPage _mainPage { get; set; }
+        public static OrdersPage _ordersPage { get; set; }
 
         public AdministratorWindow()
         {
@@ -41,11 +41,11 @@ namespace TransportCo.View.Administrator
             // Создание и сохранение статических переменных
             _mainFrame = this.MainFrame;
             _window = this;
-            mainPage = new MainPage();
-            ordersPage = new OrdersPage();
+            _mainPage = new MainPage();
+            _ordersPage = new OrdersPage();
 
             //_mainFrame.Content = mainPage;
-            _mainFrame.Content = ordersPage;
+            _mainFrame.Content = _mainPage;
         }
     }
 }

@@ -11,15 +11,19 @@ namespace TransportCo.Model
     {
         public int Number { get; set; }
         public string Status { get; set; }
-        public int Num_Receiving_storage { get; set; }
         public int Total_volume { get; set; }
         public int Total_mass { get; set; }
         public int Total_cost { get; set; }
 
-        public string DateOfCreate { get; set; }
-        public string DateOfComplete { get; set; }
+        public string NameOfOperator { get; set; }
+
+        public DateTime DateOfCreate { get; set; }
+        public DateTime DateOfComplete { get; set; }
+
+        public int Num_Receiving_storage { get; set; }
+        public string Addres { get; set; }
 
         public Transportation? transportation { get; set; }
-        public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
+        public List<Product> Requare_Products { get; set; } = new List<Product>();
     }
 }

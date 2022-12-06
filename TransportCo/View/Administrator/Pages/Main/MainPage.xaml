@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TransportCo.View.Administrator.Pages.Main"
       mc:Ignorable="d" 
-      Height="Auto" Width="Auto" MinHeight="745" MinWidth="1390"
+      Height="Auto" Width="Auto" MinHeight="745" MinWidth="1450"
       Title="MainPage">
 
     <Grid>
@@ -69,8 +69,8 @@
             
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.6*"/>
-                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.55*"/>
+                    <ColumnDefinition Width="0.45*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
@@ -78,18 +78,19 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Foreground="#FF292929" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="40,5,0,0">Необработанные заявки</TextBlock>
-                    <ListView  Grid.Row="1" Background="#FFD2D2D2">
+                    <Button Foreground="#FF292929" Width="250" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="0,2,0,0" HorizontalAlignment="Right" Background="#FFB7F3D9">Обновить данные</Button>
+                    <ListView ItemsSource="{Binding MainPageOrders, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,0">
 
                         <ListView.View>
 
                             <GridView>
-                                <GridViewColumn Width="50" Header = "№"                     DisplayMemberBinding="{Binding Path=Title}"/>
-                                <GridViewColumn Width="80" Header = "№ склада"              DisplayMemberBinding="{Binding Path=Section}"/>
-                                <GridViewColumn Width="100" Header = "Общая масса"          DisplayMemberBinding="{Binding Path=Authors}" />
-                                <GridViewColumn Width="100" Header = "Общий объем"          DisplayMemberBinding="{Binding Path=Publisher}"/>
-                                <GridViewColumn Width="120" Header = "Общая стоимость"      DisplayMemberBinding="{Binding Path=Publisher}"/>
-                                <GridViewColumn Width="120" Header = "Дата формирования"    DisplayMemberBinding="{Binding Path=Publisher}"/>
-                                <GridViewColumn Header="" Width="120">
+                                <GridViewColumn Width="50" Header = "№"                     DisplayMemberBinding="{Binding Path=Number}"/>
+                                <GridViewColumn Width="80" Header = "№ склада"              DisplayMemberBinding="{Binding Path=Num_Receiving_storage}"/>
+                                <GridViewColumn Width="80" Header = "Масса"          DisplayMemberBinding="{Binding Path=Total_mass}" />
+                                <GridViewColumn Width="80" Header = "Объем"          DisplayMemberBinding="{Binding Path=Total_volume}"/>
+                                <GridViewColumn Width="100" Header = "Стоимость"      DisplayMemberBinding="{Binding Path=Total_cost}"/>
+                                <GridViewColumn Width="145" Header = "Дата формирования"    DisplayMemberBinding="{Binding Path=DateOfCreate}"/>
+                                <GridViewColumn Header="" Width="95">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button x:Name="ReturnBookBtn" Content="Обработать" Command="{Binding Returnbook}" FontSize="14" Background="#FF00FFB3"/>
@@ -108,12 +109,12 @@
                     </Grid.RowDefinitions>
                     <TextBlock Foreground="#FF882525" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="30,5,0,0">Активные перевозки</TextBlock>
                     <Button FontSize="25" Grid.Row="0" FontFamily="Russo One" Width="100" HorizontalAlignment="Right">Выйти</Button>
-                    <ListView  Grid.Row="1" Background="{x:Null}">
+                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,3,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="100" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=Title}"/>
-                                <GridViewColumn Width="150" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=Title}"/>
-                                <GridViewColumn Width="150" Header = "Статус" DisplayMemberBinding="{Binding Path=Authors}" />
+                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=FullName}"/>
+                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=Addres}"/>
+                                <GridViewColumn Width="210" Header = "Статус" DisplayMemberBinding="{Binding Path=Status}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -128,7 +129,7 @@
                 <ListView Grid.Row="1" ItemsSource="{Binding AllEvents}" Background="{x:Null}" Margin="0,5,0,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Grid.Column="0" Text="{Binding Path=Events}" TextWrapping="Wrap" FontSize="14"/>
+                            <TextBlock Grid.Column="0" Text="{Binding Path=Info}" FontSize="14" MaxWidth="1200" TextWrapping="Wrap"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListView>

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TransportCo.View.Administrator.Pages.Main
+namespace TransportCo.View.Administrator.Pages.OrdersP
 {
     /// <summary>
-    /// Логика взаимодействия для MainPage.xaml
+    /// Логика взаимодействия для DetailOfPandingOrderPage.xaml
     /// </summary>
-    public partial class MainPage : Page
+    public partial class DetailOfPandingOrderPage : Page
     {
-        public MainPage()
+        public DetailOfPandingOrderPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;

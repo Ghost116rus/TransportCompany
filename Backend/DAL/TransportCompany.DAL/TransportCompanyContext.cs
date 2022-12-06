@@ -50,18 +50,19 @@ namespace TransportCompany.DAL
             // Ограничения заявки
 
             modelBuilder.Entity<Request>().HasCheckConstraint("Number", "Number > 0");
-
             modelBuilder.Entity<Request>()
-                .HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена'");
-
+                .HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена' OR Status LIKE 'Отказана'");
             modelBuilder.Entity<Request>().HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
-            modelBuilder.Entity<Request>().HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
-            modelBuilder.Entity<Request>().HasCheckConstraint("Total_time", "Total_time > 0");
-            modelBuilder.Entity<Request>().HasCheckConstraint("Total_length", "Total_length > 0");
-            modelBuilder.Entity<Request>().HasCheckConstraint("Car_load", "Car_load > 0");
             modelBuilder.Entity<Request>().HasCheckConstraint("Total_mass", "Total_mass > 0");
             modelBuilder.Entity<Request>().HasCheckConstraint("Total_cost", "Total_cost > 0");
-            modelBuilder.Entity<Request>().HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
+
+            // Ограничения поставки
+
+            modelBuilder.Entity<Transportation>().HasCheckConstraint("Num_Sending_storage", "Num_Sending_storage > 0");
+            modelBuilder.Entity<Transportation>().HasCheckConstraint("Total_time", "Total_time > 0");
+            modelBuilder.Entity<Transportation>().HasCheckConstraint("Total_length", "Total_length > 0");
+            modelBuilder.Entity<Transportation>().HasCheckConstraint("Car_load", "Car_load > 0");
+            modelBuilder.Entity<Transportation>().HasCheckConstraint("Total_shipping_cost", "Total_shipping_cost > 0");
 
             // Ограничения товара
             modelBuilder.Entity<Product>()

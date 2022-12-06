@@ -45,6 +45,6 @@ namespace TransportCompany.Domain.Entities
         [MaxLength(13)]
         public string Status { get; set; }
 
-        public IEnumerable<Request> Requests { get; set; } = new List<Request>();   
+        public IEnumerable<Transportation> Transportations { get; set; } = new List<Transportation>();   
     }
 }

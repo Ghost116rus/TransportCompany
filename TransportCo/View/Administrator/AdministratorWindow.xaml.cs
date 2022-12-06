@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TransportCo.View.Administrator.Pages.Main;
+using TransportCo.View.Administrator.Pages.OrdersP;
+using TransportCo.ViewModel;
 
 namespace TransportCo.View.Administrator
 {
@@ -19,9 +22,30 @@ namespace TransportCo.View.Administrator
     /// </summary>
     public partial class AdministratorWindow : Window
     {
+        public static Frame _mainFrame { get; set; }
+        public static DataManagerAdminVM _mng { get; set; }
+        public static AdministratorWindow _window { get; set; }
+
+
+        public static MainPage _mainPage { get; set; }
+        public static OrdersPage _ordersPage { get; set; }
+
         public AdministratorWindow()
         {
             InitializeComponent();
+
+            // Создание контекста данных
+            _mng = new DataManagerAdminVM();
+            DataContext = _mng;
+
+            // Создание и сохранение статических переменных
+            _mainFrame = this.MainFrame;
+            _window = this;
+            _mainPage = new MainPage();
+            _ordersPage = new OrdersPage();
+
+            //_mainFrame.Content = mainPage;
+            _mainFrame.Content = _mainPage;
         }
     }
 }

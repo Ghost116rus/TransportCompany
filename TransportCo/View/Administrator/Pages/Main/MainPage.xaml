@@ -80,9 +80,7 @@
                     <TextBlock Foreground="#FF292929" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="40,5,0,0">Необработанные заявки</TextBlock>
                     <Button Foreground="#FF292929" Width="250" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="0,2,0,0" HorizontalAlignment="Right" Background="#FFB7F3D9">Обновить данные</Button>
                     <ListView ItemsSource="{Binding MainPageOrders, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,0">
-
                         <ListView.View>
-
                             <GridView>
                                 <GridViewColumn Width="50" Header = "№"                     DisplayMemberBinding="{Binding Path=Number}"/>
                                 <GridViewColumn Width="80" Header = "№ склада"              DisplayMemberBinding="{Binding Path=Num_Receiving_storage}"/>
@@ -93,7 +91,7 @@
                                 <GridViewColumn Header="" Width="95">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="ReturnBookBtn" Content="Рассмотреть" Command="{Binding Returnbook}" FontSize="14" Background="#FF00FFB3"/>
+                                            <Button x:Name="PendingOrderBtn" Content="Рассмотреть" Command="{Binding PendingOrder}" FontSize="14" Background="#FF00FFB3"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

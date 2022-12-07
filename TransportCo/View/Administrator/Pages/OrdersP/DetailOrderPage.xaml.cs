@@ -16,23 +16,14 @@ using System.Windows.Shapes;
 namespace TransportCo.View.Administrator.Pages.OrdersP
 {
     /// <summary>
-    /// Логика взаимодействия для OrdersPage.xaml
+    /// Логика взаимодействия для DetailOrderPage.xaml
     /// </summary>
-    public partial class OrdersPage : Page
+    public partial class DetailOrderPage : Page
     {
-
-
-        public static Frame _orderDetailFrame { get; set; }
-        public static Page _detailPandingPage { get; set; }
-        public static Page _detaiOrderPage { get; set; }
-
-        public OrdersPage()
+        public DetailOrderPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
-            _orderDetailFrame = this.OrderDetail;
-            _detailPandingPage = new DetailOfPandingOrderPage();
-            _detaiOrderPage = new DetailOrderPage();
         }
     }
 }

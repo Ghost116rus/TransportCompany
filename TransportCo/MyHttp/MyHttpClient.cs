@@ -123,11 +123,6 @@ namespace TransportCo.MyHttp
         #region Работа с Заявками
 
 
-
-
-
-
-
         internal static List<Orders> GetAllOrders()
         {
 
@@ -158,7 +153,7 @@ namespace TransportCo.MyHttp
             };
         }
 
-        internal static Orders? GetDetailOrderInfo(int number)
+        public static Orders? GetDetailOrderInfo(int number)
         {
             return new Orders()
             {

@@ -142,14 +142,14 @@
                                 <GridViewColumn Header="" Width="123">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="DetailBtn" Width="110" Content="Подробнее" Command="{Binding Details}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
+                                            <Button x:Name="DetailBtn" Width="110" Content="О перевозке" Command="{Binding TransportationDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="" Width="124">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="TransportationDetailBtn" Width="110" Content="О перевозке" Command="{Binding TransportationDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
+                                            <Button x:Name="TransportationDetailBtn" Width="110" Content="О водителе" Command="{Binding DriverDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

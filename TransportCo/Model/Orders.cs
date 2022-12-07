@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using TransportCo.MyHttp;
+using TransportCo.View.Administrator;
 
 namespace TransportCo.Model
 {
@@ -23,7 +26,23 @@ namespace TransportCo.Model
         public int Num_Receiving_storage { get; set; }
         public string Addres { get; set; }
 
-        public Transportation? transportation { get; set; }
-        public List<Product> Requare_Products { get; set; } = new List<Product>();
+        public Transportation? transportation { get; set; } = null;
+        public List<Product> Requare_Products { get; set; } = new List<Product>(); 
+
+        private RelayCommand? pendingOrder;
+        public RelayCommand PendingOrder
+        {
+            get
+            {
+                return pendingOrder ??
+                    (pendingOrder = new RelayCommand(obj =>
+                    {
+                        AdministratorWindow._mng.ViewPendingOrder(this.Number);
+                    }
+                    ));
+            }
+        }
+
+
     }
 }

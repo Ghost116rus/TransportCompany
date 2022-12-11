@@ -20,10 +20,17 @@ namespace TransportCo.View.Administrator.Pages.Products
     /// </summary>
     public partial class ProductsPage : Page
     {
+        public static Frame _productDetailFrame { get; set; }
+        public static ChangeDataOdProductPage _productChangeDataPage { get; set; }
+
         public ProductsPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
+
+            _productDetailFrame = this.ProductDetail;
+
+            _productChangeDataPage = new ChangeDataOdProductPage();
         }
     }
 }

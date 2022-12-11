@@ -23,6 +23,7 @@ namespace TransportCo.View.Administrator.Pages.Products
         public ChangeDataOdProductPage()
         {
             InitializeComponent();
+            DataContext = AdministratorWindow._mng;
         }
     }
 }

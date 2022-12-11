@@ -32,6 +32,7 @@ namespace TransportCo.View.Administrator
         public static OrdersPage _ordersPage { get; set; }
         public static ProductsPage _productsPage { get; set; }
 
+
         public AdministratorWindow()
         {
             InitializeComponent();

@@ -77,7 +77,8 @@
                 <ColumnDefinition Width="0.65*"/>
                 <ColumnDefinition Width="0.35*"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding AllProducts, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5">
+            <ListView ItemsSource="{Binding AllProducts, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5"
+                      SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="120" Header = "Каталожный №"         DisplayMemberBinding="{Binding Path=Сatalogue_number}"/>
@@ -91,7 +92,7 @@
                         <GridViewColumn Header="" Width="95">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="ChangeProductBtn" Content="Изменить" Command="{Binding Test}" FontSize="14"/>
+                                    <Button x:Name="ChangeProductBtn" Content="Изменить" Command="{Binding Change}" FontSize="14"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

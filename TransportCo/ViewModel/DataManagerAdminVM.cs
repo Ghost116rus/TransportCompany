@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using TransportCo.Model;
 using TransportCo.View.Administrator;
 using TransportCo.View.Administrator.Pages.OrdersP;
+using TransportCo.View.Administrator.Pages.Products;
 using TransportCo.View.Administrator.UniversalWnd;
 
 namespace TransportCo.ViewModel
@@ -181,6 +182,16 @@ namespace TransportCo.ViewModel
 
         #region Страница товаров
 
+        private Product selectedProduct;
+        public Product SelectedProduct
+        {
+            get { return selectedProduct; }
+            set { selectedProduct = value; NotifyPropertyChanged("SelectedProduct"); }
+        }
+
+
+
+
         private List<Product> allProducts = MyHttp.MyHttpClient.GetAllProducts();
         public List<Product> AllProducts 
         { 
@@ -188,6 +199,16 @@ namespace TransportCo.ViewModel
             set { allProducts = value; NotifyPropertyChanged("AllProducts"); }
         }
 
+        public void Change(Product product)
+        {
+            SelectedProduct = product;
+            
+            if (ProductsPage._productDetailFrame.Content != ProductsPage._productChangeDataPage)
+            {
+                ProductsPage._productDetailFrame.Content = ProductsPage._productChangeDataPage;
+            }
+
+        }
 
         #endregion
 

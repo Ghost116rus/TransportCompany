@@ -5,28 +5,28 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TransportCo.View.Administrator.Pages.Products"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="500"
+      Height="Auto" Width="Auto" MinHeight="450" MinWidth="500"
       Title="ChangeDataOdProductPage">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
        
         <StackPanel Grid.Column="1" Background="White">
-            <TextBlock Height="18" Margin="0,55,0,5"  FontFamily="Russo One">Каталожный №</TextBlock>
-            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Наименование:</TextBlock>
-            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Тип:</TextBlock>
-            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Длина:</TextBlock>
-            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Ширина:</TextBlock>
-            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Высота:</TextBlock>
-            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Вес:</TextBlock>
-            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Стоимость:</TextBlock>
+            <TextBlock Height="18" Margin="15,55,0,5"  FontFamily="Russo One">Каталожный №</TextBlock>
+            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Наименование:</TextBlock>
+            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Тип:</TextBlock>
+            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Длина:</TextBlock>
+            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Ширина:</TextBlock>
+            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Высота:</TextBlock>
+            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Вес:</TextBlock>
+            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Стоимость:</TextBlock>
         </StackPanel>
-        <Grid Grid.Column="2" DataContext="{Binding SelectedProduct}" Background="White" >
+        <Grid Grid.Column="2" DataContext="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Background="White" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="90"/>
@@ -37,16 +37,16 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBox Margin="5,0,0,5"   TextAlignment="Center" Text="{Binding Path=Сatalogue_number}"/>
-                <TextBox Margin="5,10,0,10" TextAlignment="Center" Text="{Binding Path=Name}"/>
-                <TextBox Margin="5,10,0,10" TextAlignment="Center" Text="{Binding Path=Type}"/>
+                <TextBox Margin="5,0,20,5"   TextAlignment="Center" Text="{Binding Сatalogue_number}"/>
+                <TextBox Margin="5,10,20,10" TextAlignment="Center" Text="{Binding Name}"/>
+                <TextBox Margin="5,10,20,10" TextAlignment="Center" Text="{Binding Type}"/>
             </StackPanel>
             <StackPanel  Grid.Row="2" Grid.Column="0">
-                <TextBox Margin="5,18,0,10" Text="{Binding Path=Length}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Path=Width}"  TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Path=Height}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Path=Weight}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Path=Cost}"   TextAlignment="Right"/>
+                <TextBox Margin="5,18,0,10" Text="{Binding Length}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Width}"  TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Height}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Weight}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Cost}"   TextAlignment="Right"/>
             </StackPanel>
             <StackPanel  Grid.Row="2" Grid.Column="1">
                 <TextBlock Height="18" Margin="5,18,0,10" FontFamily="Russo One">мм.</TextBlock>

@@ -168,6 +168,35 @@ namespace TransportCo.MyHttp
             };
         }
 
+        public static List<Product> GetAllProducts()
+        {
+            return new List<Product>()
+            {
+                new Product()
+                {
+                    Сatalogue_number = "1245689",
+                    Name = "Холодильник LG12-58",
+                    Type = "крупногабаритный",
+                    Length = 800,
+                    Width = 800,
+                    Height = 1600,
+                    Weight = 80,
+                    Cost = 32_500
+                },
+                new Product()
+                {
+                    Сatalogue_number = "6895123",
+                    Name = "Утюг LG8-32",
+                    Type = "малогабаритный",
+                    Length = 400,
+                    Width = 200,
+                    Height = 400,
+                    Weight = 5,
+                    Cost = 8500
+                }
+            };
+        }
+
 
         #endregion
     }

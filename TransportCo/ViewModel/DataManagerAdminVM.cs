@@ -179,6 +179,18 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Страница товаров
+
+        private List<Product> allProducts = MyHttp.MyHttpClient.GetAllProducts();
+        public List<Product> AllProducts 
+        { 
+            get { return allProducts; }
+            set { allProducts = value; NotifyPropertyChanged("AllProducts"); }
+        }
+
+
+        #endregion
+
         #region Кнопки Обновить данные
 
         private RelayCommand? updateOrders;
@@ -227,6 +239,21 @@ namespace TransportCo.ViewModel
                         CleanOrdersPage();
                         allEvents = MyHttp.MyHttpClient.GetEventsLog();
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._mainPage;
+                    }));
+            }
+        }
+
+        private RelayCommand? productP;
+        public RelayCommand ProductP
+        {
+            get
+            {
+                return productP ??
+                    (productP = new RelayCommand(obj =>
+                    {
+                        //
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._productsPage;
                     }));
             }
         }

@@ -50,11 +50,11 @@
                     </Style>
                 </ToolBar.Style>
                 <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E" >Товары</ToggleButton>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E" Command="{Binding ProductP}">Товары</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E">Склады</ToggleButton>
                 <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Операторы</ToggleButton>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Диспетчеры</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Водители</ToggleButton>
                 <Separator/>

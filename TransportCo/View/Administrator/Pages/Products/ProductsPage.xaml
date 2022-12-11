@@ -1,0 +1,108 @@
+﻿<Page x:Class="TransportCo.View.Administrator.Pages.Products.ProductsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TransportCo.View.Administrator.Pages.Products"
+      mc:Ignorable="d" 
+      Height="Auto" Width="Auto" MinHeight="745" MinWidth="1450"
+      Title="ProductsPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF6E8FAB" Offset="0.088"/>
+                    <GradientStop Color="#FF00182C" Offset="1"/>
+                    <GradientStop Color="#FF2D5869" Offset="0.43"/>
+                    <GradientStop Color="#FF325767" Offset="0.221"/>
+                    <GradientStop Color="#FF014153" Offset="0.687"/>
+                    <GradientStop Color="White"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="800"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+
+            <Button FontFamily="Russo One" FontSize="22" Foreground="#FFF70000" Background="{x:Null}" Command="{Binding MainP}">Главная</Button>
+            <ToolBar Grid.Column="1" ToolBarTray.IsLocked="True">
+                <ToolBar.Style>
+                    <Style TargetType="ToolBar">
+                        <!-- Not Dropdown Button -->
+                        <Setter Property="ToolBarTray.IsLocked" Value="True"/>
+                        <!-- Not Overflow Button -->
+                        <Setter Property="OverflowMode" Value="Never"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToolBar}">
+                                    <ToolBarPanel IsItemsHost="True" Background="{x:Null}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ToolBar.Style>
+                <Separator/>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFF70000" Command="{Binding OpenOrdersPage}">Заявки</ToggleButton>
+                <Separator/>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E">Склады</ToggleButton>
+                <Separator/>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Диспетчеры</ToggleButton>
+                <Separator/>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Водители</ToggleButton>
+                <Separator/>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Машины</ToggleButton>
+                <Separator/>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFE4854E">Перевозки</ToggleButton>
+                <Separator/>
+            </ToolBar>
+
+            <TextBlock Grid.Column="3" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center">Администратор1</TextBlock>
+            <Button Grid.Column="4" FontSize="22" Grid.Row="0" FontFamily="Russo One" Width="150" HorizontalAlignment="Right" Background="{x:Null}">Выйти</Button>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="15,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.65*"/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+            <ListView ItemsSource="{Binding AllProducts, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="120" Header = "Каталожный №"         DisplayMemberBinding="{Binding Path=Сatalogue_number}"/>
+                        <GridViewColumn Width="220" Header = "Наименование"         DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Width="150" Header = "Тип"                  DisplayMemberBinding="{Binding Path=Type}"/>
+                        <GridViewColumn Width="65"  Header = "Длина"                DisplayMemberBinding="{Binding Path=Length}" />
+                        <GridViewColumn Width="65"  Header = "Ширина"               DisplayMemberBinding="{Binding Path=Width}" />
+                        <GridViewColumn Width="65"  Header = "Высота"               DisplayMemberBinding="{Binding Path=Height}" />
+                        <GridViewColumn Width="50"  Header = "Вес"                  DisplayMemberBinding="{Binding Path=Weight}" />
+                        <GridViewColumn Width="80" Header = "Стоимость"             DisplayMemberBinding="{Binding Path=Cost}"/>
+                        <GridViewColumn Header="" Width="95">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="ChangeProductBtn" Content="Изменить" Command="{Binding Test}" FontSize="14"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Frame x:Name="ProductDetail" Grid.Column="2" Grid.Row="1" NavigationUIVisibility="Hidden" Margin="5,5,5,50"/>
+
+            <Button  Grid.Column="2" Grid.Row="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontFamily="Russo One" FontSize="14" Background="#FFB7F3D9"  Margin="40,0,0,5">Обновить данные о товарах</Button>
+            <Button  Grid.Column="2" Grid.Row="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="Russo One" FontSize="14" Background="White" Margin="0,0,40,5">Добавить новый товар</Button>
+
+        </Grid>
+    </Grid>
+</Page>

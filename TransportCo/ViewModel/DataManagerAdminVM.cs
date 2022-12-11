@@ -16,20 +16,11 @@ namespace TransportCo.ViewModel
 {
     public class DataManagerAdminVM : INotifyPropertyChanged
     {
-        #region Общие методы и поля
+        #region Общие методы
+
 
         private UniversalWindow newUniversalWnd = new UniversalWindow();
 
-        public void ViewPendingOrder(int NumberOfOrder)
-        {
-            DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(NumberOfOrder);
-            newUniversalWnd = new UniversalWindow();
-            newUniversalWnd._universalFrame.Content = OrdersPage._detailPandingPage;
-
-            newUniversalWnd.Owner = AdministratorWindow._window;
-            newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            newUniversalWnd.ShowDialog();
-        }
 
         private RelayCommand? createTransportationbtn;
         public RelayCommand CreateTransportationBtn
@@ -63,6 +54,32 @@ namespace TransportCo.ViewModel
             }
         }
 
+        public void ViewPendingOrder(int NumberOfOrder)
+        {
+            DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(NumberOfOrder);
+            newUniversalWnd = new UniversalWindow();
+            newUniversalWnd._universalFrame.Content = OrdersPage._detailPandingPage;
+
+            newUniversalWnd.Owner = AdministratorWindow._window;
+            newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            newUniversalWnd.ShowDialog();
+        }
+
+
+        #endregion
+
+
+        #region Общие заявки и перевозки
+
+        private List<Transportation> activeTransportations = MyHttp.MyHttpClient.GetActiveTransportations();
+
+        public List<Transportation> ActiveTransportations
+        {
+            get { return activeTransportations; }
+            set { activeTransportations = value; NotifyPropertyChanged("ActiveTransportations"); }
+        }
+
+
         #endregion
 
 
@@ -74,15 +91,6 @@ namespace TransportCo.ViewModel
         {
             get { return mainPageOrders; }
             set { mainPageOrders = value; NotifyPropertyChanged("MainPageOrders"); }
-        }
-
-
-        private List<Transportation> activeTransportations = MyHttp.MyHttpClient.GetActiveTransportations();
-
-        public List<Transportation> ActiveTransportations
-        {
-            get { return activeTransportations; }
-            set { activeTransportations = value; NotifyPropertyChanged("ActiveTransportations"); }
         }
 
         private List<EventLog> allEvents = MyHttp.MyHttpClient.GetEventsLog();
@@ -182,11 +190,17 @@ namespace TransportCo.ViewModel
 
         #region Страница товаров
 
-        private Product selectedProduct;
+        private Product? selectedProduct;
         public Product SelectedProduct
         {
             get { return selectedProduct; }
-            set { selectedProduct = value; NotifyPropertyChanged("SelectedProduct"); }
+            set 
+            { 
+                selectedProduct = value;
+                if (value == null) 
+                    { ProductsPage._productDetailFrame.Content = null; } 
+                NotifyPropertyChanged("SelectedProduct");
+            }
         }
 
 
@@ -209,6 +223,19 @@ namespace TransportCo.ViewModel
             }
 
         }
+
+        #endregion
+
+        #region Страница Перевозок
+
+        private List<Transportation> allTransportations = MyHttp.MyHttpClient.GetAllTransportations();
+
+        public List<Transportation> AllTransportations
+        {
+            get { return allTransportations; }
+            set { allTransportations = value; NotifyPropertyChanged("AllTransportations"); }
+        }
+
 
         #endregion
 
@@ -273,11 +300,29 @@ namespace TransportCo.ViewModel
                     (productP = new RelayCommand(obj =>
                     {
                         //
+                        SelectedProduct = null;
                         allEvents = MyHttp.MyHttpClient.GetEventsLog();
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._productsPage;
                     }));
             }
         }
+
+        private RelayCommand? transporationP;
+        public RelayCommand TransporationP
+        {
+            get
+            {
+                return transporationP ??
+                    (transporationP = new RelayCommand(obj =>
+                    {
+                        //
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._transportationPage;
+                    }));
+            }
+        }
+
+        
 
         #endregion
 

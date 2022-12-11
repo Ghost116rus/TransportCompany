@@ -123,7 +123,7 @@ namespace TransportCo.MyHttp
         #region Работа с Заявками
 
 
-        internal static List<Orders> GetAllOrders()
+        public static List<Orders> GetAllOrders()
         {
 
             return new List<Orders>()
@@ -164,7 +164,8 @@ namespace TransportCo.MyHttp
                 Total_mass = 100,
                 Total_cost = 100,
                 DateOfCreate = DateTime.Now,
-                Addres = "г. Казань, ул Вахитова 41"
+                Addres = "г. Казань, ул Вахитова 41",
+                transportation = new Transportation()
             };
         }
 
@@ -197,6 +198,37 @@ namespace TransportCo.MyHttp
             };
         }
 
+        #endregion
+
+        #region Работа с Перевозками
+
+        public static List<Transportation> GetAllTransportations()
+        {
+            return new List<Transportation>()
+            {
+                new Transportation()
+                {
+                    Number = 1,
+                    Addres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                    Status = "Прошел г. Казань",
+                    FullName = "Калеев Д.А"
+                },
+                new Transportation()
+                {
+                    Number = 8,
+                    Addres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    Status = "На подъезде к г. Екатеринбург",
+                    FullName = "Горохов А.С"
+                },
+                new Transportation()
+                {
+                    Number = 16,
+                    Addres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    Status = "На подъезде к г. Екатеринбург",
+                    FullName = "Гайфуллин Д.Р"
+                },
+            };
+        }
 
         #endregion
     }

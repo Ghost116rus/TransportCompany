@@ -87,7 +87,7 @@
                         <GridViewColumn Width="65"  Header = "Ширина"               DisplayMemberBinding="{Binding Path=Width}" />
                         <GridViewColumn Width="65"  Header = "Высота"               DisplayMemberBinding="{Binding Path=Height}" />
                         <GridViewColumn Width="50"  Header = "Вес"                  DisplayMemberBinding="{Binding Path=Weight}" />
-                        <GridViewColumn Width="80" Header = "Стоимость"             DisplayMemberBinding="{Binding Path=Cost}"/>
+                        <GridViewColumn Width="80" Header =  "Стоимость"            DisplayMemberBinding="{Binding Path=Cost}"/>
                         <GridViewColumn Header="" Width="95">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

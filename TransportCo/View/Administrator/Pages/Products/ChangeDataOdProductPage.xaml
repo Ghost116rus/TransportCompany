@@ -1,0 +1,63 @@
+﻿<Page x:Class="TransportCo.View.Administrator.Pages.Products.ChangeDataOdProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TransportCo.View.Administrator.Pages.Products"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="500"
+      Title="ChangeDataOdProductPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+       
+        <StackPanel Grid.Column="1" Background="White">
+            <TextBlock Height="18" Margin="0,55,0,5"  FontFamily="Russo One">Каталожный №</TextBlock>
+            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Наименование:</TextBlock>
+            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Тип:</TextBlock>
+            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Длина:</TextBlock>
+            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Ширина:</TextBlock>
+            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Высота:</TextBlock>
+            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Вес:</TextBlock>
+            <TextBlock Height="18" Margin="0,10,0,10" FontFamily="Russo One">Стоимость:</TextBlock>
+        </StackPanel>
+        <Grid Grid.Column="2" DataContext="{Binding SelectedProduct}" Background="White" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+                <TextBox Margin="5,0,0,5"   TextAlignment="Center" Text="{Binding Path=Сatalogue_number}"/>
+                <TextBox Margin="5,10,0,10" TextAlignment="Center" Text="{Binding Path=Name}"/>
+                <TextBox Margin="5,10,0,10" TextAlignment="Center" Text="{Binding Path=Type}"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="2" Grid.Column="0">
+                <TextBox Margin="5,18,0,10" Text="{Binding Path=Length}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Path=Width}"  TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Path=Height}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Path=Weight}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" Text="{Binding Path=Cost}"   TextAlignment="Right"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="2" Grid.Column="1">
+                <TextBlock Height="18" Margin="5,18,0,10" FontFamily="Russo One">мм.</TextBlock>
+                <TextBlock Height="18" Margin="5,10,0,10" FontFamily="Russo One">мм.</TextBlock>
+                <TextBlock Height="18" Margin="5,10,0,10" FontFamily="Russo One">мм.</TextBlock>
+                <TextBlock Height="18" Margin="5,10,0,10" FontFamily="Russo One">кг.</TextBlock>
+                <TextBlock Height="18" Margin="5,10,0,10" FontFamily="Russo One">руб.</TextBlock>
+            </StackPanel>
+        </Grid>
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Russo One" FontSize="20">Данные о товаре</TextBlock>
+        <Button Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Russo One" FontSize="16" Margin="0,0,0,15" >Сохранить изменения</Button>
+
+    </Grid>
+</Page>

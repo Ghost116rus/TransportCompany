@@ -34,6 +34,8 @@ namespace TransportCo.View.Administrator
         public static ProductsPage _productsPage { get; set; }
         public static TransportationPage _transportationPage { get; set; }
 
+        public static bool exit { get; set; } = false;
+
 
         public AdministratorWindow()
         {
@@ -54,6 +56,20 @@ namespace TransportCo.View.Administrator
 
             //_mainFrame.Content = mainPage;
             _mainFrame.Content = _mainPage;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            if (exit)
+            {
+
+            }
+            else
+            {
+                base.OnClosed(e);
+                Application.Current.Dispatcher.InvokeShutdown();
+            }
+
         }
     }
 }

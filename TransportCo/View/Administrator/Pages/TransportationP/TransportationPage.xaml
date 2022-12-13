@@ -93,8 +93,8 @@
                     <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=FullName}"/>
-                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=Addres}"/>
+                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>
+                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=RecievedAddres}"/>
                                 <GridViewColumn Width="230" Header = "Статус" DisplayMemberBinding="{Binding Path=Status}" />
                                 
                                 <GridViewColumn Header="" Width="124">

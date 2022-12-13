@@ -21,6 +21,13 @@ namespace TransportCo.ViewModel
 
         private UniversalWindow newUniversalWnd = new UniversalWindow();
 
+        public void CloseUniversalWnd()
+        {
+            if (newUniversalWnd.IsInitialized != null)
+            {
+                newUniversalWnd.Close();
+            }
+        }
 
         private RelayCommand? createTransportationbtn;
         public RelayCommand CreateTransportationBtn

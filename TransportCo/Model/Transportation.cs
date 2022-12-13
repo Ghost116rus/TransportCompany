@@ -16,5 +16,10 @@ namespace TransportCo.Model
         public string Status { get; set; }
         public Transport_vehicle vehicle { get; set; }
         public Driver driver { get; set; }
+
+        public int OrderNumber { get; set; }
+        public string RecievedAddres { get; set; }
+        public string SendAddres { get; set; }
+
     }
 }

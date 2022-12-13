@@ -25,6 +25,7 @@
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0">Номер перевозки:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Номер склада-отправителя:</TextBlock>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Адрес склада-отправителя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Дата отправки:</TextBlock>
                 <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Адрес склада-получателя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общее время:</TextBlock>
@@ -39,8 +40,9 @@
             <StackPanel Orientation="Vertical" Grid.Column="2"  DataContext="{Binding DetailTransportation}" >
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0" Text="{Binding Number}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Num_Sending_storage}"/>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding SendAddres}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Date_dispatch}"/>
-                <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Sending_storage_Addres}"/>
+                <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding RecievedAddres}"/>
                 
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_time}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_length}"/>

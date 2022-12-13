@@ -105,16 +105,23 @@ namespace TransportCo.MyHttp
                 new Transportation()
                 {
                     Number = 1,
-                    Addres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                    RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
                     Status = "Прошел г. Казань",
-                    FullName = "Калеев Д.А"
+                    driver = new Driver()
+                    {
+                        FullName = "Калеев Д.А"
+                    }
+                    
                 },
                 new Transportation()
                 {
                     Number = 8,
-                    Addres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
                     Status = "На подъезде к г. Екатеринбург",
-                    FullName = "Горохов А.С"
+                    driver = new Driver()
+                    {
+                        FullName = "Горохов А.С"
+                    }                    
                 },
             };
         }
@@ -209,23 +216,34 @@ namespace TransportCo.MyHttp
                 new Transportation()
                 {
                     Number = 1,
-                    Addres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                    RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
                     Status = "Прошел г. Казань",
-                    FullName = "Калеев Д.А"
+                    driver = new Driver()
+                    {
+                        FullName = "Калеев Д.А"
+                    }
                 },
                 new Transportation()
                 {
                     Number = 8,
-                    Addres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
                     Status = "На подъезде к г. Екатеринбург",
-                    FullName = "Горохов А.С"
+                    driver = new Driver()
+                    {
+                        FullName = "Горохов А.С"
+                    }
+                    
                 },
                 new Transportation()
                 {
                     Number = 16,
-                    Addres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
                     Status = "На подъезде к г. Екатеринбург",
-                    FullName = "Гайфуллин Д.Р"
+                    driver = new Driver()
+                    {
+                        FullName = "Гайфуллин Д.Р"
+                    }
+                    
                 },
             };
         }

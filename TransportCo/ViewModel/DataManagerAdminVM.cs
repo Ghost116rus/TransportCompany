@@ -23,7 +23,7 @@ namespace TransportCo.ViewModel
 
         public void CloseUniversalWnd()
         {
-            if (newUniversalWnd.IsInitialized != null)
+            if (newUniversalWnd.IsInitialized == true)
             {
                 newUniversalWnd.Close();
             }
@@ -42,6 +42,14 @@ namespace TransportCo.ViewModel
                     ));
             }
         }
+        private void CreateNewWnd()
+        {
+            if (newUniversalWnd.IsInitialized == true)
+            {
+                newUniversalWnd.Close();
+            }
+            newUniversalWnd = new UniversalWindow();
+        }
 
         public void CreateTransportation()
         {
@@ -52,7 +60,7 @@ namespace TransportCo.ViewModel
             }
             else
             {
-                newUniversalWnd = new UniversalWindow();
+                CreateNewWnd();
                 newUniversalWnd._universalFrame.Content = null;
 
                 newUniversalWnd.Owner = AdministratorWindow._window;
@@ -64,9 +72,9 @@ namespace TransportCo.ViewModel
         public void ViewPendingOrder(int NumberOfOrder)
         {
             DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(NumberOfOrder);
-            newUniversalWnd = new UniversalWindow();
-            newUniversalWnd._universalFrame.Content = OrdersPage._detailPandingPage;
 
+            CreateNewWnd();
+            newUniversalWnd._universalFrame.Content = OrdersPage._detailPandingPage;
             newUniversalWnd.Owner = AdministratorWindow._window;
             newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             newUniversalWnd.ShowDialog();

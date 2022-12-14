@@ -60,16 +60,7 @@ namespace TransportCo.View.Administrator
 
         protected override void OnClosed(EventArgs e)
         {
-            if (exit)
-            {
-
-            }
-            else
-            {
-                base.OnClosed(e);
-                Application.Current.Dispatcher.InvokeShutdown();
-            }
-
+            _mng.CloseUniversalWnd();
         }
     }
 }

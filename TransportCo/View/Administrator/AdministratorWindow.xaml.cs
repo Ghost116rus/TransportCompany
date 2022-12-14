@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TransportCo.View.Administrator.Pages.Main;
 using TransportCo.View.Administrator.Pages.OrdersP;
+using TransportCo.View.Administrator.Pages.Products;
+using TransportCo.View.Administrator.Pages.TransportationP;
 using TransportCo.ViewModel;
 
 namespace TransportCo.View.Administrator
@@ -29,6 +31,11 @@ namespace TransportCo.View.Administrator
 
         public static MainPage _mainPage { get; set; }
         public static OrdersPage _ordersPage { get; set; }
+        public static ProductsPage _productsPage { get; set; }
+        public static TransportationPage _transportationPage { get; set; }
+
+        public static bool exit { get; set; } = false;
+
 
         public AdministratorWindow()
         {
@@ -43,9 +50,17 @@ namespace TransportCo.View.Administrator
             _window = this;
             _mainPage = new MainPage();
             _ordersPage = new OrdersPage();
+            _productsPage = new ProductsPage();
+
+            _transportationPage= new TransportationPage();
 
             //_mainFrame.Content = mainPage;
             _mainFrame.Content = _mainPage;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _mng.CloseUniversalWnd();
         }
     }
 }

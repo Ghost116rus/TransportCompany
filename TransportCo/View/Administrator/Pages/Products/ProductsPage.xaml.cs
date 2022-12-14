@@ -13,26 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TransportCo.View.Administrator.Pages.OrdersP
+namespace TransportCo.View.Administrator.Pages.Products
 {
     /// <summary>
-    /// Логика взаимодействия для OrdersPage.xaml
+    /// Логика взаимодействия для ProductsPage.xaml
     /// </summary>
-    public partial class OrdersPage : Page
+    public partial class ProductsPage : Page
     {
+        public static Frame _productDetailFrame { get; set; }
+        public static ChangeDataOdProductPage _productChangeDataPage { get; set; }
 
-
-        public static Frame _orderDetailFrame { get; set; }
-        public static Page _detailPandingPage { get; set; }
-        public static Page _detaiOrderPage { get; set; }
-
-        public OrdersPage()
+        public ProductsPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
-            _orderDetailFrame = this.OrderDetail;
-            _detailPandingPage = new DetailOfPandingOrderPage();
-            _detaiOrderPage = new DetailOrderPage();
+
+            _productDetailFrame = this.ProductDetail;
+
+            _productChangeDataPage = new ChangeDataOdProductPage();
         }
     }
 }

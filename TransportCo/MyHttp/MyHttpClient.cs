@@ -105,16 +105,23 @@ namespace TransportCo.MyHttp
                 new Transportation()
                 {
                     Number = 1,
-                    Addres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                    RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
                     Status = "Прошел г. Казань",
-                    FullName = "Калеев Д.А"
+                    driver = new Driver()
+                    {
+                        FullName = "Калеев Д.А"
+                    }
+                    
                 },
                 new Transportation()
                 {
                     Number = 8,
-                    Addres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
                     Status = "На подъезде к г. Екатеринбург",
-                    FullName = "Горохов А.С"
+                    driver = new Driver()
+                    {
+                        FullName = "Горохов А.С"
+                    }                    
                 },
             };
         }
@@ -123,12 +130,7 @@ namespace TransportCo.MyHttp
         #region Работа с Заявками
 
 
-
-
-
-
-
-        internal static List<Orders> GetAllOrders()
+        public static List<Orders> GetAllOrders()
         {
 
             return new List<Orders>()
@@ -158,7 +160,7 @@ namespace TransportCo.MyHttp
             };
         }
 
-        internal static Orders? GetDetailOrderInfo(int number)
+        public static Orders? GetDetailOrderInfo(int number)
         {
             return new Orders()
             {
@@ -169,10 +171,82 @@ namespace TransportCo.MyHttp
                 Total_mass = 100,
                 Total_cost = 100,
                 DateOfCreate = DateTime.Now,
-                Addres = "г. Казань, ул Вахитова 41"
+                Addres = "г. Казань, ул Вахитова 41",
+                transportation = new Transportation()
             };
         }
 
+        public static List<Product> GetAllProducts()
+        {
+            return new List<Product>()
+            {
+                new Product()
+                {
+                    Сatalogue_number = "1245689",
+                    Name = "Холодильник LG12-58",
+                    Type = "крупногабаритный",
+                    Length = 800,
+                    Width = 800,
+                    Height = 1600,
+                    Weight = 80,
+                    Cost = 32_500
+                },
+                new Product()
+                {
+                    Сatalogue_number = "6895123",
+                    Name = "Утюг LG8-32",
+                    Type = "малогабаритный",
+                    Length = 400,
+                    Width = 200,
+                    Height = 400,
+                    Weight = 5,
+                    Cost = 8500
+                }
+            };
+        }
+
+        #endregion
+
+        #region Работа с Перевозками
+
+        public static List<Transportation> GetAllTransportations()
+        {
+            return new List<Transportation>()
+            {
+                new Transportation()
+                {
+                    Number = 1,
+                    RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                    Status = "Прошел г. Казань",
+                    driver = new Driver()
+                    {
+                        FullName = "Калеев Д.А"
+                    }
+                },
+                new Transportation()
+                {
+                    Number = 8,
+                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    Status = "На подъезде к г. Екатеринбург",
+                    driver = new Driver()
+                    {
+                        FullName = "Горохов А.С"
+                    }
+                    
+                },
+                new Transportation()
+                {
+                    Number = 16,
+                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
+                    Status = "На подъезде к г. Екатеринбург",
+                    driver = new Driver()
+                    {
+                        FullName = "Гайфуллин Д.Р"
+                    }
+                    
+                },
+            };
+        }
 
         #endregion
     }

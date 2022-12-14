@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportCo.View.Administrator;
 
 namespace TransportCo.Model
 {
@@ -18,5 +19,21 @@ namespace TransportCo.Model
         public int Weight { get; set; }
         public int Cost { get; set; }
         public int? Count { get; set; }
+
+        public bool NewProduct { get; set; } = false;
+
+        private RelayCommand? change;
+        public RelayCommand Change
+        {
+            get
+            {
+                return change ??
+                    (change = new RelayCommand(obj =>
+                    {
+                        AdministratorWindow._mng.Change(this);
+                    }
+                    ));
+            }
+        }
     }
 }

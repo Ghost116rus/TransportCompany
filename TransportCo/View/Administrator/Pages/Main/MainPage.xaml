@@ -49,13 +49,12 @@
             <StackPanel Grid.Row="1">
                 <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontFamily="Russo One" FontSize="25" Margin="15,0,15,0">Администратор 1</TextBlock>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,80,0,0" Foreground="#FFF70000" Command="{Binding OpenOrdersPage}">Заявки</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >Все товары</Button>
+                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding ProductP}">Все товары</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >Все склады</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все операторы</Button>
+                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все диспетчеры</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все водители</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все машины</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >Активные перевозки</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >История перевозок</Button>
+                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding TransporationP}">Перевозки</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFE4854E" >Журнал событий</Button>
             </StackPanel>
             <Button Grid.Row="2" Background="{x:Null}" FontFamily="Russo One" FontSize="20" VerticalAlignment="Bottom" Foreground="White" Margin="0,0,0,30">Добавить сотрудника</Button>
@@ -80,9 +79,7 @@
                     <TextBlock Foreground="#FF292929" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="40,5,0,0">Необработанные заявки</TextBlock>
                     <Button Foreground="#FF292929" Width="250" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="0,2,0,0" HorizontalAlignment="Right" Background="#FFB7F3D9">Обновить данные</Button>
                     <ListView ItemsSource="{Binding MainPageOrders, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,0">
-
                         <ListView.View>
-
                             <GridView>
                                 <GridViewColumn Width="50" Header = "№"                     DisplayMemberBinding="{Binding Path=Number}"/>
                                 <GridViewColumn Width="80" Header = "№ склада"              DisplayMemberBinding="{Binding Path=Num_Receiving_storage}"/>
@@ -93,7 +90,7 @@
                                 <GridViewColumn Header="" Width="95">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="ReturnBookBtn" Content="Рассмотреть" Command="{Binding Returnbook}" FontSize="14" Background="#FF00FFB3"/>
+                                            <Button x:Name="PendingOrderBtn" Content="Рассмотреть" Command="{Binding PendingOrder}" FontSize="14" Background="#FF00FFB3"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -112,8 +109,8 @@
                     <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=FullName}"/>
-                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=Addres}"/>
+                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>
+                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=RecievedAddres}"/>
                                 <GridViewColumn Width="210" Header = "Статус" DisplayMemberBinding="{Binding Path=Status}" />
                             </GridView>
                         </ListView.View>

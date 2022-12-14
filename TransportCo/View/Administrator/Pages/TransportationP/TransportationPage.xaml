@@ -1,12 +1,12 @@
-﻿<Page x:Class="TransportCo.View.Administrator.Pages.OrdersP.OrdersPage"
+﻿<Page x:Class="TransportCo.View.Administrator.Pages.TransportationP.TransportationPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:TransportCo.View.Administrator.Pages.OrdersP"
+      xmlns:local="clr-namespace:TransportCo.View.Administrator.Pages.TransportationP"
       mc:Ignorable="d" 
       Height="Auto" Width="Auto" MinHeight="745" MinWidth="1450"
-      Title="OrdersPage">
+      Title="TransportationPage">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -49,6 +49,7 @@
                         </Setter>
                     </Style>
                 </ToolBar.Style>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFF70000" Command="{Binding OpenOrdersPage}">Заявки</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E" Command="{Binding ProductP}">Товары</ToggleButton>
                 <Separator/>
@@ -59,8 +60,6 @@
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Водители</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Машины</ToggleButton>
-                <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFE4854E" Command="{Binding TransporationP}">Перевозки</ToggleButton>
                 <Separator/>
             </ToolBar>
 
@@ -79,42 +78,35 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center">Заявки</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center">Перевозки</TextBlock>
             <Button Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Background="#FFB7F3D9" Command="{Binding UpdateOrders}">Обновить данные</Button>
-            <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Margin="40,0,0,0">Подробная информация о заявке</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Margin="40,0,0,0">Подробная информация о перевозке</TextBlock>
 
             <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItem}" Margin="0,0,0,5">
 
                 <TabItem Name="Panding" FontFamily="Times New Roman" FontSize="16">
 
                     <TabItem.Header>
-                        <TextBlock Text="Нерассмотренные заявки" FontFamily="Russo One" FontSize="20"/>
+                        <TextBlock Text="Активные перевозки" FontFamily="Russo One" FontSize="20"/>
                     </TabItem.Header>
 
-                    <ListView x:Name="ViewPanding" ItemsSource="{Binding PendingOrders,UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding SelectedOrder}">
+                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="№"
-                                            Width="40"
-                                            DisplayMemberBinding="{Binding Path=Number}"/>
-                                <GridViewColumn Header="№ склада"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding Path=Num_Receiving_storage}"/>
-                                <GridViewColumn Header="Время создания"
-                                            Width="150"
-                                            DisplayMemberBinding="{Binding Path=DateOfCreate, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
-                                <GridViewColumn Header="Масса"
-                                            Width="80"
-                                            DisplayMemberBinding="{Binding Path=Total_mass}"/>
-                                <GridViewColumn Header="Объем"
-                                            Width="80"
-                                            DisplayMemberBinding="{Binding Path=Total_volume}"/>
-                                <GridViewColumn Header="Адрес склада"
-                                            Width="240"
-                                            DisplayMemberBinding="{Binding Path=Addres}"/>
+                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>
+                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=RecievedAddres}"/>
+                                <GridViewColumn Width="230" Header = "Статус" DisplayMemberBinding="{Binding Path=Status}" />
+                                
+                                <GridViewColumn Header="" Width="124">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="TransportationDetailBtn" Width="110" Content="Подробнее" Command="{Binding TransportatioDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
 
                             </GridView>
+                            
                         </ListView.View>
                     </ListView>
                 </TabItem>
@@ -122,34 +114,21 @@
                 <TabItem Name="AllOrders" FontFamily="Times New Roman" FontSize="16">
 
                     <TabItem.Header>
-                        <TextBlock Text="Все заявки" FontFamily="Russo One" FontSize="20"/>
+                        <TextBlock Text="Все перевозки" FontFamily="Russo One" FontSize="20"/>
                     </TabItem.Header>
 
-                    <ListView x:Name="ViewAllOrders" ItemsSource="{Binding AllOrders,UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding SelectedOrder}">
+                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="№"
-                                            Width="40"
-                                            DisplayMemberBinding="{Binding Path=Number}"/>
-                                <GridViewColumn Header="№ склада"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding Path=Num_Receiving_storage}"/>
-                                <GridViewColumn Header="Адрес склада"
-                                            Width="320"
-                                            DisplayMemberBinding="{Binding Path=Addres}"/>
+                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=FullName}"/>
+                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=Addres}"/>
+                                <GridViewColumn Width="115" Header = "Дата отправки" DisplayMemberBinding="{Binding Path=Status}" />
+                                <GridViewColumn Width="115" Header = "Дата доставки" DisplayMemberBinding="{Binding Path=Status}" />
 
-                                <GridViewColumn Header="" Width="123">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button x:Name="DetailBtn" Width="110" Content="О перевозке" Command="{Binding TransportationDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
                                 <GridViewColumn Header="" Width="124">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="TransportationDetailBtn" Width="110" Content="О водителе" Command="{Binding DriverDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
+                                            <Button x:Name="TransportationDetailBtn" Width="110" Content="Подробнее" Command="{Binding TransportatioDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -157,6 +136,8 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    
+                    
                 </TabItem>
             </TabControl>
 
@@ -165,4 +146,3 @@
         </Grid>
     </Grid>
 </Page>
-

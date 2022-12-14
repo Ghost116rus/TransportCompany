@@ -26,7 +26,7 @@ namespace TransportCo.Model
         public int Num_Receiving_storage { get; set; }
         public string Addres { get; set; }
 
-        public Transportation? transportation { get; set; } = null;
+        public int transportationNum { get; set; } = -1;
         public List<Product> Requare_Products { get; set; } = new List<Product>(); 
 
         private RelayCommand? pendingOrder;
@@ -43,6 +43,5 @@ namespace TransportCo.Model
             }
         }
 
-
-    }
+     }
 }

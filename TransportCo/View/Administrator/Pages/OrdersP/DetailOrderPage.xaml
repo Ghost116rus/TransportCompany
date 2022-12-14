@@ -68,7 +68,7 @@
                 </ListView.View>
             </ListView>
         </Grid>
-        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,250,0">Данные о перевозке</Button>
+        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,250,0" Command="{Binding OpenWndTranspDetail}">Данные о перевозке</Button>
         <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,0,0,0">Данные о водителе</Button>
     </Grid>
 </Page>

@@ -20,10 +20,14 @@ namespace TransportCo.View.Administrator.Pages.TransportationP
     /// </summary>
     public partial class TransportationPage : Page
     {
+        public static Frame _transportationDetailFrame { get; set; }
+        public static Page _detailTransportationPage { get; set; }
         public TransportationPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
+            _transportationDetailFrame = this.TransportationDetail;
+            _detailTransportationPage = new DetailTransportationPage();
         }
     }
 }

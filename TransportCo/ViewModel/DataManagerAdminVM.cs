@@ -10,6 +10,7 @@ using TransportCo.Model;
 using TransportCo.View.Administrator;
 using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
+using TransportCo.View.Administrator.Pages.TransportationP;
 using TransportCo.View.Administrator.UniversalWnd;
 
 namespace TransportCo.ViewModel
@@ -18,9 +19,27 @@ namespace TransportCo.ViewModel
     {
         #region Общие методы
 
+        private bool WndNowActive = false;
 
         private UniversalWindow newUniversalWnd = new UniversalWindow();
 
+        private void cleanAllPages()
+        {
+            OrdersPage._orderDetailFrame.Content = null;
+            TransportationPage._transportationDetailFrame.Content = null;
+        }
+
+        private void CreateNewWnd()
+        {
+            if (newUniversalWnd.IsInitialized == true)
+            {
+                newUniversalWnd.Close();
+            }
+            newUniversalWnd = new UniversalWindow();
+            newUniversalWnd.Owner = AdministratorWindow._window;
+            newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            WndNowActive = true;
+        }
         public void CloseUniversalWnd()
         {
             if (newUniversalWnd.IsInitialized == true)
@@ -42,15 +61,6 @@ namespace TransportCo.ViewModel
                     ));
             }
         }
-        private void CreateNewWnd()
-        {
-            if (newUniversalWnd.IsInitialized == true)
-            {
-                newUniversalWnd.Close();
-            }
-            newUniversalWnd = new UniversalWindow();
-        }
-
         public void CreateTransportation()
         {
             if (newUniversalWnd.IsActive)
@@ -63,9 +73,8 @@ namespace TransportCo.ViewModel
                 CreateNewWnd();
                 newUniversalWnd._universalFrame.Content = null;
 
-                newUniversalWnd.Owner = AdministratorWindow._window;
-                newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 newUniversalWnd.ShowDialog();
+                WndNowActive = false;
             }
         }
 
@@ -75,11 +84,48 @@ namespace TransportCo.ViewModel
 
             CreateNewWnd();
             newUniversalWnd._universalFrame.Content = OrdersPage._detailPandingPage;
-            newUniversalWnd.Owner = AdministratorWindow._window;
-            newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             newUniversalWnd.ShowDialog();
+
+            WndNowActive = false;
+            cleanAllPages();
         }
 
+        public void ViewTranspWnd(int numberOfTransp)
+        {
+            if (newUniversalWnd.IsActive)
+            {
+
+                ViewTransportatioDetails(numberOfTransp);
+            }
+            else
+            {
+                CreateNewWnd();
+                ViewTransportatioDetails(numberOfTransp);
+
+                newUniversalWnd.ShowDialog();
+                WndNowActive = false;
+                cleanAllPages();
+            }
+        }
+
+        private void ViewOrderpWnd(int orderNumber)
+        {
+            if (newUniversalWnd.IsActive)
+            {
+
+                ViewOrder(orderNumber);
+            }
+            else
+            {
+                CreateNewWnd();
+                ViewOrder(orderNumber);
+
+                newUniversalWnd.ShowDialog();
+                WndNowActive = false;
+                cleanAllPages();
+            }
+
+        }
 
         #endregion
 
@@ -140,7 +186,7 @@ namespace TransportCo.ViewModel
             set 
             { 
                 selectedOrder = value;
-                if (value != null) { ViewOrder(); }
+                if (value != null) { ViewOrder(selectedOrder.Number); }
                 //else { OrdersPage._orderDetailFrame.Content = null; }
 
                 NotifyPropertyChanged("SelectedOrder");
@@ -169,19 +215,47 @@ namespace TransportCo.ViewModel
         }
 
 
-        public void ViewOrder()
+        public void ViewOrder(int number)
         {
-            DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(SelectedOrder.Number);
-            if (DetailOrder.transportation == null)
+            DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(number);
+            Page? detailPage = null;
+            if (DetailOrder.transportationNum == -1)
             {
-                OrdersPage._orderDetailFrame.Content = OrdersPage._detailPandingPage;
+                detailPage = OrdersPage._detailPandingPage;
             }
-            else if (DetailOrder.transportation != null)
+            else if (DetailOrder.transportationNum != -1)
             {
-                OrdersPage._orderDetailFrame.Content = OrdersPage._detaiOrderPage;
+                detailPage = OrdersPage._detaiOrderPage;
+            }
+            if (WndNowActive)
+            {
+                newUniversalWnd._universalFrame.Content = detailPage;
+            }
+            else
+            {
+                OrdersPage._orderDetailFrame.Content = detailPage;
             }
 
         }
+
+        private RelayCommand? openWndTranspDetail;
+        public RelayCommand OpenWndTranspDetail
+        {
+            get
+            {
+                return openWndTranspDetail ??
+                    (openWndTranspDetail = new RelayCommand(obj =>
+                    {
+                        if (DetailOrder.transportationNum != -1)
+                        {
+                            ViewTranspWnd(DetailOrder.transportationNum);
+                        }
+
+                    }
+                    ));
+            }
+        }
+
 
         private void RefreshOrders()
         {
@@ -251,6 +325,40 @@ namespace TransportCo.ViewModel
             set { allTransportations = value; NotifyPropertyChanged("AllTransportations"); }
         }
 
+        private Transportation? detailTransportation;
+        public Transportation DetailTransportation
+        {
+            get { return detailTransportation; }
+            set { detailTransportation = value; NotifyPropertyChanged("DetailTransportation"); }
+        }
+
+        private RelayCommand? openWndOrderDetail;
+        public RelayCommand OpenWndOrderDetail
+        {
+            get
+            {
+                return openWndOrderDetail ??
+                    (openWndOrderDetail = new RelayCommand(obj =>
+                    {
+                        ViewOrderpWnd(DetailTransportation.OrderNumber);
+                    }
+                    ));
+            }
+        }
+
+        public void ViewTransportatioDetails(int number)
+        {
+            DetailTransportation = MyHttp.MyHttpClient.GetDetailTransportationInfo(number);
+            if (WndNowActive)
+            {
+                newUniversalWnd._universalFrame.Content = TransportationPage._detailTransportationPage;
+            }
+            else
+            {
+                TransportationPage._transportationDetailFrame.Content = TransportationPage._detailTransportationPage;
+            }
+
+        }
 
         #endregion
 
@@ -346,5 +454,7 @@ namespace TransportCo.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 }

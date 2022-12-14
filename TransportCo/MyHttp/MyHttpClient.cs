@@ -172,7 +172,7 @@ namespace TransportCo.MyHttp
                 Total_cost = 100,
                 DateOfCreate = DateTime.Now,
                 Addres = "г. Казань, ул Вахитова 41",
-                transportation = new Transportation()
+                transportationNum = 1
             };
         }
 
@@ -245,6 +245,20 @@ namespace TransportCo.MyHttp
                     }
                     
                 },
+            };
+        }
+
+        public static Transportation GetDetailTransportationInfo(int number)
+        {
+            return new Transportation()
+            {
+                Number = 1,
+                RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                Status = "Прошел г. Казань",
+                driver = new Driver()
+                {
+                    FullName = "Калеев Д.А"
+                }
             };
         }
 

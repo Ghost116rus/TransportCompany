@@ -146,6 +146,26 @@ namespace TransportCo.ViewModel
 
         #region Главная страница
 
+        public Transportation? SelectedTransportation { get; set; } = null;
+
+        private RelayCommand? viewSelectedTransportation;
+        public RelayCommand ViewSelectedTransportation
+        {
+            get
+            {
+                return viewSelectedTransportation ??
+                    (viewSelectedTransportation = new RelayCommand(obj =>
+                    {
+                        if (SelectedTransportation != null)
+                        {
+                            ViewTranspWnd(SelectedTransportation.Number);
+                        }
+
+                    }
+                    ));
+            }
+        }
+
         private List<Orders> mainPageOrders = MyHttp.MyHttpClient.GetPendingOrders();
 
         public List<Orders> MainPageOrders
@@ -293,8 +313,6 @@ namespace TransportCo.ViewModel
         }
 
 
-
-
         private List<Product> allProducts = MyHttp.MyHttpClient.GetAllProducts();
         public List<Product> AllProducts 
         { 
@@ -311,6 +329,42 @@ namespace TransportCo.ViewModel
                 ProductsPage._productDetailFrame.Content = ProductsPage._productChangeDataPage;
             }
 
+        }
+        
+        private void SaveChangesAboutProductInDB(ref string message)
+        {
+            MyHttp.MyHttpClient.SaveChangesAboutProductInDB(SelectedProduct, ref message);
+        }
+
+        private RelayCommand? saveChangesAboutProduct;
+        public RelayCommand SaveChangesAboutProduct
+        {
+            get
+            {
+                return saveChangesAboutProduct ??
+                    (saveChangesAboutProduct = new RelayCommand(obj =>
+                    {
+                        string message = "";
+                        if (SelectedProduct != null)
+                        {
+                            if (SelectedProduct.Type == "крупногабаритный" || SelectedProduct.Type == "малогабаритный")
+                            {
+                                SaveChangesAboutProductInDB(ref message);
+                                if (message == "Данные успешно сохранены")
+                                {
+                                    SelectedProduct = null;
+                                }
+                            }
+                            else
+                            {
+                                message = "Вы должны ввести в тип либо \"крупногабаритный\", либо \"малогабаритный\"";
+                            }
+
+                            MessageBox.Show(message);
+                        }
+                    }
+                    ));
+            }
         }
 
         #endregion

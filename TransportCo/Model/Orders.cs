@@ -27,7 +27,9 @@ namespace TransportCo.Model
         public string Addres { get; set; }
 
         public int transportationNum { get; set; } = -1;
-        public List<Product> Requare_Products { get; set; } = new List<Product>(); 
+        public List<Product> Requare_Products { get; set; } = null;
+
+        
 
         private RelayCommand? pendingOrder;
         public RelayCommand PendingOrder
@@ -43,5 +45,19 @@ namespace TransportCo.Model
             }
         }
 
-     }
+        private RelayCommand? transportationDetails;
+        public RelayCommand TransportationDetails
+        {
+            get
+            {
+                return transportationDetails ??
+                    (transportationDetails = new RelayCommand(obj =>
+                    {
+                        AdministratorWindow._mng.ViewTranspWnd(this.transportationNum);
+                    }
+                    ));
+            }
+        }
+
+    }
 }

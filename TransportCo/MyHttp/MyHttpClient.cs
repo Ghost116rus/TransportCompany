@@ -78,19 +78,22 @@ namespace TransportCo.MyHttp
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
                 },
-                                new EventLog()
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
-                },                                new EventLog()
+                },
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
-                },                                new EventLog()
+                }, 
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
-                },                                new EventLog()
+                },
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
@@ -172,8 +175,25 @@ namespace TransportCo.MyHttp
                 Total_cost = 100,
                 DateOfCreate = DateTime.Now,
                 Addres = "г. Казань, ул Вахитова 41",
-                transportationNum = 1
-            };
+                transportationNum = 1,
+                Requare_Products = new List<Product>()
+                {
+                    new Product()
+                    {
+                        Сatalogue_number = "1245689",
+                        Name = "Холодильник LG12-58",
+                        Type = "крупногабаритный",
+                        Count = 5,
+                    },
+                    new Product()
+                    {
+                         Сatalogue_number = "6895123",
+                        Name = "Утюг LG8-32",
+                        Type = "малогабаритный",
+                        Count = 15,
+                    },
+                }
+        };
         }
 
         public static List<Product> GetAllProducts()
@@ -260,6 +280,11 @@ namespace TransportCo.MyHttp
                     FullName = "Калеев Д.А"
                 }
             };
+        }
+
+        internal static void SaveChangesAboutProductInDB(Product selectedProduct, ref string message)
+        {
+            message = "Данные успешно сохранены";
         }
 
         #endregion

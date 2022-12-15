@@ -104,9 +104,15 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Подробнее" Command="{Binding ViewSelectedTransportation}"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                     <TextBlock Foreground="#FF882525" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="30,5,0,0">Активные перевозки</TextBlock>
                     <Button FontSize="25" Grid.Row="0" FontFamily="Russo One" Width="100" HorizontalAlignment="Right">Выйти</Button>
-                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
+                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0"
+                              SelectedItem="{Binding SelectedTransportation}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>

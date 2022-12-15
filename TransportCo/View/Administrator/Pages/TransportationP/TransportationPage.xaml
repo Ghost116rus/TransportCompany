@@ -120,10 +120,10 @@
                     <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=FullName}"/>
-                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=Addres}"/>
-                                <GridViewColumn Width="115" Header = "Дата отправки" DisplayMemberBinding="{Binding Path=Status}" />
-                                <GridViewColumn Width="115" Header = "Дата доставки" DisplayMemberBinding="{Binding Path=Status}" />
+                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>
+                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=RecievedAddres}"/>
+                                <GridViewColumn Width="115" Header = "Дата отправки" DisplayMemberBinding="{Binding Path=Date_dispatch, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}" />
+                                <GridViewColumn Width="115" Header = "Дата доставки" DisplayMemberBinding="{Binding Path=Delivery_date, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}" />
 
                                 <GridViewColumn Header="" Width="124">
                                     <GridViewColumn.CellTemplate>

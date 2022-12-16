@@ -18,11 +18,20 @@ namespace TransportCo.View.Administrator.Pages.StoragesP
     /// <summary>
     /// Логика взаимодействия для StoragesPage.xaml
     /// </summary>
+    /// 
     public partial class StoragesPage : Page
     {
+        public static Frame _productListFrame { get; set; }
+        public static ProductListPage _productListPage { get; set; }
+
         public StoragesPage()
         {
             InitializeComponent();
+            DataContext = AdministratorWindow._mng;
+
+            _productListFrame = this.ProductList;
+
+            _productListPage = new ProductListPage();
         }
     }
 }

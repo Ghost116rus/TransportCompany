@@ -65,7 +65,7 @@
                 <Separator/>
             </ToolBar>
 
-            <TextBlock Grid.Column="3" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center">Администратор1</TextBlock>
+            <TextBlock Grid.Column="3" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/> 
             <Button Grid.Column="4" FontSize="22" Grid.Row="0" FontFamily="Russo One" Width="150" HorizontalAlignment="Right" Background="{x:Null}">Выйти</Button>
         </Grid>
 
@@ -75,16 +75,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.6*"/>
-                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.55*"/>
+                <ColumnDefinition Width="0.45*"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding AllProducts, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5"
-                      SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}">
+            <ListView ItemsSource="{Binding AllStorages, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5"
+                      SelectedItem="{Binding SelectedStorage, UpdateSourceTrigger=PropertyChanged}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="120" Header = "№ склада"                 DisplayMemberBinding="{Binding Path=Сatalogue_number}"/>
-                        <GridViewColumn Width="420" Header = "Адрес"                    DisplayMemberBinding="{Binding Path=Name}"/>
-                        <GridViewColumn Width="210" Header = "Мобильный номер телефона" DisplayMemberBinding="{Binding Path=Type}"/>
+                        <GridViewColumn Width="110" Header = "№ склада"                 DisplayMemberBinding="{Binding Path=Number}"/>
+                        <GridViewColumn Width="420" Header = "Адрес"                    DisplayMemberBinding="{Binding Path=Addres}"/>
+                        <GridViewColumn Width="200" Header = "Мобильный номер телефона" DisplayMemberBinding="{Binding Path=PhoneNumber}"/>
 
 
                     </GridView>

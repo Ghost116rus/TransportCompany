@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TransportCo.View.Administrator.Pages.StoragesP"
       mc:Ignorable="d" 
-      Height="Auto" Width="Auto" MinHeight="600" MinWidth="720"
+      Height="Auto" Width="Auto" MinHeight="600" MinWidth="600"
       Title="ProductListPage">
 
     <Grid Background="#FFFFF7EA">
@@ -13,16 +13,16 @@
         <Grid DataContext="{Binding SelectedStorage}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="700"/>
+                <ColumnDefinition Width="650"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="1" Height="25" FontFamily="Times New Roman" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0">Товары склада</TextBlock>
             <ListView Grid.Column="1" ItemsSource = "{Binding Products}" Foreground="#FF042271" FontSize="18" Margin="0,40,0,0">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="190" Header = "Каталожный номер" DisplayMemberBinding="{Binding Path=Сatalogue_number}"/>
-                        <GridViewColumn Width="355" Header = "Название" DisplayMemberBinding="{Binding Path=Name}"/>
-                        <GridViewColumn Width="135" Header = "Количество" DisplayMemberBinding="{Binding Path=Count}"/>
+                        <GridViewColumn Width="180" Header = "Каталожный номер" DisplayMemberBinding="{Binding Path=Сatalogue_number}"/>
+                        <GridViewColumn Width="340" Header = "Название" DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Width="115" Header = "Количество" DisplayMemberBinding="{Binding Path=Count}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

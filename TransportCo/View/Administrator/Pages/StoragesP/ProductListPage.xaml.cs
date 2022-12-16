@@ -23,6 +23,7 @@ namespace TransportCo.View.Administrator.Pages.StoragesP
         public ProductListPage()
         {
             InitializeComponent();
+            DataContext = AdministratorWindow._mng;
         }
     }
 }

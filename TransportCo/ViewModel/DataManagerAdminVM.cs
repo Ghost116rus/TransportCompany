@@ -10,6 +10,7 @@ using TransportCo.Model;
 using TransportCo.View.Administrator;
 using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
+using TransportCo.View.Administrator.Pages.StoragesP;
 using TransportCo.View.Administrator.Pages.TransportationP;
 using TransportCo.View.Administrator.UniversalWnd;
 
@@ -17,6 +18,18 @@ namespace TransportCo.ViewModel
 {
     public class DataManagerAdminVM : INotifyPropertyChanged
     {
+        #region Первичные методы
+
+        private string userName = "Администратор 1";
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; NotifyPropertyChanged("UserName"); }
+        }
+
+
+        #endregion
+
         #region Общие методы
 
         private bool WndNowActive = false;
@@ -129,7 +142,6 @@ namespace TransportCo.ViewModel
 
         #endregion
 
-
         #region Общие заявки и перевозки
 
         private List<Transportation> activeTransportations = MyHttp.MyHttpClient.GetActiveTransportations();
@@ -142,7 +154,6 @@ namespace TransportCo.ViewModel
 
 
         #endregion
-
 
         #region Главная страница
 
@@ -369,6 +380,39 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Страница складов
+
+        private Storage storage;
+        public Storage SelectedStorage
+        {
+            get { return storage; }
+            set
+            {
+                storage = value;
+                if (value != null) { ViewProductList(storage.Number); }
+                else { StoragesPage._productListFrame.Content = null; }
+                NotifyPropertyChanged("SelectedStorage");
+            }
+        }
+
+        private List<Storage> allStorages = MyHttp.MyHttpClient.GetAllStorage();
+        public List<Storage> AllStorages
+        {
+            get { return allStorages; }
+            set { allStorages = value; NotifyPropertyChanged("AllStorages"); }
+        }
+
+        private void ViewProductList(int number)
+        {
+            if (storage.Products == null)
+            {
+                storage.Products = MyHttp.MyHttpClient.GetProductListForStorageByNumber(number);
+            }
+            StoragesPage._productListFrame.Content = StoragesPage._productListPage;
+        }
+
+        #endregion
+
         #region Страница Перевозок
 
         private List<Transportation> allTransportations = MyHttp.MyHttpClient.GetAllTransportations();
@@ -484,6 +528,22 @@ namespace TransportCo.ViewModel
             }
         }
 
+        private RelayCommand? storageP;
+        public RelayCommand StorageP
+        {
+            get
+            {
+                return storageP ??
+                    (storageP = new RelayCommand(obj =>
+                    {
+                        //
+                        SelectedStorage = null;
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._storagesPage;
+                    }));
+            }
+        }
+
         private RelayCommand? transporationP;
         public RelayCommand TransporationP
         {
@@ -498,6 +558,8 @@ namespace TransportCo.ViewModel
                     }));
             }
         }
+
+
 
         
 

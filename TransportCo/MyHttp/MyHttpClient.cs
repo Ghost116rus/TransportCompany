@@ -36,7 +36,6 @@ namespace TransportCo.MyHttp
 
         #endregion
 
-
         #region Общие методы
 
         public static List<Orders> GetPendingOrders()
@@ -132,7 +131,6 @@ namespace TransportCo.MyHttp
 
         #region Работа с Заявками
 
-
         public static List<Orders> GetAllOrders()
         {
 
@@ -196,6 +194,10 @@ namespace TransportCo.MyHttp
         };
         }
 
+
+        #endregion
+
+        #region Работа с товарами
         public static List<Product> GetAllProducts()
         {
             return new List<Product>()
@@ -224,6 +226,67 @@ namespace TransportCo.MyHttp
                 }
             };
         }
+
+        internal static void SaveChangesAboutProductInDB(Product selectedProduct, ref string message)
+        {
+            message = "Данные успешно сохранены";
+        }
+        #endregion
+
+        #region Работа со складами
+
+        internal static List<Product>? GetProductListForStorageByNumber(int number)
+        {
+            return new List<Product>()
+            {
+                new Product()
+                {
+                    Сatalogue_number = "1245689",
+                    Name = "Холодильник LG12-58",
+                    Count = 15
+                },
+                new Product()
+                {
+                    Сatalogue_number = "6895123",
+                    Name = "Утюг LG8-32",
+                    Type = "малогабаритный",
+                    Count = 59
+                },
+                new Product()
+                {
+                    Сatalogue_number = "1234557",
+                    Name = "Монитор LGB158-C32",
+                    Type = "малогабаритный",
+                    Count = 22
+                }
+            };
+        }
+
+        public static List<Storage> GetAllStorage()
+        {
+            return new List<Storage>()
+            {
+                new Storage()
+                {
+                    Number = 5,
+                    Addres = "Респ. Татарстан, г. Казань, ул. Академика Кирпичникова 65",
+                    PhoneNumber = "89520406725"
+                },
+                new Storage()
+                {
+                    Number = 8,
+                    Addres = "Респ. Карелия, г. Булдык, ул. Академика Азимова 88",
+                    PhoneNumber = "89520406725"
+                },
+                new Storage()
+                {
+                    Number = 5,
+                    Addres = "Московская область, г. Москва, ул. Дружбы народов 7",
+                    PhoneNumber = "89520406725"
+                }
+            };
+        }
+
 
         #endregion
 
@@ -280,11 +343,6 @@ namespace TransportCo.MyHttp
                     FullName = "Калеев Д.А"
                 }
             };
-        }
-
-        internal static void SaveChangesAboutProductInDB(Product selectedProduct, ref string message)
-        {
-            message = "Данные успешно сохранены";
         }
 
         #endregion

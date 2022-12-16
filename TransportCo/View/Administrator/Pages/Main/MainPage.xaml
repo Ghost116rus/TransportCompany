@@ -52,7 +52,7 @@
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding ProductP}">Все товары</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding StorageP}">Все склады</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все диспетчеры</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все водители</Button>
+                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" Command="{Binding DriversP}">Все водители</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все машины</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding TransporationP}">Перевозки</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFE4854E" >Журнал событий</Button>

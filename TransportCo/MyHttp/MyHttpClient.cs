@@ -290,6 +290,35 @@ namespace TransportCo.MyHttp
 
         #endregion
 
+        #region Работа с водителями
+
+        internal static List<Driver>? GetAllDrivers()
+        {
+            return new List<Driver>()
+            {
+                new Driver()
+                {
+                    FullName = "Калеев Д.А.",
+                    Location = "Респ. Татарстан, г. Казань",
+                    Status = "В рейсе"
+                },
+                new Driver()
+                {
+                    FullName = "Горохов А.С.",
+                    Location = "Свердловская область, г. Екатеринбург",
+                    Status = "В рейсе"
+                },
+                new Driver()
+                {
+                    FullName = "Гайфуллин Д.Р.",
+                    Location = "Респ Башкортостан, г. Уфа",
+                    Status = "Свобден"
+                }
+            };
+        }
+
+        #endregion
+
         #region Работа с Перевозками
 
         public static List<Transportation> GetAllTransportations()
@@ -344,6 +373,8 @@ namespace TransportCo.MyHttp
                 }
             };
         }
+
+
 
         #endregion
     }

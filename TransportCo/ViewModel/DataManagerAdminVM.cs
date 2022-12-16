@@ -20,13 +20,23 @@ namespace TransportCo.ViewModel
     {
         #region Первичные методы
 
-        private string userName = "Администратор 1";
+        private string userName;
         public string UserName
         {
             get { return userName; }
             set { userName = value; NotifyPropertyChanged("UserName"); }
         }
 
+        public DataManagerAdminVM()
+        {
+            allTransportations = MyHttp.MyHttpClient.GetAllTransportations();
+            userName = "Администратор 1";
+            allProducts = MyHttp.MyHttpClient.GetAllProducts();
+            allStorages = MyHttp.MyHttpClient.GetAllStorage();
+
+
+            allDrivers = MyHttp.MyHttpClient.GetAllDrivers();
+        }
 
         #endregion
 
@@ -324,7 +334,7 @@ namespace TransportCo.ViewModel
         }
 
 
-        private List<Product> allProducts = MyHttp.MyHttpClient.GetAllProducts();
+        private List<Product> allProducts;
         public List<Product> AllProducts 
         { 
             get { return allProducts; }
@@ -382,7 +392,7 @@ namespace TransportCo.ViewModel
 
         #region Страница складов
 
-        private Storage storage;
+        private Storage? storage;
         public Storage SelectedStorage
         {
             get { return storage; }
@@ -395,7 +405,7 @@ namespace TransportCo.ViewModel
             }
         }
 
-        private List<Storage> allStorages = MyHttp.MyHttpClient.GetAllStorage();
+        private List<Storage> allStorages;
         public List<Storage> AllStorages
         {
             get { return allStorages; }
@@ -413,9 +423,33 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Работа с водителями
+
+        private Driver selectedDriver;
+        public Driver SelectedDriver
+        {
+            get { return selectedDriver; }
+            set 
+            {
+                selectedDriver = value;
+                if (value != null) { ViewDetailInfo(SelectedDriver.DriverLicense); }
+                else { StoragesPage._productListFrame.Content = null; }
+                NotifyPropertyChanged("SelectedDriver");
+            }
+        }
+
+        private List<Driver> allDrivers;
+        public List<Driver> AllDrivers
+        {
+            get { return allDrivers; }
+            set { allDrivers = value; NotifyPropertyChanged("AllDrivers"); }
+        }
+
+        #endregion
+
         #region Страница Перевозок
 
-        private List<Transportation> allTransportations = MyHttp.MyHttpClient.GetAllTransportations();
+        private List<Transportation> allTransportations;
 
         public List<Transportation> AllTransportations
         {
@@ -480,6 +514,22 @@ namespace TransportCo.ViewModel
 
         #region Кнопки перехода между страницами
 
+        private RelayCommand? mainp;
+        public RelayCommand MainP
+        {
+            get
+            {
+                return mainp ??
+                    (mainp = new RelayCommand(obj =>
+                    {
+                        //
+                        CleanOrdersPage();
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._mainPage;
+                    }));
+            }
+        }
+
         private RelayCommand? openOrdersPage;
         public RelayCommand OpenOrdersPage
         {
@@ -496,21 +546,7 @@ namespace TransportCo.ViewModel
             }
         }
 
-        private RelayCommand? mainp;
-        public RelayCommand MainP
-        {
-            get
-            {
-                return mainp ??
-                    (mainp = new RelayCommand(obj =>
-                    {
-                        //
-                        CleanOrdersPage();
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
-                        AdministratorWindow._mainFrame.Content = AdministratorWindow._mainPage;
-                    }));
-            }
-        }
+
 
         private RelayCommand? productP;
         public RelayCommand ProductP
@@ -540,6 +576,21 @@ namespace TransportCo.ViewModel
                         SelectedStorage = null;
                         allEvents = MyHttp.MyHttpClient.GetEventsLog();
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._storagesPage;
+                    }));
+            }
+        }
+
+        private RelayCommand? driversP;
+        public RelayCommand DriversP
+        {
+            get
+            {
+                return driversP ??
+                    (driversP = new RelayCommand(obj =>
+                    {
+                        //
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._driversPage;
                     }));
             }
         }

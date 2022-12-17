@@ -82,7 +82,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="150" Header = "ФИО"                 DisplayMemberBinding="{Binding Path=FullName}"/>
-                        <GridViewColumn Width="420" Header = "Расположение"                    DisplayMemberBinding="{Binding Path=Location}"/>
+                        <GridViewColumn Width="420" Header = "Расположение"        DisplayMemberBinding="{Binding Path=Location}"/>
                         <GridViewColumn Width="200" Header = "Статус" DisplayMemberBinding="{Binding Path=Status}"/>
 
 

@@ -27,6 +27,7 @@ namespace TransportCo.Model
         public string Addres { get; set; }
 
         public int transportationNum { get; set; } = -1;
+        public string DriverLicense { get; set; }
         public List<Product> Requare_Products { get; set; } = null;
 
         

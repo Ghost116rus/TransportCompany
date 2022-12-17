@@ -190,8 +190,10 @@ namespace TransportCo.MyHttp
                         Type = "малогабаритный",
                         Count = 15,
                     },
-                }
-        };
+                },
+                DriverLicense = "15896625"
+
+            };
         }
 
 
@@ -316,6 +318,38 @@ namespace TransportCo.MyHttp
                 }
             };
         }
+        internal static Driver GetDetailInfoAboutDriver(string driverLicense)
+        {
+            return new Driver()
+            {
+                DriverLicense = "15896625",
+                FullName = "Калеев Д.А.",
+                Location = "Респ. Татарстан, г. Казань",
+                Status = "В рейсе",
+                Addres = "Респ. Татарстан, г. Казань, 3-я кленовая 9\"Б\" кв 56",
+                WorkExpirience = 15,
+                Phone_number = "89520406725",
+                Transportations = new List<Transportation>()
+                {
+                    new Transportation()
+                    {
+                        Number = 1,
+                        RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                        Status = "Прошел г. Казань",
+                        Date_dispatch = DateTime.Now
+                    },
+                    new Transportation()
+                    {
+                        Number = 2,
+                        RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                        Status = "Исполнена",
+                        Date_dispatch = DateTime.Now,
+                        Delivery_date = DateTime.Now,
+
+                    },
+                }
+            };
+        }
 
         #endregion
 
@@ -332,7 +366,8 @@ namespace TransportCo.MyHttp
                     Status = "Прошел г. Казань",
                     driver = new Driver()
                     {
-                        FullName = "Калеев Д.А"
+                        FullName = "Калеев Д.А",
+                        DriverLicense = "15896625"
                     }
                 },
                 new Transportation()
@@ -373,6 +408,8 @@ namespace TransportCo.MyHttp
                 }
             };
         }
+
+
 
 
 

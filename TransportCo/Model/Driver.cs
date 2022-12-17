@@ -16,9 +16,10 @@ namespace TransportCo.Model
         public string Addres { get; set; }
         public string Phone_number { get; set; }
         public string Driver_license_category { get; set; }
-        public string Year_of_start_work { get; set; }
+        public int WorkExpirience { get; set; }
         public string Location { get; set; }
         public string Status { get; set; }
 
+        public List<Transportation> Transportations { get; set; } = null;
     }
 }

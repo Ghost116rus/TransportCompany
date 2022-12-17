@@ -23,6 +23,7 @@ namespace TransportCo.View.Administrator.Pages.Drivers
         public DriverInfoPage()
         {
             InitializeComponent();
+            DataContext = AdministratorWindow._mng;
         }
     }
 }

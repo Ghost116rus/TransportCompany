@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TransportCo.Model;
+using TransportCo.MyHttp;
 using TransportCo.View.Administrator;
+using TransportCo.View.Administrator.Pages.Drivers;
 using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
 using TransportCo.View.Administrator.Pages.StoragesP;
@@ -50,6 +52,7 @@ namespace TransportCo.ViewModel
         {
             OrdersPage._orderDetailFrame.Content = null;
             TransportationPage._transportationDetailFrame.Content = null;
+            DriversPage._driverInfoFrame.Content = null;
         }
 
         private void CreateNewWnd()
@@ -124,6 +127,23 @@ namespace TransportCo.ViewModel
             {
                 CreateNewWnd();
                 ViewTransportatioDetails(numberOfTransp);
+
+                newUniversalWnd.ShowDialog();
+                WndNowActive = false;
+                cleanAllPages();
+            }
+        }
+        public void ViewDriverpWnd(string driver_license)
+        {
+            if (newUniversalWnd.IsActive)
+            {
+
+                ViewDetailDriverInfo(driver_license);
+            }
+            else
+            {
+                CreateNewWnd();
+                ViewDetailDriverInfo(driver_license);
 
                 newUniversalWnd.ShowDialog();
                 WndNowActive = false;
@@ -297,6 +317,24 @@ namespace TransportCo.ViewModel
             }
         }
 
+        private RelayCommand? openWndDriverDetail;
+        public RelayCommand OpenWndDriverDetail
+        {
+            get
+            {
+                return openWndDriverDetail ??
+                    (openWndDriverDetail = new RelayCommand(obj =>
+                    {
+                        if (DetailOrder.transportationNum != -1)
+                        {
+                            ViewDriverpWnd(DetailOrder.DriverLicense);
+                        }
+
+                    }
+                    ));
+            }
+        }
+        
 
         private void RefreshOrders()
         {
@@ -432,9 +470,28 @@ namespace TransportCo.ViewModel
             set 
             {
                 selectedDriver = value;
-                if (value != null) { ViewDetailInfo(SelectedDriver.DriverLicense); }
-                else { StoragesPage._productListFrame.Content = null; }
+                if (value != null) { ViewDetailDriverInfo(SelectedDriver.DriverLicense); }
+                else { DriversPage._driverInfoFrame.Content = null; }
                 NotifyPropertyChanged("SelectedDriver");
+            }
+        }
+        private Driver? detailDriverInfo;
+        public Driver DetailDriverInfo
+        {
+            get { return detailDriverInfo; }
+            set { detailDriverInfo = value; NotifyPropertyChanged("DetailDriverInfo"); }
+        }
+
+        private void ViewDetailDriverInfo(string driverLicense)
+        {
+            DetailDriverInfo = MyHttpClient.GetDetailInfoAboutDriver(driverLicense);
+            if (WndNowActive)
+            {
+                newUniversalWnd._universalFrame.Content = DriversPage._driverInfoPage;
+            }
+            else
+            {
+                DriversPage._driverInfoFrame.Content = DriversPage._driverInfoPage;
             }
         }
 
@@ -490,6 +547,20 @@ namespace TransportCo.ViewModel
                 TransportationPage._transportationDetailFrame.Content = TransportationPage._detailTransportationPage;
             }
 
+        }
+
+        private RelayCommand? openWndDriverDetailFromTransportation;
+        public RelayCommand OpenWndDriverDetailFromTransportation
+        {
+            get
+            {
+                return openWndDriverDetailFromTransportation ??
+                    (openWndDriverDetailFromTransportation = new RelayCommand(obj =>
+                    {
+                        ViewDriverpWnd(DetailTransportation.driver.DriverLicense);
+                    }
+                    ));
+            }
         }
 
         #endregion

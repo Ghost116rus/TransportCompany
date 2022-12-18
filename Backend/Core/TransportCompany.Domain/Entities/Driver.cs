@@ -18,8 +18,16 @@ namespace TransportCompany.Domain.Entities
         public string Driver_license_number { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public string FIO { get; set; }
+        [MaxLength(30)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public string SecondName { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public string Patronymic { get; set; }
 
         [Required]
         [MaxLength(155)]

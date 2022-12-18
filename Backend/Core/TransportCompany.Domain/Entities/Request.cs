@@ -31,12 +31,6 @@ namespace TransportCompany.Domain.Entities
         public DateTime DateOfCreate { get; set; }
         public DateTime? DateOfComplete { get; set; }
 
-        public int? TransportationID { get; set; }
-
-        [ForeignKey("TransportationID")]
-        public Transportation? transportation { get; set; }
-
-
         public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
 
         //public IEnumerable<Product> Products { get; set; } = new List<Product>();

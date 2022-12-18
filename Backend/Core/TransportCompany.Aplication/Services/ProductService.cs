@@ -13,6 +13,7 @@ namespace TransportCompany.Aplication.Services
     {
         private readonly IProductRepository _productRepository;
 
+
         public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository;
@@ -33,6 +34,19 @@ namespace TransportCompany.Aplication.Services
                 Cost = product.Cost
             });
             return productsBO;
+        }
+
+        public async Task<IEnumerable<ProductExmpBO>> GetProductsForStorage(int number)
+        {
+            var productList = await _productRepository.GetStorageProducts(number);
+            var products = productList.Select(product => new ProductExmpBO
+            {
+                Сatalogue_number = product.Сatalogue_number,
+                Name = product.Product.Name,
+                Count = product.Count
+            });
+
+            return products;
         }
     }
 }

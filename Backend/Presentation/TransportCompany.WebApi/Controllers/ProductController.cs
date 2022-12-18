@@ -15,10 +15,16 @@ namespace TransportCompany.WebApi.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
+        [HttpGet("GetProducts")]
         public async Task<IActionResult> GetProducts()
         {
             var products = await _productService.GetAllProducts();
+            return Ok(products);
+        }
+        [HttpGet("GetProductsByStorage")]
+        public async Task<IActionResult> GetStorageProductsHttp(int number)
+        {
+            var products = await _productService.GetProductsForStorage(number);
             return Ok(products);
         }
     }

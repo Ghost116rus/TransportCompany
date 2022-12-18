@@ -10,5 +10,6 @@ namespace TransportCompany.DAL.Interfaces
     public interface IProductRepository
     {
         Task<IEnumerable<Product>> GetAllProducts();
+        Task<IEnumerable<Product_exmp>> GetStorageProducts(int number);
     }
 }

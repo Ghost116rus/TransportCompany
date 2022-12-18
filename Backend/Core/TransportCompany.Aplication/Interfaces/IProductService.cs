@@ -10,5 +10,6 @@ namespace TransportCompany.Aplication.Interfaces
     public interface IProductService
     {
         Task<IEnumerable<ProductBO>> GetAllProducts();
+        Task<IEnumerable<ProductExmpBO>> GetProductsForStorage(int number);
     }
 }

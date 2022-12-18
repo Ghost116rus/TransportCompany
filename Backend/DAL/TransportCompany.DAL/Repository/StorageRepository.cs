@@ -24,5 +24,7 @@ namespace TransportCompany.DAL.Repository
                 .Include(x=> x.Location).ToListAsync();
             return storages;
         }
+
+
     }
 }

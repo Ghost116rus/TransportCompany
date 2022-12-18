@@ -13,15 +13,13 @@ namespace TransportCompany.Domain.Entities
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int Number { get; set; }
 
         public int Num_Sending_storage { get; set; }
 
         public DateTime Date_dispatch { get; set; }
 
         public DateTime Delivery_date { get; set; }
-
-        public int Total_time { get; set; }
 
         public int Total_length { get; set; }
 
@@ -32,6 +30,13 @@ namespace TransportCompany.Domain.Entities
         [Required]
         [MaxLength(255)]
         public string Status { get; set; }
+
+
+        public int RequestNumber { get; set; }
+
+        [ForeignKey("RequestNumber")]
+        public Request Request { get; set; }
+
 
         [Column(TypeName = "char(17)")]
         public string VehicleID { get; set; }

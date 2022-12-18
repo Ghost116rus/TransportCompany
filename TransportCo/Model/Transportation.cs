@@ -10,7 +10,6 @@ namespace TransportCo.Model
         public string Sending_storage_Addres { get; set; }
         public DateTime Date_dispatch { get; set; }
         public DateTime Delivery_date { get; set; }
-        public int Total_time { get; set; }
         public int Total_length { get; set; }
         public int Car_load { get; set; }
         public int Total_shipping_cost { get; set; }

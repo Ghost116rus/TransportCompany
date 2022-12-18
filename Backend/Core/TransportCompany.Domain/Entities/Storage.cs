@@ -13,21 +13,14 @@ namespace TransportCompany.Domain.Entities
         public int Storage_number { get; set; }
 
         [Required]
-        [MaxLength(155)]
-        public string Addres { get; set; }
+        public int LocationId { get; set; }
+
+        [ForeignKey("LocationId")]
+        public Locations Location { get; set; }
 
         [Required]
         [Column(TypeName = "char(10)")]
         public string Phone_number { get; set;}
-
-        [Required]
-        [MaxLength(100)]
-        public string FIO_manager { get; set; }
-
-        [Required]
-        [MaxLength(11)]
-        public string Requests { get; set; }
-
 
         public IEnumerable<Product_exmp> Product_Exmps { get; set; } = new List<Product_exmp>();
 

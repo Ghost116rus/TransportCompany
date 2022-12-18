@@ -13,21 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TransportCo.View.Administrator.Pages.TransportationP
+namespace TransportCo.View.Administrator.Pages.Drivers
 {
     /// <summary>
-    /// Логика взаимодействия для TransportationPage.xaml
+    /// Логика взаимодействия для DriverInfoPage.xaml
     /// </summary>
-    public partial class TransportationPage : Page
+    public partial class DriverInfoPage : Page
     {
-        public static Frame _transportationDetailFrame { get; set; }
-        public static Page _detailTransportationPage { get; set; }
-        public TransportationPage()
+        public DriverInfoPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
-            _transportationDetailFrame = this.TransportationDetail;
-            _detailTransportationPage = new DetailTransportationPage();
         }
     }
 }

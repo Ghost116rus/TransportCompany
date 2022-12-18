@@ -13,21 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TransportCo.View.Administrator.Pages.TransportationP
+namespace TransportCo.View.Administrator.Pages.StoragesP
 {
     /// <summary>
-    /// Логика взаимодействия для TransportationPage.xaml
+    /// Логика взаимодействия для ProductListPage.xaml
     /// </summary>
-    public partial class TransportationPage : Page
+    public partial class ProductListPage : Page
     {
-        public static Frame _transportationDetailFrame { get; set; }
-        public static Page _detailTransportationPage { get; set; }
-        public TransportationPage()
+        public ProductListPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
-            _transportationDetailFrame = this.TransportationDetail;
-            _detailTransportationPage = new DetailTransportationPage();
         }
     }
 }

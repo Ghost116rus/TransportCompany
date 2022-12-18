@@ -36,7 +36,6 @@ namespace TransportCo.MyHttp
 
         #endregion
 
-
         #region Общие методы
 
         public static List<Orders> GetPendingOrders()
@@ -78,19 +77,22 @@ namespace TransportCo.MyHttp
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
                 },
-                                new EventLog()
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
-                },                                new EventLog()
+                },
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
-                },                                new EventLog()
+                }, 
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
-                },                                new EventLog()
+                },
+                new EventLog()
                 {
                     Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
 
@@ -128,7 +130,6 @@ namespace TransportCo.MyHttp
         #endregion
 
         #region Работа с Заявками
-
 
         public static List<Orders> GetAllOrders()
         {
@@ -172,10 +173,33 @@ namespace TransportCo.MyHttp
                 Total_cost = 100,
                 DateOfCreate = DateTime.Now,
                 Addres = "г. Казань, ул Вахитова 41",
-                transportation = new Transportation()
+                transportationNum = 1,
+                Requare_Products = new List<Product>()
+                {
+                    new Product()
+                    {
+                        Сatalogue_number = "1245689",
+                        Name = "Холодильник LG12-58",
+                        Type = "крупногабаритный",
+                        Count = 5,
+                    },
+                    new Product()
+                    {
+                         Сatalogue_number = "6895123",
+                        Name = "Утюг LG8-32",
+                        Type = "малогабаритный",
+                        Count = 15,
+                    },
+                },
+                DriverLicense = "15896625"
+
             };
         }
 
+
+        #endregion
+
+        #region Работа с товарами
         public static List<Product> GetAllProducts()
         {
             return new List<Product>()
@@ -205,6 +229,128 @@ namespace TransportCo.MyHttp
             };
         }
 
+        internal static void SaveChangesAboutProductInDB(Product selectedProduct, ref string message)
+        {
+            message = "Данные успешно сохранены";
+        }
+        #endregion
+
+        #region Работа со складами
+
+        internal static List<Product>? GetProductListForStorageByNumber(int number)
+        {
+            return new List<Product>()
+            {
+                new Product()
+                {
+                    Сatalogue_number = "1245689",
+                    Name = "Холодильник LG12-58",
+                    Count = 15
+                },
+                new Product()
+                {
+                    Сatalogue_number = "6895123",
+                    Name = "Утюг LG8-32",
+                    Type = "малогабаритный",
+                    Count = 59
+                },
+                new Product()
+                {
+                    Сatalogue_number = "1234557",
+                    Name = "Монитор LGB158-C32",
+                    Type = "малогабаритный",
+                    Count = 22
+                }
+            };
+        }
+
+        public static List<Storage> GetAllStorage()
+        {
+            return new List<Storage>()
+            {
+                new Storage()
+                {
+                    Number = 5,
+                    Addres = "Респ. Татарстан, г. Казань, ул. Академика Кирпичникова 65",
+                    PhoneNumber = "89520406725"
+                },
+                new Storage()
+                {
+                    Number = 8,
+                    Addres = "Респ. Карелия, г. Булдык, ул. Академика Азимова 88",
+                    PhoneNumber = "89520406725"
+                },
+                new Storage()
+                {
+                    Number = 5,
+                    Addres = "Московская область, г. Москва, ул. Дружбы народов 7",
+                    PhoneNumber = "89520406725"
+                }
+            };
+        }
+
+
+        #endregion
+
+        #region Работа с водителями
+
+        internal static List<Driver>? GetAllDrivers()
+        {
+            return new List<Driver>()
+            {
+                new Driver()
+                {
+                    FullName = "Калеев Д.А.",
+                    Location = "Респ. Татарстан, г. Казань",
+                    Status = "В рейсе"
+                },
+                new Driver()
+                {
+                    FullName = "Горохов А.С.",
+                    Location = "Свердловская область, г. Екатеринбург",
+                    Status = "В рейсе"
+                },
+                new Driver()
+                {
+                    FullName = "Гайфуллин Д.Р.",
+                    Location = "Респ Башкортостан, г. Уфа",
+                    Status = "Свобден"
+                }
+            };
+        }
+        internal static Driver GetDetailInfoAboutDriver(string driverLicense)
+        {
+            return new Driver()
+            {
+                DriverLicense = "15896625",
+                FullName = "Калеев Д.А.",
+                Location = "Респ. Татарстан, г. Казань",
+                Status = "В рейсе",
+                Addres = "Респ. Татарстан, г. Казань, 3-я кленовая 9\"Б\" кв 56",
+                WorkExpirience = 15,
+                Phone_number = "89520406725",
+                Transportations = new List<Transportation>()
+                {
+                    new Transportation()
+                    {
+                        Number = 1,
+                        RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                        Status = "Прошел г. Казань",
+                        Date_dispatch = DateTime.Now
+                    },
+                    new Transportation()
+                    {
+                        Number = 2,
+                        RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                        Status = "Исполнена",
+                        Date_dispatch = DateTime.Now,
+                        Delivery_date = DateTime.Now,
+
+                    },
+                }
+            };
+        }
+
         #endregion
 
         #region Работа с Перевозками
@@ -220,7 +366,8 @@ namespace TransportCo.MyHttp
                     Status = "Прошел г. Казань",
                     driver = new Driver()
                     {
-                        FullName = "Калеев Д.А"
+                        FullName = "Калеев Д.А",
+                        DriverLicense = "15896625"
                     }
                 },
                 new Transportation()
@@ -247,6 +394,24 @@ namespace TransportCo.MyHttp
                 },
             };
         }
+
+        public static Transportation GetDetailTransportationInfo(int number)
+        {
+            return new Transportation()
+            {
+                Number = 1,
+                RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+                Status = "Прошел г. Казань",
+                driver = new Driver()
+                {
+                    FullName = "Калеев Д.А"
+                }
+            };
+        }
+
+
+
+
 
         #endregion
     }

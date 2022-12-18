@@ -12,22 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TransportCo.View.Administrator.Pages.StoragesP;
 
-namespace TransportCo.View.Administrator.Pages.TransportationP
+namespace TransportCo.View.Administrator.Pages.Drivers
 {
     /// <summary>
-    /// Логика взаимодействия для TransportationPage.xaml
+    /// Логика взаимодействия для DriversPage.xaml
     /// </summary>
-    public partial class TransportationPage : Page
+    public partial class DriversPage : Page
     {
-        public static Frame _transportationDetailFrame { get; set; }
-        public static Page _detailTransportationPage { get; set; }
-        public TransportationPage()
+        public static Frame _driverInfoFrame { get; set; }
+        public static DriverInfoPage _driverInfoPage{ get; set; }
+
+        public DriversPage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
-            _transportationDetailFrame = this.TransportationDetail;
-            _detailTransportationPage = new DetailTransportationPage();
+
+            _driverInfoFrame = this.DriverInfo;
+            _driverInfoPage = new DriverInfoPage();
         }
     }
 }

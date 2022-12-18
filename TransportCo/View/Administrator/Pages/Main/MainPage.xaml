@@ -50,9 +50,9 @@
                 <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontFamily="Russo One" FontSize="25" Margin="15,0,15,0">Администратор 1</TextBlock>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,80,0,0" Foreground="#FFF70000" Command="{Binding OpenOrdersPage}">Заявки</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding ProductP}">Все товары</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" >Все склады</Button>
+                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding StorageP}">Все склады</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все диспетчеры</Button>
-                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все водители</Button>
+                <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" Command="{Binding DriversP}">Все водители</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FF4EE45E" >Все машины</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFC7E44E" Command="{Binding TransporationP}">Перевозки</Button>
                 <Button FontFamily="Russo One" FontSize="22" Background="{x:Null}" Margin="0,10,0,0" Foreground="#FFE4854E" >Журнал событий</Button>
@@ -104,9 +104,15 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Подробнее" Command="{Binding ViewSelectedTransportation}"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                     <TextBlock Foreground="#FF882525" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="30,5,0,0">Активные перевозки</TextBlock>
                     <Button FontSize="25" Grid.Row="0" FontFamily="Russo One" Width="100" HorizontalAlignment="Right">Выйти</Button>
-                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
+                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0"
+                              SelectedItem="{Binding SelectedTransportation}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>

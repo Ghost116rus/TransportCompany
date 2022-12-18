@@ -26,8 +26,11 @@ namespace TransportCo.Model
         public int Num_Receiving_storage { get; set; }
         public string Addres { get; set; }
 
-        public Transportation? transportation { get; set; } = null;
-        public List<Product> Requare_Products { get; set; } = new List<Product>(); 
+        public int transportationNum { get; set; } = -1;
+        public string DriverLicense { get; set; }
+        public List<Product> Requare_Products { get; set; } = null;
+
+        
 
         private RelayCommand? pendingOrder;
         public RelayCommand PendingOrder
@@ -43,6 +46,19 @@ namespace TransportCo.Model
             }
         }
 
+        private RelayCommand? transportationDetails;
+        public RelayCommand TransportationDetails
+        {
+            get
+            {
+                return transportationDetails ??
+                    (transportationDetails = new RelayCommand(obj =>
+                    {
+                        AdministratorWindow._mng.ViewTranspWnd(this.transportationNum);
+                    }
+                    ));
+            }
+        }
 
     }
 }

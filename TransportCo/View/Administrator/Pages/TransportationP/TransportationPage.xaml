@@ -53,11 +53,11 @@
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E" Command="{Binding ProductP}">Товары</ToggleButton>
                 <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E">Склады</ToggleButton>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E" Command="{Binding StorageP}">Склады</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Диспетчеры</ToggleButton>
                 <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Водители</ToggleButton>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E" Command="{Binding DriversP}">Водители</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Машины</ToggleButton>
                 <Separator/>
@@ -82,7 +82,7 @@
             <Button Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Background="#FFB7F3D9" Command="{Binding UpdateOrders}">Обновить данные</Button>
             <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Margin="40,0,0,0">Подробная информация о перевозке</TextBlock>
 
-            <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItem}" Margin="0,0,0,5">
+            <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItemTransportation}" Margin="0,0,0,5">
 
                 <TabItem Name="Panding" FontFamily="Times New Roman" FontSize="16">
 
@@ -117,13 +117,13 @@
                         <TextBlock Text="Все перевозки" FontFamily="Russo One" FontSize="20"/>
                     </TabItem.Header>
 
-                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
+                    <ListView ItemsSource="{Binding AllTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=FullName}"/>
-                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=Addres}"/>
-                                <GridViewColumn Width="115" Header = "Дата отправки" DisplayMemberBinding="{Binding Path=Status}" />
-                                <GridViewColumn Width="115" Header = "Дата доставки" DisplayMemberBinding="{Binding Path=Status}" />
+                                <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>
+                                <GridViewColumn Width="200" Header = "Адрес назначения" DisplayMemberBinding="{Binding Path=RecievedAddres}"/>
+                                <GridViewColumn Width="115" Header = "Дата отправки" DisplayMemberBinding="{Binding Path=Date_dispatch, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}" />
+                                <GridViewColumn Width="115" Header = "Дата доставки" DisplayMemberBinding="{Binding Path=Delivery_date, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}" />
 
                                 <GridViewColumn Header="" Width="124">
                                     <GridViewColumn.CellTemplate>
@@ -141,7 +141,7 @@
                 </TabItem>
             </TabControl>
 
-            <Frame x:Name="OrderDetail" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden" Margin="5,5,5,5"/>
+            <Frame x:Name="TransportationDetail" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden" Margin="5,5,5,5"/>
 
         </Grid>
     </Grid>

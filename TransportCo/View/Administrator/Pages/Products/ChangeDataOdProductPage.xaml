@@ -15,40 +15,43 @@
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-       
-        <StackPanel Grid.Column="1" Background="White">
-            <TextBlock Height="18" Margin="15,55,0,5"  FontFamily="Russo One">Каталожный №</TextBlock>
-            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Наименование:</TextBlock>
-            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Тип:</TextBlock>
-            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Длина:</TextBlock>
-            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Ширина:</TextBlock>
-            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Высота:</TextBlock>
-            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Вес:</TextBlock>
-            <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Стоимость:</TextBlock>
-        </StackPanel>
+        <Grid Grid.Column="1" Background="White">
+            <StackPanel>
+                <TextBlock Height="18" Margin="15,55,0,5"  FontFamily="Russo One">Каталожный №</TextBlock>
+                <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Наименование:</TextBlock>
+                <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Тип:</TextBlock>
+                <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Длина:</TextBlock>
+                <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Ширина:</TextBlock>
+                <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Высота:</TextBlock>
+                <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Вес:</TextBlock>
+                <TextBlock Height="18" Margin="15,10,0,10" FontFamily="Russo One">Стоимость:</TextBlock>
+            </StackPanel>
+        </Grid>
+
         <Grid Grid.Column="2" DataContext="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Background="White" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="90"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="243*"/>
+                <RowDefinition Height="62*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBox Margin="5,0,20,5"   TextAlignment="Center" Text="{Binding Сatalogue_number}"/>
+                <TextBox Margin="5,0,20,5"   TextAlignment="Center" Text="{Binding Сatalogue_number}" IsEnabled="False"/>
                 <TextBox Margin="5,10,20,10" TextAlignment="Center" Text="{Binding Name}"/>
                 <TextBox Margin="5,10,20,10" TextAlignment="Center" Text="{Binding Type}"/>
             </StackPanel>
-            <StackPanel  Grid.Row="2" Grid.Column="0">
-                <TextBox Margin="5,18,0,10" Text="{Binding Length}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Width}"  TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Height}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Weight}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" Text="{Binding Cost}"   TextAlignment="Right"/>
+            <StackPanel  Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
+                <TextBox Margin="5,18,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Length}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Width}"  TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Height}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Weight}" TextAlignment="Right"/>
+                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Cost}"   TextAlignment="Right"/>
             </StackPanel>
-            <StackPanel  Grid.Row="2" Grid.Column="1">
+            <StackPanel  Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
                 <TextBlock Height="18" Margin="5,18,0,10" FontFamily="Russo One">мм.</TextBlock>
                 <TextBlock Height="18" Margin="5,10,0,10" FontFamily="Russo One">мм.</TextBlock>
                 <TextBlock Height="18" Margin="5,10,0,10" FontFamily="Russo One">мм.</TextBlock>
@@ -56,8 +59,9 @@
                 <TextBlock Height="18" Margin="5,10,0,10" FontFamily="Russo One">руб.</TextBlock>
             </StackPanel>
         </Grid>
+        
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Russo One" FontSize="20">Данные о товаре</TextBlock>
-        <Button Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Russo One" FontSize="16" Margin="0,0,0,15" >Сохранить изменения</Button>
+        <Button Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Russo One" FontSize="16" Margin="0,0,0,15" Command="{Binding SaveChangesAboutProduct}">Сохранить изменения</Button>
 
     </Grid>
 </Page>

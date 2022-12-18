@@ -11,9 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TransportCo.View.Administrator.Pages.Drivers;
 using TransportCo.View.Administrator.Pages.Main;
 using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
+using TransportCo.View.Administrator.Pages.StoragesP;
 using TransportCo.View.Administrator.Pages.TransportationP;
 using TransportCo.ViewModel;
 
@@ -32,6 +34,8 @@ namespace TransportCo.View.Administrator
         public static MainPage _mainPage { get; set; }
         public static OrdersPage _ordersPage { get; set; }
         public static ProductsPage _productsPage { get; set; }
+        public static StoragesPage _storagesPage { get; set; }
+        public static DriversPage _driversPage { get; set; }
         public static TransportationPage _transportationPage { get; set; }
 
         public static bool exit { get; set; } = false;
@@ -51,8 +55,10 @@ namespace TransportCo.View.Administrator
             _mainPage = new MainPage();
             _ordersPage = new OrdersPage();
             _productsPage = new ProductsPage();
+            _storagesPage = new StoragesPage();
+            _driversPage = new DriversPage();
 
-            _transportationPage= new TransportationPage();
+            _transportationPage = new TransportationPage();
 
             //_mainFrame.Content = mainPage;
             _mainFrame.Content = _mainPage;

@@ -7,20 +7,65 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TransportCo.Model;
+using TransportCo.MyHttp;
 using TransportCo.View.Administrator;
+using TransportCo.View.Administrator.Pages.Drivers;
 using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
+using TransportCo.View.Administrator.Pages.StoragesP;
+using TransportCo.View.Administrator.Pages.TransportationP;
 using TransportCo.View.Administrator.UniversalWnd;
 
 namespace TransportCo.ViewModel
 {
     public class DataManagerAdminVM : INotifyPropertyChanged
     {
+        #region Первичные методы
+
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; NotifyPropertyChanged("UserName"); }
+        }
+
+        public DataManagerAdminVM()
+        {
+            allTransportations = MyHttp.MyHttpClient.GetAllTransportations();
+            userName = "Администратор 1";
+            allProducts = MyHttp.MyHttpClient.GetAllProducts();
+            allStorages = MyHttp.MyHttpClient.GetAllStorage();
+
+
+            allDrivers = MyHttp.MyHttpClient.GetAllDrivers();
+        }
+
+        #endregion
+
         #region Общие методы
 
+        private bool WndNowActive = false;
 
         private UniversalWindow newUniversalWnd = new UniversalWindow();
 
+        private void cleanAllPages()
+        {
+            OrdersPage._orderDetailFrame.Content = null;
+            TransportationPage._transportationDetailFrame.Content = null;
+            DriversPage._driverInfoFrame.Content = null;
+        }
+
+        private void CreateNewWnd()
+        {
+            if (newUniversalWnd.IsInitialized == true)
+            {
+                newUniversalWnd.Close();
+            }
+            newUniversalWnd = new UniversalWindow();
+            newUniversalWnd.Owner = AdministratorWindow._window;
+            newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            WndNowActive = true;
+        }
         public void CloseUniversalWnd()
         {
             if (newUniversalWnd.IsInitialized == true)
@@ -42,15 +87,6 @@ namespace TransportCo.ViewModel
                     ));
             }
         }
-        private void CreateNewWnd()
-        {
-            if (newUniversalWnd.IsInitialized == true)
-            {
-                newUniversalWnd.Close();
-            }
-            newUniversalWnd = new UniversalWindow();
-        }
-
         public void CreateTransportation()
         {
             if (newUniversalWnd.IsActive)
@@ -63,9 +99,8 @@ namespace TransportCo.ViewModel
                 CreateNewWnd();
                 newUniversalWnd._universalFrame.Content = null;
 
-                newUniversalWnd.Owner = AdministratorWindow._window;
-                newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 newUniversalWnd.ShowDialog();
+                WndNowActive = false;
             }
         }
 
@@ -75,14 +110,67 @@ namespace TransportCo.ViewModel
 
             CreateNewWnd();
             newUniversalWnd._universalFrame.Content = OrdersPage._detailPandingPage;
-            newUniversalWnd.Owner = AdministratorWindow._window;
-            newUniversalWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             newUniversalWnd.ShowDialog();
+
+            WndNowActive = false;
+            cleanAllPages();
         }
 
+        public void ViewTranspWnd(int numberOfTransp)
+        {
+            if (newUniversalWnd.IsActive)
+            {
+
+                ViewTransportatioDetails(numberOfTransp);
+            }
+            else
+            {
+                CreateNewWnd();
+                ViewTransportatioDetails(numberOfTransp);
+
+                newUniversalWnd.ShowDialog();
+                WndNowActive = false;
+                cleanAllPages();
+            }
+        }
+        public void ViewDriverpWnd(string driver_license)
+        {
+            if (newUniversalWnd.IsActive)
+            {
+
+                ViewDetailDriverInfo(driver_license);
+            }
+            else
+            {
+                CreateNewWnd();
+                ViewDetailDriverInfo(driver_license);
+
+                newUniversalWnd.ShowDialog();
+                WndNowActive = false;
+                cleanAllPages();
+            }
+        }
+
+        private void ViewOrderpWnd(int orderNumber)
+        {
+            if (newUniversalWnd.IsActive)
+            {
+
+                ViewOrder(orderNumber);
+            }
+            else
+            {
+                CreateNewWnd();
+                ViewOrder(orderNumber);
+
+                newUniversalWnd.ShowDialog();
+                WndNowActive = false;
+                cleanAllPages();
+            }
+
+        }
 
         #endregion
-
 
         #region Общие заявки и перевозки
 
@@ -97,8 +185,27 @@ namespace TransportCo.ViewModel
 
         #endregion
 
-
         #region Главная страница
+
+        public Transportation? SelectedTransportation { get; set; } = null;
+
+        private RelayCommand? viewSelectedTransportation;
+        public RelayCommand ViewSelectedTransportation
+        {
+            get
+            {
+                return viewSelectedTransportation ??
+                    (viewSelectedTransportation = new RelayCommand(obj =>
+                    {
+                        if (SelectedTransportation != null)
+                        {
+                            ViewTranspWnd(SelectedTransportation.Number);
+                        }
+
+                    }
+                    ));
+            }
+        }
 
         private List<Orders> mainPageOrders = MyHttp.MyHttpClient.GetPendingOrders();
 
@@ -122,13 +229,13 @@ namespace TransportCo.ViewModel
 
         #region Страница заявок
 
-        private TabItem? selectedTabItem;
-        public TabItem SelectedTabItem
+        private TabItem? selectedTabItemOrders;
+        public TabItem SelectedTabItemOrders
         {
-            get { return selectedTabItem; }
+            get { return selectedTabItemOrders; }
             set 
             { 
-                selectedTabItem = value;
+                selectedTabItemOrders = value;
                 RefreshOrders();
             }
         }
@@ -140,7 +247,7 @@ namespace TransportCo.ViewModel
             set 
             { 
                 selectedOrder = value;
-                if (value != null) { ViewOrder(); }
+                if (value != null) { ViewOrder(selectedOrder.Number); }
                 //else { OrdersPage._orderDetailFrame.Content = null; }
 
                 NotifyPropertyChanged("SelectedOrder");
@@ -169,19 +276,65 @@ namespace TransportCo.ViewModel
         }
 
 
-        public void ViewOrder()
+        public void ViewOrder(int number)
         {
-            DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(SelectedOrder.Number);
-            if (DetailOrder.transportation == null)
+            DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(number);
+            Page? detailPage = null;
+            if (DetailOrder.transportationNum == -1)
             {
-                OrdersPage._orderDetailFrame.Content = OrdersPage._detailPandingPage;
+                detailPage = OrdersPage._detailPandingPage;
             }
-            else if (DetailOrder.transportation != null)
+            else if (DetailOrder.transportationNum != -1)
             {
-                OrdersPage._orderDetailFrame.Content = OrdersPage._detaiOrderPage;
+                detailPage = OrdersPage._detaiOrderPage;
+            }
+            if (WndNowActive)
+            {
+                newUniversalWnd._universalFrame.Content = detailPage;
+            }
+            else
+            {
+                OrdersPage._orderDetailFrame.Content = detailPage;
             }
 
         }
+
+        private RelayCommand? openWndTranspDetail;
+        public RelayCommand OpenWndTranspDetail
+        {
+            get
+            {
+                return openWndTranspDetail ??
+                    (openWndTranspDetail = new RelayCommand(obj =>
+                    {
+                        if (DetailOrder.transportationNum != -1)
+                        {
+                            ViewTranspWnd(DetailOrder.transportationNum);
+                        }
+
+                    }
+                    ));
+            }
+        }
+
+        private RelayCommand? openWndDriverDetail;
+        public RelayCommand OpenWndDriverDetail
+        {
+            get
+            {
+                return openWndDriverDetail ??
+                    (openWndDriverDetail = new RelayCommand(obj =>
+                    {
+                        if (DetailOrder.transportationNum != -1)
+                        {
+                            ViewDriverpWnd(DetailOrder.DriverLicense);
+                        }
+
+                    }
+                    ));
+            }
+        }
+        
 
         private void RefreshOrders()
         {
@@ -219,9 +372,7 @@ namespace TransportCo.ViewModel
         }
 
 
-
-
-        private List<Product> allProducts = MyHttp.MyHttpClient.GetAllProducts();
+        private List<Product> allProducts;
         public List<Product> AllProducts 
         { 
             get { return allProducts; }
@@ -238,12 +389,135 @@ namespace TransportCo.ViewModel
             }
 
         }
+        
+        private void SaveChangesAboutProductInDB(ref string message)
+        {
+            MyHttp.MyHttpClient.SaveChangesAboutProductInDB(SelectedProduct, ref message);
+        }
+
+        private RelayCommand? saveChangesAboutProduct;
+        public RelayCommand SaveChangesAboutProduct
+        {
+            get
+            {
+                return saveChangesAboutProduct ??
+                    (saveChangesAboutProduct = new RelayCommand(obj =>
+                    {
+                        string message = "";
+                        if (SelectedProduct != null)
+                        {
+                            if (SelectedProduct.Type == "крупногабаритный" || SelectedProduct.Type == "малогабаритный")
+                            {
+                                SaveChangesAboutProductInDB(ref message);
+                                if (message == "Данные успешно сохранены")
+                                {
+                                    SelectedProduct = null;
+                                }
+                            }
+                            else
+                            {
+                                message = "Вы должны ввести в тип либо \"крупногабаритный\", либо \"малогабаритный\"";
+                            }
+
+                            MessageBox.Show(message);
+                        }
+                    }
+                    ));
+            }
+        }
+
+        #endregion
+
+        #region Страница складов
+
+        private Storage? storage;
+        public Storage SelectedStorage
+        {
+            get { return storage; }
+            set
+            {
+                storage = value;
+                if (value != null) { ViewProductList(storage.Number); }
+                else { StoragesPage._productListFrame.Content = null; }
+                NotifyPropertyChanged("SelectedStorage");
+            }
+        }
+
+        private List<Storage> allStorages;
+        public List<Storage> AllStorages
+        {
+            get { return allStorages; }
+            set { allStorages = value; NotifyPropertyChanged("AllStorages"); }
+        }
+
+        private void ViewProductList(int number)
+        {
+            if (storage.Products == null)
+            {
+                storage.Products = MyHttp.MyHttpClient.GetProductListForStorageByNumber(number);
+            }
+            StoragesPage._productListFrame.Content = StoragesPage._productListPage;
+        }
+
+        #endregion
+
+        #region Работа с водителями
+
+        private Driver selectedDriver;
+        public Driver SelectedDriver
+        {
+            get { return selectedDriver; }
+            set 
+            {
+                selectedDriver = value;
+                if (value != null) { ViewDetailDriverInfo(SelectedDriver.DriverLicense); }
+                else { DriversPage._driverInfoFrame.Content = null; }
+                NotifyPropertyChanged("SelectedDriver");
+            }
+        }
+        private Driver? detailDriverInfo;
+        public Driver DetailDriverInfo
+        {
+            get { return detailDriverInfo; }
+            set { detailDriverInfo = value; NotifyPropertyChanged("DetailDriverInfo"); }
+        }
+
+        private void ViewDetailDriverInfo(string driverLicense)
+        {
+            DetailDriverInfo = MyHttpClient.GetDetailInfoAboutDriver(driverLicense);
+            if (WndNowActive)
+            {
+                newUniversalWnd._universalFrame.Content = DriversPage._driverInfoPage;
+            }
+            else
+            {
+                DriversPage._driverInfoFrame.Content = DriversPage._driverInfoPage;
+            }
+        }
+
+        private List<Driver> allDrivers;
+        public List<Driver> AllDrivers
+        {
+            get { return allDrivers; }
+            set { allDrivers = value; NotifyPropertyChanged("AllDrivers"); }
+        }
 
         #endregion
 
         #region Страница Перевозок
 
-        private List<Transportation> allTransportations = MyHttp.MyHttpClient.GetAllTransportations();
+        private TabItem? selectedTabItemTransportation;
+        public TabItem SelectedTabItemTransportation
+        {
+            get { return selectedTabItemTransportation; }
+            set
+            {
+                selectedTabItemTransportation = value;
+                RefreshTransportations();
+            }
+        }
+
+        private List<Transportation> allTransportations;
 
         public List<Transportation> AllTransportations
         {
@@ -251,6 +525,73 @@ namespace TransportCo.ViewModel
             set { allTransportations = value; NotifyPropertyChanged("AllTransportations"); }
         }
 
+        private Transportation? detailTransportation;
+        public Transportation DetailTransportation
+        {
+            get { return detailTransportation; }
+            set { detailTransportation = value; NotifyPropertyChanged("DetailTransportation"); }
+        }
+
+        private RelayCommand? openWndOrderDetail;
+        public RelayCommand OpenWndOrderDetail
+        {
+            get
+            {
+                return openWndOrderDetail ??
+                    (openWndOrderDetail = new RelayCommand(obj =>
+                    {
+                        ViewOrderpWnd(DetailTransportation.OrderNumber);
+                    }
+                    ));
+            }
+        }
+
+        public void ViewTransportatioDetails(int number)
+        {
+            DetailTransportation = MyHttp.MyHttpClient.GetDetailTransportationInfo(number);
+            if (WndNowActive)
+            {
+                newUniversalWnd._universalFrame.Content = TransportationPage._detailTransportationPage;
+            }
+            else
+            {
+                TransportationPage._transportationDetailFrame.Content = TransportationPage._detailTransportationPage;
+            }
+
+        }
+
+        private void CleanTransportationPage()
+        {
+            SelectedOrder = null;
+            TransportationPage._transportationDetailFrame.Content = null;
+            DetailTransportation = null;
+            ActiveTransportations = null;
+            AllTransportations = null;
+        }
+
+        private void RefreshTransportations()
+        {
+            ActiveTransportations = MyHttp.MyHttpClient.GetActiveTransportations();
+            AllTransportations = MyHttp.MyHttpClient.GetAllTransportations();
+            if (DetailTransportation != null)
+            {
+                DetailTransportation = MyHttp.MyHttpClient.GetDetailTransportationInfo(DetailTransportation.Number);
+            }
+        }
+
+        private RelayCommand? openWndDriverDetailFromTransportation;
+        public RelayCommand OpenWndDriverDetailFromTransportation
+        {
+            get
+            {
+                return openWndDriverDetailFromTransportation ??
+                    (openWndDriverDetailFromTransportation = new RelayCommand(obj =>
+                    {
+                        ViewDriverpWnd(DetailTransportation.driver.DriverLicense);
+                    }
+                    ));
+            }
+        }
 
         #endregion
 
@@ -274,6 +615,22 @@ namespace TransportCo.ViewModel
 
         #region Кнопки перехода между страницами
 
+        private RelayCommand? mainp;
+        public RelayCommand MainP
+        {
+            get
+            {
+                return mainp ??
+                    (mainp = new RelayCommand(obj =>
+                    {
+                        //
+                        CleanOrdersPage();
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._mainPage;
+                    }));
+            }
+        }
+
         private RelayCommand? openOrdersPage;
         public RelayCommand OpenOrdersPage
         {
@@ -290,21 +647,7 @@ namespace TransportCo.ViewModel
             }
         }
 
-        private RelayCommand? mainp;
-        public RelayCommand MainP
-        {
-            get
-            {
-                return mainp ??
-                    (mainp = new RelayCommand(obj =>
-                    {
-                        //
-                        CleanOrdersPage();
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
-                        AdministratorWindow._mainFrame.Content = AdministratorWindow._mainPage;
-                    }));
-            }
-        }
+
 
         private RelayCommand? productP;
         public RelayCommand ProductP
@@ -322,6 +665,37 @@ namespace TransportCo.ViewModel
             }
         }
 
+        private RelayCommand? storageP;
+        public RelayCommand StorageP
+        {
+            get
+            {
+                return storageP ??
+                    (storageP = new RelayCommand(obj =>
+                    {
+                        //
+                        SelectedStorage = null;
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._storagesPage;
+                    }));
+            }
+        }
+
+        private RelayCommand? driversP;
+        public RelayCommand DriversP
+        {
+            get
+            {
+                return driversP ??
+                    (driversP = new RelayCommand(obj =>
+                    {
+                        //
+                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._driversPage;
+                    }));
+            }
+        }
+
         private RelayCommand? transporationP;
         public RelayCommand TransporationP
         {
@@ -331,11 +705,15 @@ namespace TransportCo.ViewModel
                     (transporationP = new RelayCommand(obj =>
                     {
                         //
+                        CleanTransportationPage();
+                        RefreshTransportations();
                         allEvents = MyHttp.MyHttpClient.GetEventsLog();
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._transportationPage;
                     }));
             }
         }
+
+
 
         
 
@@ -346,5 +724,7 @@ namespace TransportCo.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 }

@@ -10,7 +10,7 @@
 
     <Grid Background="#FFFFF7EA">
         <Grid.RowDefinitions>
-            <RowDefinition Height="350"/>
+            <RowDefinition Height="380"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
@@ -22,28 +22,27 @@
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Margin="0,15,0,0">Данные о заявке</TextBlock>
             <StackPanel Orientation="Vertical" Grid.Column="1">
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0">Номер заявки:</TextBlock>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,80,0,0">Номер заявки:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Текущий статус:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Номер склада-получателя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Оператор:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Время формирования:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Время завершения:</TextBlock>
                 <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Адрес склада-получателя:</TextBlock>
-                <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Адрес склада-отправителя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая стоимость:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая масса:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая Объем:</TextBlock>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2"  DataContext="{Binding DetailOrder}" >
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0" Text="{Binding Number}"/>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,80,0,0" Text="{Binding Number}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Status}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Num_Receiving_storage}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding NameOfOperator}"/>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding DateOfCreate}"/>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding DateOfComplete}"/>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding DateOfCreate, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding DateOfComplete, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
                 <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Addres}"/>
-                <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding transportation.Addres}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_cost}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_mass}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_volume}"/>
@@ -57,18 +56,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="1" Height="25" FontFamily="Times New Roman" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0">Перечень запрашиваемых товаров</TextBlock>
-            <ListView Grid.Column="1" ItemsSource = "{Binding Product}" Foreground="#FF042271" FontSize="18" Margin="0,40,0,0">
+            <ListView Grid.Column="1" ItemsSource = "{Binding Requare_Products}" Foreground="#FF042271" FontSize="18" Margin="0,40,0,0">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="190" Header = "Каталожный номер" DisplayMemberBinding="{Binding Path=Title}"/>
-                        <GridViewColumn Width="180" Header = "Название" DisplayMemberBinding="{Binding Path=Section}"/>
-                        <GridViewColumn Width="180" Header = "Стоимость" DisplayMemberBinding="{Binding Path=Authors}" />
-                        <GridViewColumn Width="135" Header = "Количество" DisplayMemberBinding="{Binding Path=Publisher}"/>
+                        <GridViewColumn Width="190" Header = "Каталожный номер" DisplayMemberBinding="{Binding Path=Сatalogue_number}"/>
+                        <GridViewColumn Width="355" Header = "Название" DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Width="135" Header = "Количество" DisplayMemberBinding="{Binding Path=Count}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
-        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,250,0">Данные о перевозке</Button>
-        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,0,0,0">Данные о водителе</Button>
+        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,250,0" Command="{Binding OpenWndTranspDetail}">Данные о перевозке</Button>
+        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,0,0,0" Command="{Binding OpenWndDriverDetail}">Данные о водителе</Button>
     </Grid>
 </Page>

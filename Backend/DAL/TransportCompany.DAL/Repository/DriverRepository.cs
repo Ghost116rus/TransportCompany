@@ -11,16 +11,16 @@ namespace TransportCompany.DAL.Repository
 {
     public class DriverRepository : IDriverRepository
     {
-        private readonly TransportContext _context;
+        private readonly TransportCompanyContext _context;
 
-        public DriverRepository(TransportContext context)
+        public DriverRepository(TransportCompanyContext context)
         {
             _context = context;
         }
 
         public IEnumerable<Driver> GetDrivers()
         {
-            var driversEntities = new List<Driver>();
+            var driversEntities = _context.Drivers.ToList();
             return driversEntities;
         }
     }

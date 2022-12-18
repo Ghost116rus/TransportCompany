@@ -17,6 +17,6 @@ namespace TransportCompany.Aplication.BO
         public string Location { get; set; }
         public string Status { get; set; }
 
-        //public IEnumerable<TransportationBO> Transportations { get; set; } = new List<TransportationBO>();
+        public IEnumerable<TransportationBO> Transportations { get; set; } = new List<TransportationBO>();
     }
 }

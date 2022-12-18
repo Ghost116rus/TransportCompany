@@ -20,7 +20,8 @@ namespace TransportCompany.Aplication.Services
 
             var driverBO = driversEntities.Select(driver => new DriverBO
             {
-                FIO = driver.FirstName + " " + driver.SecondName + " " + driver.Patronymic,
+                Driver_license_number = driver.Driver_license_number,
+                FIO = driver.FirstName + " " + driver.SecondName[0] + "." + driver.Patronymic[0] + ".",
                 Addres = driver.Addres,
                 Phone_number = driver.Phone_number,
                 Status = driver.Status,

@@ -82,7 +82,7 @@
             <Button Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Background="#FFB7F3D9" Command="{Binding UpdateOrders}">Обновить данные</Button>
             <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Margin="40,0,0,0">Подробная информация о перевозке</TextBlock>
 
-            <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItem}" Margin="0,0,0,5">
+            <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItemTransportation}" Margin="0,0,0,5">
 
                 <TabItem Name="Panding" FontFamily="Times New Roman" FontSize="16">
 
@@ -117,7 +117,7 @@
                         <TextBlock Text="Все перевозки" FontFamily="Russo One" FontSize="20"/>
                     </TabItem.Header>
 
-                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
+                    <ListView ItemsSource="{Binding AllTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="110" Header = "ФИО водителя" DisplayMemberBinding="{Binding Path=driver.FullName}"/>

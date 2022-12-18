@@ -83,7 +83,7 @@
             <Button Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Background="#FFB7F3D9" Command="{Binding UpdateOrders}">Обновить данные</Button>
             <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Margin="40,0,0,0">Подробная информация о заявке</TextBlock>
 
-            <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItem}" Margin="0,0,0,5">
+            <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItemOrders}" Margin="0,0,0,5">
 
                 <TabItem Name="Panding" FontFamily="Times New Roman" FontSize="16">
 
@@ -136,23 +136,14 @@
                                             Width="100"
                                             DisplayMemberBinding="{Binding Path=Num_Receiving_storage}"/>
                                 <GridViewColumn Header="Адрес склада"
-                                            Width="320"
+                                            Width="250"
                                             DisplayMemberBinding="{Binding Path=Addres}"/>
-
-                                <GridViewColumn Header="" Width="123">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button x:Name="DetailBtn" Width="110" Content="О перевозке" Command="{Binding TransportationDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="" Width="124">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button x:Name="TransportationDetailBtn" Width="110" Content="О водителе" Command="{Binding DriverDetails}" FontSize="16" Background="#FF00FFB3" FontFamily="Times New Roman"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                <GridViewColumn Header="Время создания"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Path=DateOfCreate, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
+                                <GridViewColumn Header="Статус"
+                                            Width="160"
+                                            DisplayMemberBinding="{Binding Path=Status}"/>
 
                             </GridView>
                         </ListView.View>

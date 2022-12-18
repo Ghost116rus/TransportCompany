@@ -229,13 +229,13 @@ namespace TransportCo.ViewModel
 
         #region Страница заявок
 
-        private TabItem? selectedTabItem;
-        public TabItem SelectedTabItem
+        private TabItem? selectedTabItemOrders;
+        public TabItem SelectedTabItemOrders
         {
-            get { return selectedTabItem; }
+            get { return selectedTabItemOrders; }
             set 
             { 
-                selectedTabItem = value;
+                selectedTabItemOrders = value;
                 RefreshOrders();
             }
         }
@@ -506,6 +506,17 @@ namespace TransportCo.ViewModel
 
         #region Страница Перевозок
 
+        private TabItem? selectedTabItemTransportation;
+        public TabItem SelectedTabItemTransportation
+        {
+            get { return selectedTabItemTransportation; }
+            set
+            {
+                selectedTabItemTransportation = value;
+                RefreshTransportations();
+            }
+        }
+
         private List<Transportation> allTransportations;
 
         public List<Transportation> AllTransportations
@@ -547,6 +558,25 @@ namespace TransportCo.ViewModel
                 TransportationPage._transportationDetailFrame.Content = TransportationPage._detailTransportationPage;
             }
 
+        }
+
+        private void CleanTransportationPage()
+        {
+            SelectedOrder = null;
+            TransportationPage._transportationDetailFrame.Content = null;
+            DetailTransportation = null;
+            ActiveTransportations = null;
+            AllTransportations = null;
+        }
+
+        private void RefreshTransportations()
+        {
+            ActiveTransportations = MyHttp.MyHttpClient.GetActiveTransportations();
+            AllTransportations = MyHttp.MyHttpClient.GetAllTransportations();
+            if (DetailTransportation != null)
+            {
+                DetailTransportation = MyHttp.MyHttpClient.GetDetailTransportationInfo(DetailTransportation.Number);
+            }
         }
 
         private RelayCommand? openWndDriverDetailFromTransportation;
@@ -675,6 +705,8 @@ namespace TransportCo.ViewModel
                     (transporationP = new RelayCommand(obj =>
                     {
                         //
+                        CleanTransportationPage();
+                        RefreshTransportations();
                         allEvents = MyHttp.MyHttpClient.GetEventsLog();
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._transportationPage;
                     }));

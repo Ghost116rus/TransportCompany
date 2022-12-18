@@ -13,8 +13,10 @@ namespace TransportCompany.Domain.Entities
         public int Storage_number { get; set; }
 
         [Required]
-        [MaxLength(155)]
-        public string Addres { get; set; }
+        public int LocationId { get; set; }
+
+        [ForeignKey("LocationId")]
+        public Locations Location { get; set; }
 
         [Required]
         [Column(TypeName = "char(10)")]

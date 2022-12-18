@@ -9,14 +9,16 @@ namespace TransportCompany.DAL
             :base(options)
         {
         }
+        public DbSet<Distance> Distances { get; set; }
         public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Locations> locations { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Product_exmp> Product_exmps { get; set; }
         public DbSet<Requare_product> Requare_products { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<Transport_vehicle> Transport_vehicles { get; set; }
-
+        public DbSet<Transportation> Transportations{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +48,9 @@ namespace TransportCompany.DAL
 
             modelBuilder.Entity<Product_exmp>()
             .HasKey(m => new { m.Storage_number, m.Сatalogue_number });
+
+            modelBuilder.Entity<Distance>()
+            .HasKey(m => new { m.StartP, m.EndP });
 
             // Ограничения заявки
 
@@ -104,6 +109,12 @@ namespace TransportCompany.DAL
                 .HasCheckConstraint("Storage_number", "Storage_number > 0");
 
             modelBuilder.Entity<Requare_product>().HasCheckConstraint("RequestID", "RequestID > 0");
+
+            // вспомогательные таблицы
+            modelBuilder.Entity<Distance>()
+                .HasCheckConstraint("StartP", "StartP > 0");
+            modelBuilder.Entity<Distance>()
+                .HasCheckConstraint("EndP", "EndP > 0");
         }
 
     }

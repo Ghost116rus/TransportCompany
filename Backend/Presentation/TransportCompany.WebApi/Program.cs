@@ -1,6 +1,9 @@
 using TransportCompany.DAL;
 using Microsoft.EntityFrameworkCore;
-
+using TransportCompany.DAL.Repository;
+using TransportCompany.DAL.Interfaces;
+using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
@@ -17,6 +21,13 @@ services.AddDbContext<TransportCompanyContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+// Repository
+services.AddScoped<IDriverRepository, DriverRepository>();
+
+// Services
+services.AddScoped<IDriverService, DriverService>();
+
 
 var app = builder.Build();
 

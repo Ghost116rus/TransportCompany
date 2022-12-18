@@ -25,10 +25,12 @@ services.AddDbContext<TransportCompanyContext>(options =>
 // Repository
 services.AddScoped<IDriverRepository, DriverRepository>();
 services.AddScoped<IProductRepository, ProductRepository>();
+services.AddScoped<IStorageRepository, StorageRepository>();
 
 // Services
 services.AddScoped<IDriverService, DriverService>();
 services.AddScoped<IProductService, ProductService>();
+services.AddScoped<IStorageService, StorageService>();
 
 var app = builder.Build();
 

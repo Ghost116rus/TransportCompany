@@ -11,6 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TransportCo.View.Operator.Pages;
+using TransportCo.View.Administrator;
+using TransportCo.ViewModel;
+using System.Text.RegularExpressions;
 
 namespace TransportCo.View.Operator
 {
@@ -19,9 +23,33 @@ namespace TransportCo.View.Operator
     /// </summary>
     public partial class OperatorWindow : Window
     {
+        public static Frame _mainFrame { get; set; }
+        public static DataManagerOperatorVM _mng { get; set; }
+        public static OperatorWindow _window { get; set; }
+
+
+        public static MainPagexaml _mainPage { get; set; }
+        public static CreateOrderPage _createPage { get; set; }
         public OperatorWindow()
         {
             InitializeComponent();
+
+            // Создание контекста данных
+            _mng = new DataManagerOperatorVM();
+            DataContext = _mng;
+
+            // Создание и сохранение статических переменных
+            _mainFrame = this.MainFrame;
+            _window = this;
+            _mainPage = new MainPagexaml();
+            _createPage = new CreateOrderPage();
+
+            //_mainFrame.Content = mainPage;
+            _mainFrame.Content = _mainPage;
+            _mng.RefreshDataAboutProduct();
+            _mng.GetAllPRoducts();
         }
+
     }
+
 }

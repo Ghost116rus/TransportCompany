@@ -109,7 +109,7 @@
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <TextBlock Foreground="#FF882525" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="30,5,0,0">Активные перевозки</TextBlock>
-                    <Button FontSize="25" Grid.Row="0" FontFamily="Russo One" Width="100" HorizontalAlignment="Right">Выйти</Button>
+                    <Button FontSize="25" Grid.Row="0" FontFamily="Russo One" Width="100" HorizontalAlignment="Right" Command="{Binding GoOut}">Выйти</Button>
                     <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0"
                               SelectedItem="{Binding SelectedTransportation}">
                         <ListView.View>

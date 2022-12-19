@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransportCo.View.Administrator"
         mc:Ignorable="d"
-        Title="FastTravel24" MinHeight="780" Height="800" MinWidth="1465" Width="1480">
+        Title="FastTravel24" MinHeight="800" MinWidth="1480">
     <Grid>
 
         <Frame x:Name="MainFrame" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" NavigationUIVisibility="Hidden" Background="#FFCCCCCC"/>

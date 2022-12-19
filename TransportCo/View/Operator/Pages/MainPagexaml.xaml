@@ -5,10 +5,55 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TransportCo.View.Operator.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      Height="Auto" Width="Auto" MinHeight="705" MinWidth="1200"
       Title="MainPagexaml">
 
     <Grid>
         
+        <TextBlock FontFamily="Russo One" FontSize="30" HorizontalAlignment="Center">Товары склада</TextBlock>
+        <Grid Margin="0,50,0,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="940"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Background="White" >
+                <TextBlock Width="150" FontFamily="Times New Roman" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0">Каталожный №</TextBlock>
+                <TextBlock Width="250" FontFamily="Times New Roman" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">Наименование</TextBlock>
+                <TextBlock Width="150" FontFamily="Times New Roman" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">Тип</TextBlock>
+                <TextBlock Width="150" FontFamily="Times New Roman" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">Стоимость</TextBlock>
+                <TextBlock Width="150" FontFamily="Times New Roman" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">Количество</TextBlock>
+            </StackPanel>
+            <ListView Grid.Column="1" Grid.Row="1" ItemsSource="{Binding StorageProducts, UpdateSourceTrigger=PropertyChanged}" 
+                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,80">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Сatalogue_number}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Path=Name}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Path=Type}"/>
+                            <TextBlock Grid.Column="4" Text="{Binding Path=Cost}"/>
+                            <TextBox Name="TEst" Grid.Column="5"  Text="{Binding Path=Count, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput = "PreviewTextInput"/>
+                        </Grid>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListView>
+            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Russo One" FontSize="20" Margin="0,0,350,15" Background="#FFB2FF69" Command="{Binding RefreshMainP}">Обновить данные</Button>
+            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Russo One" FontSize="20" Margin="350,0,0,15" Background="#FFF0FB8E" >Добавить новый товар</Button>
+        </Grid>
     </Grid>
 </Page>

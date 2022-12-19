@@ -55,7 +55,7 @@
             </StackPanel>
 
             <ListView x:Name="ProductList" Grid.Column="1" ItemsSource="{Binding OrderProducts, UpdateSourceTrigger=PropertyChanged}" 
-                  SelectedItem="{Binding SelectedProductInOrder, UpdateSourceTrigger=PropertyChanged}" Margin="5,220,5,55">
+                  Margin="5,220,5,55">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

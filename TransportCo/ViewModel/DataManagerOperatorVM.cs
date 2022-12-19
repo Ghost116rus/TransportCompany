@@ -324,6 +324,32 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Кнопка выйти
+
+        void Exit()
+        {
+            StartWindow authorizationWindow = new StartWindow();
+            authorizationWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            authorizationWindow.Show();
+            OperatorWindow._window.Close();
+        }
+
+        private RelayCommand goOut;
+        public RelayCommand GoOut
+        {
+            get
+            {
+                return goOut ?? new RelayCommand(obj =>
+                {
+                    Exit();
+                }
+                );
+            }
+        }
+
+        #endregion
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

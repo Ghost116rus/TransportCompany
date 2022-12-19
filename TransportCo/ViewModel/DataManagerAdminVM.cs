@@ -621,6 +621,7 @@ namespace TransportCo.ViewModel
             }
         }
 
+
         private RelayCommand? openOrdersPage;
         public RelayCommand OpenOrdersPage
         {
@@ -635,7 +636,6 @@ namespace TransportCo.ViewModel
                     }));
             }
         }
-
 
 
         private RelayCommand? productP;
@@ -653,6 +653,7 @@ namespace TransportCo.ViewModel
             }
         }
 
+
         private RelayCommand? storageP;
         public RelayCommand StorageP
         {
@@ -668,6 +669,7 @@ namespace TransportCo.ViewModel
             }
         }
 
+
         private RelayCommand? driversP;
         public RelayCommand DriversP
         {
@@ -681,6 +683,7 @@ namespace TransportCo.ViewModel
                     }));
             }
         }
+
 
         private RelayCommand? transporationP;
         public RelayCommand TransporationP
@@ -697,10 +700,7 @@ namespace TransportCo.ViewModel
                     }));
             }
         }
-
-
-
-        
+                
 
         #endregion
 

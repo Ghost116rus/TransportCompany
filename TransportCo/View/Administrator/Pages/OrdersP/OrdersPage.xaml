@@ -64,7 +64,7 @@
                 <Separator/>
             </ToolBar>
 
-            <TextBlock Grid.Column="3" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center">Администратор1</TextBlock>
+            <TextBlock Grid.Column="3" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Grid.Column="4" FontSize="22" Grid.Row="0" FontFamily="Russo One" Width="150" HorizontalAlignment="Right" Background="{x:Null}">Выйти</Button>
         </Grid>
 

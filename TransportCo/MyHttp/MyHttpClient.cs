@@ -68,38 +68,6 @@ namespace TransportCo.MyHttp
             };
         }
 
-        public static List<EventLog> GetEventsLog()
-        {
-            return new List<EventLog>()
-            {
-                new EventLog()
-                {
-                    Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
-
-                },
-                new EventLog()
-                {
-                    Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
-
-                },
-                new EventLog()
-                {
-                    Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
-
-                }, 
-                new EventLog()
-                {
-                    Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
-
-                },
-                new EventLog()
-                {
-                    Info = DateTime.Now.ToString() + " Водитель Калеев Д.А изменил свой статус с 'Прошел г. Казань' на 'прибыл в Нижний Новогород'"
-
-                }
-            };
-        }
-
         public static List<Transportation> GetActiveTransportations()
         {
             return new List<Transportation>()
@@ -127,6 +95,7 @@ namespace TransportCo.MyHttp
                 },
             };
         }
+
         #endregion
 
         #region Работа с Заявками

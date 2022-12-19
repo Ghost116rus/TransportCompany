@@ -215,14 +215,6 @@ namespace TransportCo.ViewModel
             set { mainPageOrders = value; NotifyPropertyChanged("MainPageOrders"); }
         }
 
-        private List<EventLog> allEvents = MyHttp.MyHttpClient.GetEventsLog();
-
-        public List<EventLog> AllEvents
-        {
-            get { return allEvents; }
-            set { allEvents = value; NotifyPropertyChanged("AllEvents"); }
-        }
-
 
 
         #endregion
@@ -605,8 +597,7 @@ namespace TransportCo.ViewModel
                 return updateOrders ??
                     (updateOrders = new RelayCommand(obj =>
                     {
-                        RefreshOrders();
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        RefreshOrders();                        
                     }));
             }
         }
@@ -624,8 +615,7 @@ namespace TransportCo.ViewModel
                     (mainp = new RelayCommand(obj =>
                     {
                         //
-                        CleanOrdersPage();
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        CleanOrdersPage();                       
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._mainPage;
                     }));
             }
@@ -640,8 +630,7 @@ namespace TransportCo.ViewModel
                     (openOrdersPage = new RelayCommand(obj =>
                     {
                         CleanOrdersPage();
-                        RefreshOrders();
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        RefreshOrders();                        
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._ordersPage;
                     }));
             }
@@ -658,8 +647,7 @@ namespace TransportCo.ViewModel
                     (productP = new RelayCommand(obj =>
                     {
                         //
-                        SelectedProduct = null;
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        SelectedProduct = null;                        
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._productsPage;
                     }));
             }
@@ -674,8 +662,7 @@ namespace TransportCo.ViewModel
                     (storageP = new RelayCommand(obj =>
                     {
                         //
-                        SelectedStorage = null;
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        SelectedStorage = null;                        
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._storagesPage;
                     }));
             }
@@ -689,8 +676,7 @@ namespace TransportCo.ViewModel
                 return driversP ??
                     (driversP = new RelayCommand(obj =>
                     {
-                        //
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        //                        
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._driversPage;
                     }));
             }
@@ -706,8 +692,7 @@ namespace TransportCo.ViewModel
                     {
                         //
                         CleanTransportationPage();
-                        RefreshTransportations();
-                        allEvents = MyHttp.MyHttpClient.GetEventsLog();
+                        RefreshTransportations();                        
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._transportationPage;
                     }));
             }

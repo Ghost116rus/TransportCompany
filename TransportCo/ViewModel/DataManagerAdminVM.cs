@@ -14,6 +14,7 @@ using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
 using TransportCo.View.Administrator.Pages.StoragesP;
 using TransportCo.View.Administrator.Pages.TransportationP;
+using TransportCo.View.Administrator.Pages.Vehicles;
 using TransportCo.View.Administrator.UniversalWnd;
 using TransportCo.View.Operator;
 
@@ -39,6 +40,7 @@ namespace TransportCo.ViewModel
 
 
             allDrivers = MyHttp.MyHttpClient.GetAllDrivers();
+            allVehicles = MyHttp.MyHttpClient.GetAllVehicles();
         }
 
         #endregion
@@ -497,6 +499,58 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Страница машин
+
+        private Transport_vehicle selectedVehicle;
+        public Transport_vehicle SelectedVehicle
+        {
+            get { return selectedVehicle; }
+            set
+            {
+                selectedVehicle = value;
+                if (value != null) { ViewDetailVehicleInfo(SelectedVehicle.Vehicle_identification_number); }
+                else { TransportVehiclePage._vehicleInfoFrame.Content = null; }
+                NotifyPropertyChanged("SelectedVehicle");
+            }
+        }
+        private Transport_vehicle? detailVehicleInfo;
+        public Transport_vehicle DetailVehicleInfo
+        {
+            get { return detailVehicleInfo; }
+            set { detailVehicleInfo = value; NotifyPropertyChanged("DetailVehicleInfo"); }
+        }
+
+        private void ViewDetailVehicleInfo(string Vehicle_identification_number)
+        {
+            DetailVehicleInfo = MyHttpClient.GetDetailInfoAboutVehicle(Vehicle_identification_number);
+            if (WndNowActive)
+            {
+                newUniversalWnd._universalFrame.Content = TransportVehiclePage._detailVehiclePage;
+            }
+            else
+            {
+                TransportVehiclePage._vehicleInfoFrame.Content = TransportVehiclePage._detailVehiclePage;
+            }
+        }
+
+        private List<Transport_vehicle> allVehicles;
+        public List<Transport_vehicle> AllVehicles
+        {
+            get { return allVehicles; }
+            set { allVehicles = value; NotifyPropertyChanged("AllVehicles"); }
+        }
+
+        public void RefreshVehicles()
+        {
+            allVehicles = MyHttp.MyHttpClient.GetAllVehicles();
+            if (DetailVehicleInfo != null)
+            {
+                ViewDetailVehicleInfo(DetailVehicleInfo.Vehicle_identification_number);
+            }
+        }
+
+        #endregion
+
         #region Страница Перевозок
 
         private TabItem? selectedTabItemTransportation;
@@ -602,6 +656,21 @@ namespace TransportCo.ViewModel
                     }));
             }
         }
+
+        private RelayCommand? refreshVehiclePage;
+        public RelayCommand RefreshVehiclePage
+        {
+            get
+            {
+                return refreshVehiclePage ??
+                    (refreshVehiclePage = new RelayCommand(obj =>
+                    {
+                        RefreshVehicles();
+                    }));
+            }
+        }
+
+
 
         #endregion
 

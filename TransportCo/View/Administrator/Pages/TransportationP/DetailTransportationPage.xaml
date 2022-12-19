@@ -29,7 +29,6 @@
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Адрес склада-отправителя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Дата отправки:</TextBlock>
                 <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Адрес склада-получателя:</TextBlock>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общее время:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая длина:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая стоимость перевозки:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0">Автомобиль:</TextBlock>
@@ -45,7 +44,6 @@
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Date_dispatch, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
                 <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding RecievedAddres}"/>
                 
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_time}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_length}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_shipping_cost}"/>
 

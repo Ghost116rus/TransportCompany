@@ -327,6 +327,43 @@ namespace TransportCo.MyHttp
 
         #endregion
 
+        #region Работа с машинами
+        public static List<Transport_vehicle>? GetAllVehicles()
+        {
+            return new List<Transport_vehicle>()
+            {
+                new Transport_vehicle()
+                {
+                    Vehicle_identification_number = "1BYS89116",
+                    Name = "Форд Бронко",
+                    Location = "Респб. Татарстан, г. Казань",
+                    Status = "Свободен"
+                },
+                new Transport_vehicle()
+                {
+                    Vehicle_identification_number = "1BYS12116",
+                    Name = "Форд Алгась",
+                    Location = "Респб. Татарстан, г. Казань",
+                    Status = "Свободен"
+                }
+
+            };
+        }
+
+        public static Transport_vehicle GetDetailInfoAboutVehicle(string vehicle_identification_number)
+        {
+            return new Transport_vehicle()
+            {
+                Vehicle_identification_number = "1BYS12116",
+                Name = "Форд Алгась",
+                Location = "Респб. Татарстан, г. Казань",
+                Status = "Свободен",
+                Fuel_consumption = 15
+            };
+        }
+
+        #endregion
+
         #region Работа с Перевозками
 
         public static List<Transportation> GetAllTransportations()
@@ -470,6 +507,14 @@ namespace TransportCo.MyHttp
         {
             return true;
         }
+
+        internal static bool RepairVehicle(string vehicle_identification_number)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
 
         #endregion
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TransportCo.Model;
+using TransportCo.Model.Operator;
 
 namespace TransportCo.MyHttp
 {
@@ -11,6 +12,7 @@ namespace TransportCo.MyHttp
     {
         static int currentIdUser;
         static int? storageNum;
+        public static int max_volume = 30_000;
 
         #region АВТОРИЗАЦИЯ
 
@@ -450,6 +452,52 @@ namespace TransportCo.MyHttp
         }
 
         public static bool SaveChangesAboutCountInDB(string сatalogue_number, int count)
+        {
+            return true;
+        }
+
+        internal static List<ProductOrder> GetAllProductsForOrder()
+        {
+            return new List<ProductOrder>()
+            {
+                new ProductOrder()
+                {
+                    Сatalogue_number = "1245689",
+                    Name = "Холодильник LG12-58",
+                    Type = "крупногабаритный",
+                    Volume = 800*800*1600 / 1_000_000,
+                    Weight = 80,
+                    Cost = 32_500
+                },
+                new ProductOrder()
+                {
+                    Сatalogue_number = "6895123",
+                    Name = "Утюг LG8-32",
+                    Type = "малогабаритный",
+                    Volume = 400*400*200 / 1_000_000,
+                    Weight = 5,
+                    Cost = 8500
+                }
+            };
+        }
+
+        internal static List<ProductOrder> GetProductsListByName(string searchName)
+        {
+            return new List<ProductOrder>()
+            {
+                new ProductOrder()
+                {
+                    Сatalogue_number = "1245689",
+                    Name = "Холодильник LG12-58",
+                    Type = "крупногабаритный",
+                    Volume = 800*800*1600/1000,
+                    Weight = 80,
+                    Cost = 32_500
+                }
+            };
+        }
+
+        public static bool CreateNewOrder(List<ProductOrder> orderProducts, int total_cost, int total_mass, int total_volume, ref string message)
         {
             return true;
         }

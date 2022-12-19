@@ -29,7 +29,7 @@
                 <TextBlock Width="150" FontFamily="Times New Roman" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">Количество</TextBlock>
             </StackPanel>
             <ListView Grid.Column="1" Grid.Row="1" ItemsSource="{Binding StorageProducts, UpdateSourceTrigger=PropertyChanged}" 
-                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0">
+                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,80">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -46,12 +46,14 @@
                             <TextBlock Grid.Column="2" Text="{Binding Path=Name}"/>
                             <TextBlock Grid.Column="3" Text="{Binding Path=Type}"/>
                             <TextBlock Grid.Column="4" Text="{Binding Path=Cost}"/>
-                            <TextBox Grid.Column="5" Text="{Binding Path=Count, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Name="TEst" Grid.Column="5"  Text="{Binding Path=Count, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput = "PreviewTextInput"/>
                         </Grid>
 
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListView>
+            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Russo One" FontSize="20" Margin="0,0,350,15" Background="#FFB2FF69" Command="{Binding RefreshMainP}">Обновить данные</Button>
+            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Russo One" FontSize="20" Margin="350,0,0,15" Background="#FFF0FB8E" >Добавить новый товар</Button>
         </Grid>
     </Grid>
 </Page>

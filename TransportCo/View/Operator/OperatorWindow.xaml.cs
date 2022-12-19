@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TransportCo.View.Operator.Pages;
 using TransportCo.View.Administrator;
 using TransportCo.ViewModel;
+using System.Text.RegularExpressions;
 
 namespace TransportCo.View.Operator
 {
@@ -28,6 +29,7 @@ namespace TransportCo.View.Operator
 
 
         public static MainPagexaml _mainPage { get; set; }
+        public static CreateOrderPage _createPage { get; set; }
         public OperatorWindow()
         {
             InitializeComponent();
@@ -40,10 +42,14 @@ namespace TransportCo.View.Operator
             _mainFrame = this.MainFrame;
             _window = this;
             _mainPage = new MainPagexaml();
+            _createPage = new CreateOrderPage();
 
             //_mainFrame.Content = mainPage;
             _mainFrame.Content = _mainPage;
             _mng.RefreshDataAboutProduct();
+            _mng.GetAllPRoducts();
         }
+
     }
+
 }

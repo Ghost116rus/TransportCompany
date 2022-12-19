@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransportCo.View.Operator"
         mc:Ignorable="d"
-        Title="OperatorWindow" MinHeight="745" MinWidth="1200">
+        Title="OperatorWindow" MinHeight="785" MinWidth="1400">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -32,8 +32,8 @@
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" >
-                <Button FontFamily="Russo One" FontSize="22" Width="150"  Foreground="#FFF70000" Background="{x:Null}" Command="{Binding MainP}">Главная</Button>
-                <Button FontFamily="Russo One" FontSize="20" Background="{x:Null}">Сформировать заявку</Button>
+                <Button FontFamily="Russo One" FontSize="22" Width="150"  Foreground="#FFF70000" Background="{x:Null}" Command="{Binding OpenMainPage}">Главная</Button>
+                <Button FontFamily="Russo One" FontSize="20" Background="{x:Null}" Command="{Binding OpenCreateOrderPage}">Сформировать заявку</Button>
                 <Button FontFamily="Russo One" FontSize="20" Background="{x:Null}">Просмотреть заявки</Button>
             </StackPanel>
 
@@ -43,7 +43,16 @@
             <TextBlock Grid.Column="4" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center">Администратор1</TextBlock>
             <Button Grid.Column="5" FontSize="22" Grid.Row="0" FontFamily="Russo One" Width="150" HorizontalAlignment="Right" Background="{x:Null}">Выйти</Button>
         </Grid>
-        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Background="#FFCCCCCC"/>
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden">
+            <Frame.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF4EC3A5"/>
+                    <GradientStop Color="#FF2D5786" Offset="1"/>
+                    <GradientStop Color="#FF3F977D" Offset="0.249"/>
+                    <GradientStop Color="#FF179275" Offset="0.695"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+        </Frame>
 
     </Grid>
 </Window>

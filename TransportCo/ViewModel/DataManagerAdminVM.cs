@@ -679,8 +679,22 @@ namespace TransportCo.ViewModel
                 return driversP ??
                     (driversP = new RelayCommand(obj =>
                     {
-                        //                        
+                        SelectedDriver = null;                      
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._driversPage;
+                    }));
+            }
+        }
+
+        private RelayCommand? vehicleP;
+        public RelayCommand VehicleP
+        {
+            get
+            {
+                return vehicleP ??
+                    (vehicleP = new RelayCommand(obj =>
+                    {
+                        //                        
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._transportVehiclePage;
                     }));
             }
         }

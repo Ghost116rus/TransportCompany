@@ -58,7 +58,7 @@
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E" Command="{Binding DriversP}">Водители</ToggleButton>
                 <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Машины</ToggleButton>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E" Command="{Binding VehicleP}">Машины</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFE4854E" Command="{Binding TransporationP}">Перевозки</ToggleButton>
                 <Separator/>

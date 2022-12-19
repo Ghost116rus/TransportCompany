@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace TransportCo.View.Operator.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainPagexaml.xaml
+    /// Логика взаимодействия для CreateOrderPage.xaml
     /// </summary>
-    public partial class MainPagexaml : Page
+    public partial class CreateOrderPage : Page
     {
-        public MainPagexaml()
+        public CreateOrderPage()
         {
             InitializeComponent();
             DataContext = OperatorWindow._mng;

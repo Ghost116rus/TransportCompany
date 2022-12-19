@@ -15,6 +15,7 @@ using TransportCo.View.Administrator.Pages.Products;
 using TransportCo.View.Administrator.Pages.StoragesP;
 using TransportCo.View.Administrator.Pages.TransportationP;
 using TransportCo.View.Administrator.UniversalWnd;
+using TransportCo.View.Operator;
 
 namespace TransportCo.ViewModel
 {
@@ -715,7 +716,32 @@ namespace TransportCo.ViewModel
 
 
 
-        
+
+
+        #endregion
+
+        #region Кнопка выйти
+
+        void Exit()
+        {
+            StartWindow authorizationWindow = new StartWindow();
+            authorizationWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            authorizationWindow.Show();
+            AdministratorWindow._window.Close();
+        }
+
+        private RelayCommand goOut;
+        public RelayCommand GoOut
+        {
+            get
+            {
+                return goOut ?? new RelayCommand(obj =>
+                {
+                    Exit();
+                }
+                );
+            }
+        }
 
         #endregion
 

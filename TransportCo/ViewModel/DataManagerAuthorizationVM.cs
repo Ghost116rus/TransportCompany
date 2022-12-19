@@ -82,7 +82,7 @@ namespace TransportCo.ViewModel
             }
             else if (type == "Operator")
             {
-                window = new View.Administrator.AdministratorWindow();
+                window = new View.Operator.OperatorWindow();
             }
             else
             {

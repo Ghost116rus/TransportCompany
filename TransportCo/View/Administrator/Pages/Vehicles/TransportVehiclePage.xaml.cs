@@ -23,6 +23,7 @@ namespace TransportCo.View.Administrator.Pages.Vehicles
         public TransportVehiclePage()
         {
             InitializeComponent();
+            DataContext = AdministratorWindow._mng;
         }
     }
 }

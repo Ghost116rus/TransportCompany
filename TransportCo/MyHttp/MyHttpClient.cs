@@ -10,6 +10,7 @@ namespace TransportCo.MyHttp
     public static class MyHttpClient
     {
         static int currentIdUser;
+        static int? storageNum;
 
         #region АВТОРИЗАЦИЯ
 
@@ -35,6 +36,8 @@ namespace TransportCo.MyHttp
         }
 
         #endregion
+
+        #region Администратор
 
         #region Общие методы
 
@@ -412,6 +415,44 @@ namespace TransportCo.MyHttp
 
 
 
+
+
+
+        #endregion
+
+        #endregion
+
+
+        #region Диспетчер
+
+        public static List<ProductOperator> GetAllProductsByStorageNumber()
+        {
+
+            return new List<ProductOperator>()
+            {
+                new ProductOperator()
+                {
+                    Сatalogue_number = "1245689",
+                    Name = "Холодильник LG12-58",
+                    Type = "крупногабаритный",
+                    Cost = 32_500,
+                    Count = 15
+                },
+                new ProductOperator()
+                {
+                    Сatalogue_number = "6895123",
+                    Name = "Утюг LG8-32",
+                    Type = "малогабаритный",
+                    Cost = 8500,
+                    Count = 22
+                }
+            };
+        }
+
+        public static bool SaveChangesAboutCountInDB(string сatalogue_number, int count)
+        {
+            return true;
+        }
 
         #endregion
     }

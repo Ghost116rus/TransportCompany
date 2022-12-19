@@ -23,6 +23,7 @@ namespace TransportCo.View.Operator.Pages
         public MainPagexaml()
         {
             InitializeComponent();
+            DataContext = OperatorWindow._mng;
         }
     }
 }

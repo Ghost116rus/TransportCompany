@@ -39,7 +39,7 @@ namespace TransportCompany.DAL.Repository
         public async Task<IEnumerable<Request>> GetPandingOrder()
         {
             var pandingOrders = await _context.Requests.
-                Where(x => x.Status == "Сформирована")
+                Where(x => x.Status == "Сформирована" || x.Status == "Обрабатывается")
                 .OrderBy(x => x.DateOfCreate)
                 .ToListAsync();
 

@@ -50,5 +50,8 @@ namespace TransportCompany.Domain.Entities
 
         [ForeignKey("DriverID")]
         public Driver Driver { get; set; }
+
+        [ForeignKey("Num_Sending_storage")]
+        public Storage Storage { get; set; }
     }
 }

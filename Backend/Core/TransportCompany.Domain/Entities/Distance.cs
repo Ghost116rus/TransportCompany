@@ -19,6 +19,8 @@ namespace TransportCompany.Domain.Entities
         [Required]
         public int TotalLength { get; set; }
 
+        [ForeignKey("StartP")]
+        public Locations StartPoint { get; set; }
 
         [ForeignKey("EndP")]
         public Locations EndPoint { get; set; }

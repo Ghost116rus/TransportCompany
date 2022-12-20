@@ -27,25 +27,38 @@ namespace TransportCompany.DAL
         {
             //modelBuilder.Entity<BooksAuthorsEntity>().HasKey(u => new { u.AuthorID, u.ISBN });
 
-            ////Настройка связи многие-ко-многим между товарами и складами
-            //modelBuilder
-            //.Entity<Product>()
-            //.HasMany(c => c.Storages)
-            //.WithMany(s => s.Products)
-            //.UsingEntity<Product_exmp>(
-            //   j => j
-            //    .HasOne(pt => pt.Storage)
-            //    .WithMany(t => t.Product_Exmps)
-            //    .HasForeignKey(pt => pt.Storage_number),
-            //j => j
-            //    .HasOne(pt => pt.Product)
-            //    .WithMany(p => p.Product_Exmps)
-            //    .HasForeignKey(pt => pt.Сatalogue_number),
-            //j =>
-            //{
-            //    j.HasKey(t => new { t.Storage_number, t.Сatalogue_number });
-            //    j.ToTable("Product_exmp");
-            //});
+            // Настройка двойного внешнего ключа
+            modelBuilder.Entity<Distance>(entity =>
+            {
+                entity.HasOne(d => d.StartPoint)
+                    .WithMany(p => p.LocationsStartPoints)
+                    .HasForeignKey(d => d.StartP)
+                    .OnDelete(DeleteBehavior.ClientNoAction)
+                    .HasConstraintName("FK_Distance_Locations_StartPoint");
+
+                entity.HasOne(d => d.EndPoint)
+                    .WithMany(p => p.LocationsEndsPoints)
+                    .HasForeignKey(d => d.EndP)
+                    .OnDelete(DeleteBehavior.ClientNoAction)
+                    .HasConstraintName("FK_Distance_Locations_EndPoint");
+            });
+
+            modelBuilder.Entity<Request>(entity =>
+            {
+                entity.HasOne(r => r.Storage)
+                    .WithMany()
+                    .HasForeignKey(r => r.Num_Receiving_storage)
+                    .OnDelete(DeleteBehavior.ClientNoAction);
+            });
+
+            modelBuilder.Entity<Transportation>(entity =>
+            {
+                entity.HasOne(t => t.Storage)
+                    .WithMany()
+                    .HasForeignKey(t => t.Num_Sending_storage)
+                    .OnDelete(DeleteBehavior.ClientNoAction);
+            });
+
             modelBuilder.Entity<Requare_product>()
             .HasKey(m => new { m.RequestID, m.Сatalogue_number });
 

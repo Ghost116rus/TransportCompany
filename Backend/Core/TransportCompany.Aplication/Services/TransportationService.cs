@@ -19,15 +19,15 @@ namespace TransportCompany.Aplication.Services
             this.transportationRepository = transportationRepository;
         }
 
-        public async Task<IEnumerable<TransportationBO>> GetAllTransportations()
+        public async Task<IEnumerable<TransportationsBO>> GetAllTransportations()
         {
             var transpFromDb = await transportationRepository.GetAllTransportation();
 
-            var transportations = transpFromDb.Select(x => new TransportationBO
-            {
+            //var transportations = transpFromDb.Select(x => new TransportationBO
+            //{
 
-            })
-
+            //})
+            return null;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TransportCompany.Aplication.Services
                 Expirience = GetExpirience(driverFromDB.Year_of_start_work),
                 Location = driverFromDB.Location,
                 Status = driverFromDB.Status,
-                Transportations = driverFromDB.Transportations.Select(x => new TransportationBO
+                Transportations = driverFromDB.Transportations.Select(x => new TransportationsBO
                 {
                     Number = x.Number,
                     RequestNumber = x.RequestNumber,

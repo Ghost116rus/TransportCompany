@@ -20,5 +20,7 @@ namespace TransportCompany.Domain.Entities
         public string Addres { get; set; }
 
         public IEnumerable<Storage> Storages { get; set; } = new List<Storage>();
+        public IEnumerable<Distance> LocationsStartPoints { get; set; } = new List<Distance>();
+        public IEnumerable<Distance> LocationsEndsPoints { get; set; } = new List<Distance>();
     }
 }

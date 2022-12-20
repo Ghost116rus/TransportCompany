@@ -9,6 +9,7 @@ namespace TransportCompany.Aplication.Interfaces
 {
     public interface ITransportationService
     {
+        Task<IEnumerable<TransportationsBO>> GetActiveTransportations();
         Task<IEnumerable<TransportationsBO>> GetAllTransportations();
     }
 }

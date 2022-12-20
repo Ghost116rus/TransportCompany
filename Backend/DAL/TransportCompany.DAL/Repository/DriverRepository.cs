@@ -24,7 +24,7 @@ namespace TransportCompany.DAL.Repository
             var driver = await _context.Drivers
                 .Include(x => x.Transportations)
                     .ThenInclude(x => x.Request)
-                        .ThenInclude(x => x.Storage)
+                        .ThenInclude(x => x.RecievingStorage)
                             .ThenInclude(y => y.Location)
                 .FirstOrDefaultAsync(driver => driver.Driver_license_number == Driver_license_number);
             return driver;

@@ -28,6 +28,7 @@ services.AddScoped<IProductRepository, ProductRepository>();
 services.AddScoped<IStorageRepository, StorageRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IOrderRepository, OrderRepository>();
+services.AddScoped<ITransportationRepository, TransportationRepository>();
 
 // Services
 services.AddScoped<IDriverService, DriverService>();
@@ -35,6 +36,7 @@ services.AddScoped<IProductService, ProductService>();
 services.AddScoped<IStorageService, StorageService>();
 services.AddScoped<IUserService, UserService>();
 services.AddScoped<IOrderService, OrderService>();
+services.AddScoped<ITransportationService, TransportationService>();
 
 var app = builder.Build();
 

@@ -33,7 +33,7 @@ namespace TransportCompany.Aplication.Services
                     RequestNumber = x.RequestNumber,
                     Status = x.Status,
                     Date_dispatch = x.Date_dispatch,
-                    DeliveryAddres = x.Request.Storage.Location.Addres
+                    DeliveryAddres = x.Request.RecievingStorage.Location.Addres
                 })
             };
             return driver;
@@ -48,6 +48,11 @@ namespace TransportCompany.Aplication.Services
         public async Task<IEnumerable<DriverBO>> GetDrivers()
         {
             var driversEntities = await _driverRepository.GetDrivers();
+
+            if (driversEntities == null)
+            {
+                return null;
+            }
 
             var driverBO = driversEntities.Select(driver => new DriverBO
             {

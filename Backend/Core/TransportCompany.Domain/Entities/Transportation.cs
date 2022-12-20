@@ -49,6 +49,6 @@ namespace TransportCompany.Domain.Entities
 
 
         [ForeignKey("Num_Sending_storage")]
-        public Storage Storage { get; set; }
+        public Storage SendingStorage { get; set; }
     }
 }

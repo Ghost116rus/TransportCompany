@@ -18,16 +18,27 @@ namespace TransportCompany.DAL.Repository
             _context = context;
         }
 
+        public async Task<IEnumerable<Transportation>> GetActiveTransportation()
+        {
+            var Transportations = await _context.Transportations
+                .Include(x => x.Driver)
+                .Include(x => x.Request)
+                    .ThenInclude(r => r.RecievingStorage)
+                        .ThenInclude(s => s.Location)
+                .Where(r => r.Request.Status == "Сформирована" || r.Request.Status == "Доставляется")
+                .ToListAsync();
+            return Transportations;
+        }
+
         public async Task<IEnumerable<Transportation>> GetAllTransportation()
         {
-            //var Transportations = await _context.Transportations
-            //    .Include(x => x.Driver)
-            //    .Include(x => x.Request.Num_Receiving_storage)
-            //    .
-
-            //    .ToListAsync();
-            //return Transportations;
-            return null;
+            var Transportations = await _context.Transportations
+                .Include(x => x.Driver)
+                .Include(x => x.Request)
+                    .ThenInclude(r => r.RecievingStorage)
+                        .ThenInclude(s => s.Location)
+                .ToListAsync();
+            return Transportations;
         }
     }
 }

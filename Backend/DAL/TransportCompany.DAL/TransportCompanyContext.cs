@@ -45,7 +45,7 @@ namespace TransportCompany.DAL
 
             modelBuilder.Entity<Request>(entity =>
             {
-                entity.HasOne(r => r.Storage)
+                entity.HasOne(r => r.RecievingStorage)
                     .WithMany()
                     .HasForeignKey(r => r.Num_Receiving_storage)
                     .OnDelete(DeleteBehavior.ClientNoAction);
@@ -53,7 +53,7 @@ namespace TransportCompany.DAL
 
             modelBuilder.Entity<Transportation>(entity =>
             {
-                entity.HasOne(t => t.Storage)
+                entity.HasOne(t => t.SendingStorage)
                     .WithMany()
                     .HasForeignKey(t => t.Num_Sending_storage)
                     .OnDelete(DeleteBehavior.ClientNoAction);

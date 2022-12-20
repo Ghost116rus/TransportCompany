@@ -22,6 +22,12 @@ namespace TransportCompany.Aplication.Services
         public async Task<IEnumerable<ProductBO>> GetAllProducts()
         {
             var products = await _productRepository.GetAllProducts();
+
+            if (products == null)
+            {
+                return null;
+            }
+
             var productsBO = products.Select(product => new ProductBO
             {
                 Сatalogue_number = product.Сatalogue_number,
@@ -39,6 +45,12 @@ namespace TransportCompany.Aplication.Services
         public async Task<IEnumerable<ProductExmpBO>> GetProductsForStorage(int number)
         {
             var productList = await _productRepository.GetStorageProducts(number);
+
+            if (productList == null)
+            {
+                return null;
+            }
+
             var products = productList.Select(product => new ProductExmpBO
             {
                 Сatalogue_number = product.Сatalogue_number,

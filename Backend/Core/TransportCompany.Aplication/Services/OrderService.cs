@@ -26,6 +26,11 @@ namespace TransportCompany.Aplication.Services
         {
             var orderFromDB = await _orderRepository.GetOrderByNumber(number);
 
+            if (orderFromDB == null)
+            {
+                return null;
+            }
+
             var order = new RequestBO()
             {
                 Number = orderFromDB.Number,
@@ -49,6 +54,12 @@ namespace TransportCompany.Aplication.Services
         public async Task<IEnumerable<RequestBO>> GetAllOrders()
         {
             var ordersFromDB = await _orderRepository.GetAllOrder();
+
+            if (ordersFromDB == null)
+            {
+                return null;
+            }
+
             var orders = ordersFromDB.Select(order => new RequestBO
             {
                 Number = order.Number,

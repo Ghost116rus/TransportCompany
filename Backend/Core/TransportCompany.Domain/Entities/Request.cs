@@ -32,7 +32,7 @@ namespace TransportCompany.Domain.Entities
         public DateTime? DateOfComplete { get; set; }
 
         [ForeignKey("Num_Receiving_storage")]
-        public Storage Storage { get; set; }
+        public Storage RecievingStorage { get; set; }
 
         public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
     }

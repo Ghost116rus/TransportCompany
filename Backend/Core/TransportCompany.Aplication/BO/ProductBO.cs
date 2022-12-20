@@ -17,7 +17,7 @@ namespace TransportCompany.Aplication.BO
         public int Cost { get; set; }
 
 
-        //public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
+        //public IEnumerable<Requare_productBO> Requare_Products { get; set; } = new List<Requare_product>();
 
         //public IEnumerable<Product_exmp> Product_Exmps { get; set; } = new List<Product_exmp>();
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportCompany.DAL;
 
@@ -11,9 +12,10 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    partial class TransportCompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221220122332_AddUserPlusTypeFix")]
+    partial class AddUserPlusTypeFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasIndex("EndP");
 
-                    b.ToTable("Distances", (string)null);
+                    b.ToTable("Distances");
 
                     b.HasCheckConstraint("EndP", "EndP > 0");
 
@@ -97,7 +99,7 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("Phone_number")
                         .IsUnique();
 
-                    b.ToTable("Driver", (string)null);
+                    b.ToTable("Driver");
 
                     b.HasCheckConstraint("Status", "Status LIKE 'Свободен' OR Status LIKE 'В рейсе' OR Status LIKE 'На больничном'");
 
@@ -119,7 +121,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("locations", (string)null);
+                    b.ToTable("locations");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product", b =>
@@ -154,7 +156,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Сatalogue_number");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Product");
 
                     b.HasCheckConstraint("Cost", "Cost > 0");
 
@@ -184,7 +186,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasIndex("Сatalogue_number");
 
-                    b.ToTable("Product_exmp", (string)null);
+                    b.ToTable("Product_exmp");
 
                     b.HasCheckConstraint("Storage_number", "Storage_number > 0");
                 });
@@ -204,7 +206,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasIndex("Сatalogue_number");
 
-                    b.ToTable("Requare_product", (string)null);
+                    b.ToTable("Requare_product");
 
                     b.HasCheckConstraint("RequestID", "RequestID > 0");
                 });
@@ -242,7 +244,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Number");
 
-                    b.ToTable("Request", (string)null);
+                    b.ToTable("Request");
 
                     b.HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
 
@@ -274,7 +276,7 @@ namespace TransportCompany.DAL.Migrations
                     b.HasIndex("Phone_number")
                         .IsUnique();
 
-                    b.ToTable("Storage", (string)null);
+                    b.ToTable("Storage");
 
                     b.HasCheckConstraint("Storage_number", "Storage_number > 0");
                 });
@@ -315,7 +317,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasKey("Vehicle_identification_number");
 
-                    b.ToTable("Transport_vehicle", (string)null);
+                    b.ToTable("Transport_vehicle");
 
                     b.HasCheckConstraint("Fuel_consumption", "Fuel_consumption > 0");
 
@@ -376,7 +378,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasIndex("VehicleID");
 
-                    b.ToTable("Transportations", (string)null);
+                    b.ToTable("Transportations");
 
                     b.HasCheckConstraint("Car_load", "Car_load > 0");
 
@@ -409,18 +411,13 @@ namespace TransportCompany.DAL.Migrations
                     b.Property<int>("TypeOfUser")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.HasKey("Login");
 
                     b.HasIndex("ForignKeyToDriver");
 
                     b.HasIndex("ForignKeyToStorage");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.HasCheckConstraint("ForignKeyToStorage", "ForignKeyToStorage > 0");
 

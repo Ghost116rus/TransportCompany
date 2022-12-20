@@ -32,7 +32,5 @@ namespace TransportCompany.Domain.Entities
         public DateTime? DateOfComplete { get; set; }
 
         public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
-
-        //public IEnumerable<Product> Products { get; set; } = new List<Product>();
     }
 }

@@ -9,6 +9,9 @@ namespace TransportCompany.DAL
             :base(options)
         {
         }
+
+        public DbSet<User> Users { get; set; }
+
         public DbSet<Distance> Distances { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Locations> locations { get; set; }
@@ -51,6 +54,13 @@ namespace TransportCompany.DAL
 
             modelBuilder.Entity<Distance>()
             .HasKey(m => new { m.StartP, m.EndP });
+
+            // Ограничение пользователя
+            modelBuilder.Entity<User>()
+                .HasCheckConstraint("ForignKeyToStorage", "ForignKeyToStorage > 0");
+
+            modelBuilder.Entity<User>()
+                .HasCheckConstraint("TypeOfUser", "TypeOfUser >= 0 AND TypeOfUser < 3");
 
             // Ограничения заявки
 

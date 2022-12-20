@@ -16,19 +16,14 @@ using System.Windows.Shapes;
 namespace TransportCo.View.Administrator.Pages.Vehicles
 {
     /// <summary>
-    /// Логика взаимодействия для TransportVehiclePage.xaml
+    /// Логика взаимодействия для DetailVehiclePage.xaml
     /// </summary>
-    public partial class TransportVehiclePage : Page
+    public partial class DetailVehiclePage : Page
     {
-        public static Frame _vehicleInfoFrame { get; set; }
-        public static DetailVehiclePage _detailVehiclePage { get; set; }
-        public TransportVehiclePage()
+        public DetailVehiclePage()
         {
             InitializeComponent();
             DataContext = AdministratorWindow._mng;
-
-            _vehicleInfoFrame = this.VehicleInfo;
-            _detailVehiclePage = new DetailVehiclePage();
         }
     }
 }

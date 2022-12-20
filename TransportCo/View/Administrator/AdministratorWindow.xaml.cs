@@ -17,6 +17,7 @@ using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
 using TransportCo.View.Administrator.Pages.StoragesP;
 using TransportCo.View.Administrator.Pages.TransportationP;
+using TransportCo.View.Administrator.Pages.Vehicles;
 using TransportCo.ViewModel;
 
 namespace TransportCo.View.Administrator
@@ -36,6 +37,7 @@ namespace TransportCo.View.Administrator
         public static ProductsPage _productsPage { get; set; }
         public static StoragesPage _storagesPage { get; set; }
         public static DriversPage _driversPage { get; set; }
+        public static TransportVehiclePage _transportVehiclePage { get; set; }
         public static TransportationPage _transportationPage { get; set; }
 
         public static bool exit { get; set; } = false;
@@ -57,6 +59,7 @@ namespace TransportCo.View.Administrator
             _productsPage = new ProductsPage();
             _storagesPage = new StoragesPage();
             _driversPage = new DriversPage();
+            _transportVehiclePage = new TransportVehiclePage();
 
             _transportationPage = new TransportationPage();
 

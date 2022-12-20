@@ -9,6 +9,7 @@ namespace TransportCompany.DAL.Interfaces
 {
     public interface IDriverRepository
     {
-        IEnumerable<Driver> GetDrivers();
+        Task<Driver> GetDetailDriverInfo(string Driver_license_number);
+        Task<IEnumerable<Driver>> GetDrivers();
     }
 }

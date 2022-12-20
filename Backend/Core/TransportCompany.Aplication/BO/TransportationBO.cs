@@ -12,8 +12,9 @@ namespace TransportCompany.Aplication.BO
         public int Total_shipping_cost { get; set; }
         public string Status { get; set; }
 
+        public int RequestNumber { get; set; }
 
-        //public int RequestNumber { get; set; }
+        public string DeliveryAddres { get; set; }
 
 
         //public Request Request { get; set; }

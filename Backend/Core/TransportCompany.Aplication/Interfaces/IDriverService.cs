@@ -9,6 +9,7 @@ namespace TransportCompany.Aplication.Interfaces
 {
     public interface IDriverService
     {
-        public IEnumerable<DriverBO> GetDrivers();
+        public Task<DriverBO> GetDetailDriverInfo(string Driver_license_number);
+        public Task<IEnumerable<DriverBO>> GetDrivers();
     }
 }

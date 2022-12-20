@@ -33,11 +33,10 @@ namespace TransportCompany.Aplication.Services
                     RequestNumber = x.RequestNumber,
                     Status = x.Status,
                     Date_dispatch = x.Date_dispatch,
-                    DeliveryAddres = x.Request.
-
-
+                    DeliveryAddres = x.Request.Storage.Location.Addres
                 })
             };
+            return driver;
         }
 
         private string GetExpirience(string year_of_start_work)

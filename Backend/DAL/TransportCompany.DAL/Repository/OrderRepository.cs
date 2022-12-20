@@ -45,5 +45,19 @@ namespace TransportCompany.DAL.Repository
 
             return pandingOrders;
         }
+
+        public async Task<int> CreateOrder(Request order)
+        {
+            _context.Requests.Add(order);
+            await _context.SaveChangesAsync();
+            return order.Number;
+        }
+
+        public async Task CreateOrderList(Requare_product product)
+        {
+            _context.Requare_products.Add(product);
+            await _context.SaveChangesAsync();
+            return;
+        }
     }
 }

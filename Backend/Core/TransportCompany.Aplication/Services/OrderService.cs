@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportCompany.Aplication.BO;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.Orders;
+using TransportCompany.Aplication.Responses;
 using TransportCompany.DAL.Interfaces;
 using TransportCompany.Domain.Entities;
 
@@ -78,6 +80,52 @@ namespace TransportCompany.Aplication.Services
             return orders;
         }
 
+        public async Task<BasicResponse> CreateOrder(NewOrder newOrder)
+        {
+            int newOrderId = -1;
+            BasicResponse response = new BasicResponse();
 
+            try
+            {
+                var order = new Request()
+                {
+                    Status = "Сформирована",
+                    Num_Receiving_storage = newOrder.Num_Receiving_storage,
+                    Total_volume = newOrder.Total_volume,
+                    Total_cost = newOrder.Total_cost,
+                    Total_mass = newOrder.Total_mass,
+                    DateOfCreate = DateTime.Now
+                };
+                newOrderId = await _orderRepository.CreateOrder(order);
+            }
+            catch (Exception)
+            {
+                response.IsSuccess = false;
+                response.Error  = "Ошибка на этапе создания заявки";
+                return response;
+            }
+
+            try
+            {
+                var productList = newOrder.productList.Select(list => new Requare_product
+                {
+                    Сatalogue_number = list.Сatalogue_number,
+                    Count = list.Count,
+                    RequestID = newOrderId
+                });
+                foreach (var product in productList)
+                {
+                    await _orderRepository.CreateOrderList(product);
+                }
+            }
+            catch (Exception)
+            {
+                response.IsSuccess = false;
+                response.Error = "Ошибка на этапе записи списка товаров";
+                return response;
+            }
+            response.IsSuccess = true;
+            return response;
+        }
     }
 }

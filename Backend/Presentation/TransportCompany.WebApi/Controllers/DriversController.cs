@@ -15,11 +15,17 @@ namespace TransportCompany.WebApi.Controllers
             _driverService = driverService;
         }
 
-
         [HttpGet]
-        public IActionResult GetDrivers()
+        public async Task<IActionResult> GetDetailDriverInfo(string Driver_license_number)
         {
-            var driversBO = _driverService.GetDrivers();
+            var driver = await _driverService.GetDetailDriverInfo(Driver_license_number);
+            return Ok(driver);
+        }
+
+        [HttpGet("GetAllDrivers")]
+        public async Task<IActionResult> GetDrivers()
+        {
+            var driversBO = await _driverService.GetDrivers();
             return Ok(driversBO);
         }
     }

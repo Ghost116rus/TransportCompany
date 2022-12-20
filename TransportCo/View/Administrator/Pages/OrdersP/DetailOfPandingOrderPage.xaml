@@ -59,6 +59,7 @@
                 </ListView.View>
             </ListView>
         </Grid>
-        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CreateTransportationBtn}">СФормировать перевозку</Button>
+        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CreateTransportationBtn}" Margin="0,0,250,0" Background="#FFB2DC6C">СФормировать перевозку</Button>
+        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding DisApproveTransportationBtn}" Margin="250,0,0,0" Background="#FFE64A4A">Отказать в перевозке</Button>
     </Grid>
 </Page>

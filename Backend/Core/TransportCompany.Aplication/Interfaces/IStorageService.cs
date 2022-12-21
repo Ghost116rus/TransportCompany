@@ -10,5 +10,7 @@ namespace TransportCompany.Aplication.Interfaces
     public interface IStorageService
     {
         Task<IEnumerable<StorageBO>> GetAllStorages();
+
+        Task<StoragesListTransportationBO> GetStoragesRequest(int requestId);
     }
 }

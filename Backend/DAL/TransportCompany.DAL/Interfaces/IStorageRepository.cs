@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TransportCompany.Domain.Entities;
+﻿using TransportCompany.Domain.Entities;
 
 namespace TransportCompany.DAL.Interfaces
 {
     public interface IStorageRepository
     {
         Task<IEnumerable<Storage>> GetAllStorages();
+
+        Task<IEnumerable<int>> GetStoragesRequest(int requestId);
+
+        Task<Storage> GetStorageById(int storageId);
     }
 }

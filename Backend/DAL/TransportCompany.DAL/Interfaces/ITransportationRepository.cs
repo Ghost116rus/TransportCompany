@@ -9,6 +9,7 @@ namespace TransportCompany.DAL.Interfaces
 {
     public interface ITransportationRepository
     {
+        Task CreateTransportation(Transportation transportation);
         Task<IEnumerable<Transportation>> GetActiveTransportation();
         Task<IEnumerable<Transportation>> GetAllTransportation();
     }

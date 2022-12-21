@@ -18,6 +18,30 @@ namespace TransportCompany.DAL.Repository
             _context = context;
         }
 
+        public async Task CreateTransportation(Transportation transportation)
+        {
+            var requare_products = await _context.Requare_products
+                .Where(p => p.RequestID == transportation.RequestNumber).ToListAsync();
+            
+            foreach (var product in requare_products)
+            {
+                var product_exmp = await _context.Product_exmps.
+                    Where(p => p.Сatalogue_number == product.Сatalogue_number && p.Storage_number == transportation.Num_Sending_storage)
+                    .FirstOrDefaultAsync();
+                if (product_exmp == null)
+                {
+                    throw new Exception();
+                }
+                product_exmp.Count = product_exmp.Count - product.Count;
+
+                _context.Product_exmps.Update(product_exmp);
+            }        
+
+            _context.Transportations.Add(transportation);
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Transportation>> GetActiveTransportation()
         {
             var Transportations = await _context.Transportations

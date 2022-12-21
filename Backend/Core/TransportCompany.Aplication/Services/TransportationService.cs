@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportCompany.Aplication.BO;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.CreateTransportation;
+using TransportCompany.Aplication.Responses;
 using TransportCompany.DAL.Interfaces;
-
+using TransportCompany.DAL.Repository;
+using TransportCompany.Domain.Entities;
 
 namespace TransportCompany.Aplication.Services
 {
@@ -17,6 +20,40 @@ namespace TransportCompany.Aplication.Services
         public TransportationService(ITransportationRepository transportationRepository)
         {
             this.transportationRepository = transportationRepository;
+        }
+
+        public async Task<BasicResponse> CreateTransportation(RequestToCreateTransportation request)
+        {
+            BasicResponse basicResponse = new BasicResponse();
+            basicResponse.IsSuccess = false;
+            try
+            {
+                Transportation transportation = new Transportation()
+                {
+                    RequestNumber = request.RequestNumber,
+                    Num_Sending_storage = request.NumSendingStorage,
+                    Total_length = request.Total_length,
+                    Car_load = request.Car_load,
+                    Total_shipping_cost = request.Total_shipping_cost,
+                    DriverID = request.DriverID,
+                    VehicleID = request.VehicleID,
+
+                    Status = "Ожидает подтверждение Оператора склада-получателя",
+                    Date_dispatch = DateTime.Now.AddDays(2),
+                    Delivery_date = CreateDateOfDispatch(request.Total_length)
+                };
+
+                await transportationRepository.CreateTransportation(transportation);
+
+                basicResponse.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+
+                basicResponse.Error = "Ошибка при попытке сохранить новую перевозку";
+            }
+            return basicResponse;
+
         }
 
         public async Task<IEnumerable<TransportationsBO>> GetActiveTransportations()
@@ -59,10 +96,17 @@ namespace TransportCompany.Aplication.Services
                 Delivery_date = t.Delivery_date,
                 DeliveryAddres = t.Request.RecievingStorage.Location.Addres,
                 FullName = t.Driver.FirstName + " " + t.Driver.SecondName[0] + ". " + t.Driver.Patronymic[0] + ".",
-                RequestNumber = t.RequestNumber
+                RequestNumber = t.RequestNumber,
             });
 
             return transportations;
+        }
+
+
+        private DateTime CreateDateOfDispatch(int length)
+        {
+            int days = length / 300;
+            return DateTime.Now.AddDays(days + 2);
         }
     }
 }

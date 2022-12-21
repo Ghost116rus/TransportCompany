@@ -51,8 +51,8 @@ namespace TransportCo.MyHttp
             var response = Client.GetAsync("http://localhost:5093/api/Order/PandingOrders");
 
             var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OrderDTO>>().Result;
-            
-            var orders = result.Select(order => new OrderDTO
+
+            List<Orders> orders = result.Select(order => new Orders
             {
                 Number = order.Number,
                 Status = order.Status,
@@ -62,35 +62,11 @@ namespace TransportCo.MyHttp
                 Total_volume = order.Total_volume,
                 DateOfCreate = order.DateOfCreate,
                 DateOfComplete = order.DateOfComplete,
-                Add
+                Addres = order.Addres,
             }
-            );
+            ).ToList();
 
-            return new List<Orders>()
-            {
-                new Orders()
-                {
-                    Number = 1,
-                    Status = "Wait",
-                    Num_Receiving_storage = 1,
-                    Total_volume = 50,
-                    Total_mass = 100,
-                    Total_cost = 100,
-                    DateOfCreate = DateTime.Now,
-                    Addres = "г. Казань, ул Вахитова 41"
-                },
-                new Orders()
-                {
-                    Number = 8,
-                    Status = "Wait",
-                    Num_Receiving_storage = 1,
-                    Total_volume = 50,
-                    Total_mass = 100,
-                    Total_cost = 100,
-                    DateOfCreate = DateTime.Now,
-                    Addres = "г. Екатеринбург, ул Арбузова 15"
-                },
-            };
+            return orders;
         }
 
         public static List<Transportation> GetActiveTransportations()
@@ -125,69 +101,95 @@ namespace TransportCo.MyHttp
 
         #region Работа с Заявками
 
+
         public static List<Orders> GetAllOrders()
         {
 
-            return new List<Orders>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Order/AllOrders");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OrderDTO>>().Result;
+
+            List<Orders> orders = result.Select(order => new Orders
             {
-                new Orders()
-                {
-                    Number = 1,
-                    Status = "Wait",
-                    Num_Receiving_storage = 1,
-                    Total_volume = 50,
-                    Total_mass = 100,
-                    Total_cost = 100,
-                    DateOfCreate = DateTime.Now,
-                    Addres = "г. Казань, ул Вахитова 41"
-                },
-                new Orders()
-                {
-                    Number = 8,
-                    Status = "Wait",
-                    Num_Receiving_storage = 1,
-                    Total_volume = 50,
-                    Total_mass = 100,
-                    Total_cost = 100,
-                    DateOfCreate = DateTime.Now,
-                    Addres = "г. Москва, ул Павлова 21"
-                },
-            };
+                Number = order.Number,
+                Status = order.Status,
+                Num_Receiving_storage = order.Num_Receiving_storage,
+                Total_cost = order.Total_cost,
+                Total_mass = order.Total_mass,
+                Total_volume = order.Total_volume,
+                DateOfCreate = order.DateOfCreate,
+                DateOfComplete = order.DateOfComplete,
+                Addres = order.Addres,
+            }
+            ).ToList();
+
+            return orders;
         }
 
         public static Orders? GetDetailOrderInfo(int number)
         {
-            return new Orders()
-            {
-                Number = 1,
-                Status = "Wait",
-                Num_Receiving_storage = 1,
-                Total_volume = 50,
-                Total_mass = 100,
-                Total_cost = 100,
-                DateOfCreate = DateTime.Now,
-                Addres = "г. Казань, ул Вахитова 41",
-                transportationNum = 1,
-                Requare_Products = new List<Product>()
-                {
-                    new Product()
-                    {
-                        Сatalogue_number = "1245689",
-                        Name = "Холодильник LG12-58",
-                        Type = "крупногабаритный",
-                        Count = 5,
-                    },
-                    new Product()
-                    {
-                         Сatalogue_number = "6895123",
-                        Name = "Утюг LG8-32",
-                        Type = "малогабаритный",
-                        Count = 15,
-                    },
-                },
-                DriverLicense = "15896625"
+            HttpClient Client = new HttpClient();
 
+            var response = Client.GetAsync($"http://localhost:5093/api/Order/DetailInfo?number={number}");
+
+            var order = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<OrderDTO>().Result;
+
+            Orders detailInfoOrder = new Orders()
+            {
+                Number = order.Number,
+                Status = order.Status,
+                Num_Receiving_storage = order.Num_Receiving_storage,
+                Total_cost = order.Total_cost,
+                Total_mass = order.Total_mass,
+                Total_volume = order.Total_volume,
+                DateOfCreate = order.DateOfCreate,
+                DateOfComplete = order.DateOfComplete,
+                Addres = order.Addres,
+                transportationNum = order.TransportationNumber,
+                Requare_Products = order.productsList.Select(p => new Product
+                {
+                    Сatalogue_number = p.Сatalogue_number,
+                    Name = p.Name,
+                    Count = p.Count
+                }).ToList()
             };
+            
+
+            return detailInfoOrder;
+
+            //return new Orders()
+            //{
+            //    Number = 1,
+            //    Status = "Wait",
+            //    Num_Receiving_storage = 1,
+            //    Total_volume = 50,
+            //    Total_mass = 100,
+            //    Total_cost = 100,
+            //    DateOfCreate = DateTime.Now,
+            //    Addres = "г. Казань, ул Вахитова 41",
+            //    transportationNum = 1,
+            //    Requare_Products = new List<Product>()
+            //    {
+            //        new Product()
+            //        {
+            //            Сatalogue_number = "1245689",
+            //            Name = "Холодильник LG12-58",
+            //            Type = "крупногабаритный",
+            //            Count = 5,
+            //        },
+            //        new Product()
+            //        {
+            //             Сatalogue_number = "6895123",
+            //            Name = "Утюг LG8-32",
+            //            Type = "малогабаритный",
+            //            Count = 15,
+            //        },
+            //    },
+            //    DriverLicense = "15896625"
+
+            //};
         }
 
 

@@ -16,6 +16,7 @@ namespace TransportCompany.Aplication.BO
         public int Total_volume { get; set; }
         public int Total_mass { get; set; }
         public int Total_cost { get; set; }
+        public string Addres { get; set; }
         public DateTime DateOfCreate { get; set; }
         public DateTime? DateOfComplete { get; set; }
         public int TransportationNumber { get; set; }

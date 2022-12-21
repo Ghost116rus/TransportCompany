@@ -30,7 +30,7 @@
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Оператор:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Время формирования:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Время завершения:</TextBlock>
-                <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Адрес склада-получателя:</TextBlock>
+                <TextBlock Height="80" FontFamily="Times New Roman" FontSize="16">Адрес склада-получателя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая стоимость:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая масса:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая Объем:</TextBlock>
@@ -42,7 +42,7 @@
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding NameOfOperator}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding DateOfCreate, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding DateOfComplete, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
-                <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Addres}"/>
+                <TextBlock Height="80" MaxWidth="275" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Addres}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_cost}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_mass}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_volume}"/>

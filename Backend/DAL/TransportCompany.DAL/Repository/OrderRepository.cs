@@ -22,6 +22,8 @@ namespace TransportCompany.DAL.Repository
         {
             var order = await _context.Requests
                 .Include(x => x.transportation)
+                .Include(x => x.RecievingStorage)
+                    .ThenInclude(s => s.Location)
                 .Include(x => x.Requare_Products)
                     .ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync(x => x.Number == number);
@@ -32,7 +34,10 @@ namespace TransportCompany.DAL.Repository
 
         public async Task<IEnumerable<Request>> GetAllOrder()
         {
-            var orders = await _context.Requests.OrderBy(x => x.DateOfCreate).ToListAsync();
+            var orders = await _context.Requests
+                .Include(x => x.RecievingStorage)
+                    .ThenInclude(s => s.Location)
+                .OrderBy(x => x.DateOfCreate).ToListAsync();
             return orders;
         }
 
@@ -41,6 +46,8 @@ namespace TransportCompany.DAL.Repository
         {
             var pandingOrders = await _context.Requests.
                 Where(x => x.Status == "Сформирована" || x.Status == "Обрабатывается")
+                .Include(x => x.RecievingStorage)
+                    .ThenInclude(s => s.Location)
                 .OrderBy(x => x.DateOfCreate)
                 .ToListAsync();
 

@@ -11,6 +11,7 @@ namespace TransportCo.DTO
         public int Number { get; set; }
         public string Status { get; set; }
         public int Num_Receiving_storage { get; set; }
+        public string Addres { get; set; }
         public int Total_volume { get; set; }
         public int Total_mass { get; set; }
         public int Total_cost { get; set; }

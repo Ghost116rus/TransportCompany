@@ -21,7 +21,7 @@ namespace TransportCo.Model
         public string NameOfOperator { get; set; }
 
         public DateTime DateOfCreate { get; set; }
-        public DateTime DateOfComplete { get; set; }
+        public DateTime? DateOfComplete { get; set; }
 
         public int Num_Receiving_storage { get; set; }
         public string Addres { get; set; }

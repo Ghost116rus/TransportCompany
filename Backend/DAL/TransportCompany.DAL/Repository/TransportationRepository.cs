@@ -61,7 +61,8 @@ namespace TransportCompany.DAL.Repository
                     .ThenInclude(r => r.RecievingStorage)
                         .ThenInclude(s => s.Location)
                 .Where(r => r.Request.Status == "Сформирована" || r.Request.Status == "Доставляется")
-                .ToListAsync();
+                .OrderBy(x => x.Request.DateOfCreate).ToListAsync();
+                
             return Transportations;
         }
 
@@ -72,8 +73,32 @@ namespace TransportCompany.DAL.Repository
                 .Include(x => x.Request)
                     .ThenInclude(r => r.RecievingStorage)
                         .ThenInclude(s => s.Location)
-                .ToListAsync();
+                 .OrderByDescending(x => x.Request.DateOfCreate).ToListAsync();
+
             return Transportations;
+        }
+
+        public async Task<Transportation> GetDetailInfoAboutTransportation(int number)
+        {
+            var transportation = await _context.Transportations
+                .Include(t => t.Driver)
+                .Include(t => t.vehicle)
+                .Include(t => t.SendingStorage)
+                    .ThenInclude(s => s.Location)
+                .Include(t => t.Request)
+                    .ThenInclude(r => r.RecievingStorage)
+                        .ThenInclude(s => s.Location)
+                .FirstOrDefaultAsync(t => t.Number == number);
+            return transportation;
+        }
+
+        public async Task<Transportation> GetDriverByTransportationId(int transportationNumber)
+        {
+            var transportation = await _context.Transportations
+                .Include(t => t.Driver)
+                .Where(t => t.Number == transportationNumber)
+                .FirstOrDefaultAsync();
+            return transportation;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TransportCo.DTO;
 using TransportCo.Model;
 using TransportCo.Model.Operator;
@@ -63,6 +64,7 @@ namespace TransportCo.MyHttp
                 DateOfCreate = order.DateOfCreate,
                 DateOfComplete = order.DateOfComplete,
                 Addres = order.Addres,
+                DriverLicense = order.Driver_license_number
             }
             ).ToList();
 
@@ -71,30 +73,27 @@ namespace TransportCo.MyHttp
 
         public static List<Transportation> GetActiveTransportations()
         {
-            return new List<Transportation>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Transportations/GetActiveTransportations");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<TRansportationDTO>>().Result;
+
+            List<Transportation> transportations = result.Select(t => new Transportation
             {
-                new Transportation()
+                Number = t.Number,
+                RecievedAddres = t.DeliveryAddres,
+                Status = t.Status,
+                Date_dispatch = t.Date_dispatch,
+                Delivery_date = t.Delivery_date,
+                driver = new Driver()
                 {
-                    Number = 1,
-                    RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
-                    Status = "Прошел г. Казань",
-                    driver = new Driver()
-                    {
-                        FullName = "Калеев Д.А"
-                    }
-                    
-                },
-                new Transportation()
-                {
-                    Number = 8,
-                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
-                    Status = "На подъезде к г. Екатеринбург",
-                    driver = new Driver()
-                    {
-                        FullName = "Горохов А.С"
-                    }                    
-                },
-            };
+                    FullName = t.FullName
+                }
+            }
+            ).ToList();
+
+            return transportations;
         }
 
         #endregion
@@ -148,6 +147,7 @@ namespace TransportCo.MyHttp
                 DateOfComplete = order.DateOfComplete,
                 Addres = order.Addres,
                 transportationNum = order.TransportationNumber,
+                DriverLicense = order.Driver_license_number,
                 Requare_Products = order.productsList.Select(p => new Product
                 {
                     Сatalogue_number = p.Сatalogue_number,
@@ -158,38 +158,6 @@ namespace TransportCo.MyHttp
             
 
             return detailInfoOrder;
-
-            //return new Orders()
-            //{
-            //    Number = 1,
-            //    Status = "Wait",
-            //    Num_Receiving_storage = 1,
-            //    Total_volume = 50,
-            //    Total_mass = 100,
-            //    Total_cost = 100,
-            //    DateOfCreate = DateTime.Now,
-            //    Addres = "г. Казань, ул Вахитова 41",
-            //    transportationNum = 1,
-            //    Requare_Products = new List<Product>()
-            //    {
-            //        new Product()
-            //        {
-            //            Сatalogue_number = "1245689",
-            //            Name = "Холодильник LG12-58",
-            //            Type = "крупногабаритный",
-            //            Count = 5,
-            //        },
-            //        new Product()
-            //        {
-            //             Сatalogue_number = "6895123",
-            //            Name = "Утюг LG8-32",
-            //            Type = "малогабаритный",
-            //            Count = 15,
-            //        },
-            //    },
-            //    DriverLicense = "15896625"
-
-            //};
         }
 
 
@@ -198,31 +166,25 @@ namespace TransportCo.MyHttp
         #region Работа с товарами
         public static List<Product> GetAllProducts()
         {
-            return new List<Product>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Product/GetProducts");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<ProductsDTO>>().Result;
+
+            var products = result.Select(p => new Product()
             {
-                new Product()
-                {
-                    Сatalogue_number = "1245689",
-                    Name = "Холодильник LG12-58",
-                    Type = "крупногабаритный",
-                    Length = 800,
-                    Width = 800,
-                    Height = 1600,
-                    Weight = 80,
-                    Cost = 32_500
-                },
-                new Product()
-                {
-                    Сatalogue_number = "6895123",
-                    Name = "Утюг LG8-32",
-                    Type = "малогабаритный",
-                    Length = 400,
-                    Width = 200,
-                    Height = 400,
-                    Weight = 5,
-                    Cost = 8500
-                }
-            };
+                Сatalogue_number = p.Сatalogue_number,
+                Name = p.Name,
+                Type = p.Type,
+                Length = p.Length,
+                Width = p.Width,
+                Height = p.Height,
+                Weight = p.Weight,
+                Cost = p.Cost
+            }).ToList();
+
+            return products;
         }
 
         internal static void SaveChangesAboutProductInDB(Product selectedProduct, ref string message)
@@ -235,54 +197,38 @@ namespace TransportCo.MyHttp
 
         public static List<Product>? GetProductListForStorageByNumber(int number)
         {
-            return new List<Product>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Product/GetProductsByStorage?number={number}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<ProductForListDTO>>().Result;
+
+            var products = result.Select(p => new Product()
             {
-                new Product()
-                {
-                    Сatalogue_number = "1245689",
-                    Name = "Холодильник LG12-58",
-                    Count = 15
-                },
-                new Product()
-                {
-                    Сatalogue_number = "6895123",
-                    Name = "Утюг LG8-32",
-                    Type = "малогабаритный",
-                    Count = 59
-                },
-                new Product()
-                {
-                    Сatalogue_number = "1234557",
-                    Name = "Монитор LGB158-C32",
-                    Type = "малогабаритный",
-                    Count = 22
-                }
-            };
+                Сatalogue_number = p.Сatalogue_number,
+                Name = p.Name,
+                Count = p.Count
+            }).ToList();
+
+            return products;
         }
 
         public static List<Storage> GetAllStorage()
         {
-            return new List<Storage>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Storages");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<StorageDTO>>().Result;
+
+            var storages = result.Select(p => new Storage()
             {
-                new Storage()
-                {
-                    Number = 5,
-                    Addres = "Респ. Татарстан, г. Казань, ул. Академика Кирпичникова 65",
-                    PhoneNumber = "89520406725"
-                },
-                new Storage()
-                {
-                    Number = 8,
-                    Addres = "Респ. Карелия, г. Булдык, ул. Академика Азимова 88",
-                    PhoneNumber = "89520406725"
-                },
-                new Storage()
-                {
-                    Number = 5,
-                    Addres = "Московская область, г. Москва, ул. Дружбы народов 7",
-                    PhoneNumber = "89520406725"
-                }
-            };
+                Number = p.Storage_number,
+                Addres = p.Addres,
+                PhoneNumber = p.Phone_number
+            }).ToList();
+
+            return storages;
         }
 
 
@@ -290,61 +236,87 @@ namespace TransportCo.MyHttp
 
         #region Работа с водителями
 
-        internal static List<Driver>? GetAllDrivers()
+        public static List<Driver>? GetAllDrivers()
         {
-            return new List<Driver>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Drivers/GetAllDrivers");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<DriverDTO>>().Result;
+
+            var drivers = result.Select(d => new Driver()
             {
-                new Driver()
-                {
-                    FullName = "Калеев Д.А.",
-                    Location = "Респ. Татарстан, г. Казань",
-                    Status = "В рейсе"
-                },
-                new Driver()
-                {
-                    FullName = "Горохов А.С.",
-                    Location = "Свердловская область, г. Екатеринбург",
-                    Status = "В рейсе"
-                },
-                new Driver()
-                {
-                    FullName = "Гайфуллин Д.Р.",
-                    Location = "Респ Башкортостан, г. Уфа",
-                    Status = "Свобден"
-                }
-            };
+                DriverLicense = d.Driver_license_number,
+                FullName = d.FIO,
+                Location = d.Location,
+                Status = d.Status
+            }).ToList();
+            return drivers;
         }
         internal static Driver GetDetailInfoAboutDriver(string driverLicense)
         {
-            return new Driver()
+            if (driverLicense == "")
             {
-                DriverLicense = "15896625",
-                FullName = "Калеев Д.А.",
-                Location = "Респ. Татарстан, г. Казань",
-                Status = "В рейсе",
-                Addres = "Респ. Татарстан, г. Казань, 3-я кленовая 9\"Б\" кв 56",
-                WorkExpirience = 15,
-                Phone_number = "89520406725",
-                Transportations = new List<Transportation>()
-                {
-                    new Transportation()
-                    {
-                        Number = 1,
-                        RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
-                        Status = "Прошел г. Казань",
-                        Date_dispatch = DateTime.Now
-                    },
-                    new Transportation()
-                    {
-                        Number = 2,
-                        RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
-                        Status = "Исполнена",
-                        Date_dispatch = DateTime.Now,
-                        Delivery_date = DateTime.Now,
+                MessageBox.Show("Ошибка!");
+                return null;
+            }
+            HttpClient Client = new HttpClient();
 
-                    },
-                }
+            var response = Client.GetAsync($"http://localhost:5093/api/Drivers?Driver_license_number={driverLicense}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<DriverDTO>().Result;
+
+            var driver = new Driver()
+            {
+                DriverLicense = result.Driver_license_number,
+                FullName = result.FIO,
+                Addres = result.Addres,
+                Phone_number = result.Phone_number,
+                Driver_license_category = result.Driver_license_category,
+                WorkExpirience = result.Expirience,
+                Location = result.Location,
+                Status = result.Status,
+                Transportations = result.Transportations.Select(t => new Transportation()
+                {
+                    Number = t.Number,
+                    Status = t.Status,
+                    Date_dispatch = t.Date_dispatch,
+                    RecievedAddres = t.DeliveryAddres
+                }).ToList()
             };
+
+
+            return driver;
+
+            //return new Driver()
+            //{
+            //    DriverLicense = "15896625",
+            //    FullName = "Калеев Д.А.",
+            //    Location = "Респ. Татарстан, г. Казань",
+            //    Status = "В рейсе",
+            //    Addres = "Респ. Татарстан, г. Казань, 3-я кленовая 9\"Б\" кв 56",
+            //    WorkExpirience = 15,
+            //    Phone_number = "89520406725",
+            //    Transportations = new List<Transportation>()
+            //    {
+            //        new Transportation()
+            //        {
+            //            Number = 1,
+            //            RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+            //            Status = "Прошел г. Казань",
+            //            Date_dispatch = DateTime.Now
+            //        },
+            //        new Transportation()
+            //        {
+            //            Number = 2,
+            //            RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
+            //            Status = "Исполнена",
+            //            Date_dispatch = DateTime.Now,
+            //            Delivery_date = DateTime.Now,
+
+            //        },
+            //    }
+            //};
         }
 
         #endregion
@@ -395,63 +367,66 @@ namespace TransportCo.MyHttp
         #region Работа с Перевозками
 
         public static List<Transportation> GetAllTransportations()
-        {
-            return new List<Transportation>()
+        {       
+
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Transportations/GetAllTransportations");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<TRansportationDTO>>().Result;
+
+            List<Transportation> transportations = result.Select(t => new Transportation
             {
-                new Transportation()
+                Number = t.Number,
+                RecievedAddres = t.DeliveryAddres,
+                Status = t.Status,
+                Date_dispatch = t.Date_dispatch,
+                Delivery_date = t.Delivery_date,
+                driver = new Driver()
                 {
-                    Number = 1,
-                    RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
-                    Status = "Прошел г. Казань",
-                    driver = new Driver()
-                    {
-                        FullName = "Калеев Д.А",
-                        DriverLicense = "15896625"
-                    }
-                },
-                new Transportation()
-                {
-                    Number = 8,
-                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
-                    Status = "На подъезде к г. Екатеринбург",
-                    driver = new Driver()
-                    {
-                        FullName = "Горохов А.С"
-                    }
-                    
-                },
-                new Transportation()
-                {
-                    Number = 16,
-                    RecievedAddres = "г. Екатеринбург, ул. Губкина, д. 56",
-                    Status = "На подъезде к г. Екатеринбург",
-                    driver = new Driver()
-                    {
-                        FullName = "Гайфуллин Д.Р"
-                    }
-                    
-                },
-            };
+                    FullName = t.FullName
+                }
+            }
+            ).ToList();
+
+            return transportations;
         }
 
         public static Transportation GetDetailTransportationInfo(int number)
         {
-            return new Transportation()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetDetailInfoAboutTransportation?number={number}");
+
+            var transportation = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<DetailTransportationDTO>().Result;
+
+            Transportation detailInfoTransportation = new Transportation()
             {
-                Number = 1,
-                RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
-                Status = "Прошел г. Казань",
+                Number = transportation.Number,
+                Num_Sending_storage = transportation.Num_Sending_storage,
+                Status = transportation.Status,
+                Sending_storage_Addres = transportation.Sending_storage_Addres,
+                Date_dispatch=transportation.Date_dispatch,
+                RecievedAddres=transportation.DeliveryAddres,
+                Delivery_date = transportation.Delivery_date,
+                Total_length = transportation.Total_length,
+                Total_shipping_cost = transportation.Total_shipping_cost,
+                Car_load = transportation.Car_load,
+                vehicle = new Transport_vehicle()
+                {
+                    Vehicle_identification_number = transportation.Vehicle_identification_number,
+                    Name = transportation.Name,
+                },
+                OrderNumber = transportation.RequestNumber,
                 driver = new Driver()
                 {
-                    FullName = "Калеев Д.А"
+                    FullName = transportation.FullName,
+                    DriverLicense = transportation.Driver_license_number
                 }
             };
+
+            return detailInfoTransportation;
         }
-
-
-
-
-
 
 
         #endregion

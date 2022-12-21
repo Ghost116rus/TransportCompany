@@ -19,6 +19,7 @@ namespace TransportCo.DTO
         public DateTime? DateOfComplete { get; set; }
         public int TransportationNumber { get; set; }
         public IEnumerable<ProductForListDTO>? productsList { get; set; }
+        public string Driver_license_number { get; set; }
 
     }
 }

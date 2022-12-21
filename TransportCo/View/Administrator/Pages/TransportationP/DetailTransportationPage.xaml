@@ -26,33 +26,35 @@
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,80,0,0">Номер перевозки:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Номер склада-отправителя:</TextBlock>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Адрес склада-отправителя:</TextBlock>
+                <TextBlock Height="80" FontFamily="Times New Roman" FontSize="16">Адрес склада-отправителя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Дата отправки:</TextBlock>
-                <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Адрес склада-получателя:</TextBlock>
+                <TextBlock Height="80" FontFamily="Times New Roman" FontSize="16">Адрес склада-получателя:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая длина:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Общая стоимость перевозки:</TextBlock>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0">Автомобиль:</TextBlock>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,20,0,0">Автомобиль:</TextBlock>
+                <TextBlock Height="45" MaxWidth="200" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" >Идентификационный номер автомобиля:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Загруженность автомобиля:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0">ФИО водителя:</TextBlock>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Текущий статус:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Дата доставки:</TextBlock>
+                <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Текущий статус:</TextBlock>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2"  DataContext="{Binding DetailTransportation}" >
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,80,0,0" Text="{Binding Number}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Num_Sending_storage}"/>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding SendAddres}"/>
+                <TextBlock Height="80" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Sending_storage_Addres}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Date_dispatch, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
-                <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding RecievedAddres}"/>
+                <TextBlock Height="80" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding RecievedAddres}"/>
                 
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_length}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_shipping_cost}"/>
 
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0" Text="{Binding vehicle.Name}"/>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,20,0,0" Text="{Binding vehicle.Name}"/>
+                <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16" Margin="0,0,0,0" Text="{Binding vehicle.Vehicle_identification_number}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Car_load}"/>
 
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,40,0,0" Text="{Binding driver.FullName}"/>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Status}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Delivery_date, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
+                <TextBlock Height="50" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Status}"/>
             </StackPanel>
         </Grid>
 

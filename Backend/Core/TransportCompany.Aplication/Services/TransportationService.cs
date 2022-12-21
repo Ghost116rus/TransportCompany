@@ -96,12 +96,40 @@ namespace TransportCompany.Aplication.Services
                 Delivery_date = t.Delivery_date,
                 DeliveryAddres = t.Request.RecievingStorage.Location.Addres,
                 FullName = t.Driver.FirstName + " " + t.Driver.SecondName[0] + ". " + t.Driver.Patronymic[0] + ".",
-                RequestNumber = t.RequestNumber,
+                RequestNumber = t.RequestNumber
             });
 
             return transportations;
         }
 
+        public async Task<DetailTransportationBO> GetDetailInfoAboutTransportation(int number)
+        {
+            var transFromDB = await transportationRepository.GetDetailInfoAboutTransportation(number);
+            if (transFromDB != null)
+            {
+                var transportation = new DetailTransportationBO()
+                {
+                    Number = transFromDB.Number,
+                    Num_Sending_storage = transFromDB.Num_Sending_storage,
+                    Status = transFromDB.Status,
+                    Sending_storage_Addres = transFromDB.SendingStorage.Location.Addres,
+                    Date_dispatch = transFromDB.Date_dispatch,
+                    DeliveryAddres = transFromDB.Request.RecievingStorage.Location.Addres,
+                    Total_length = transFromDB.Total_length,
+                    Total_shipping_cost = transFromDB.Total_shipping_cost,
+                    Vehicle_identification_number = transFromDB.vehicle.Vehicle_identification_number,
+                    Name = transFromDB.vehicle.Name,
+                    Car_load = transFromDB.Car_load,
+                    FullName = transFromDB.Driver.FirstName + " " + transFromDB.Driver.SecondName[0] + ". " + transFromDB.Driver.Patronymic[0] + ".",
+                    Driver_license_number = transFromDB.Driver.Driver_license_number,
+                    Delivery_date = transFromDB.Delivery_date,
+                    RequestNumber = transFromDB.RequestNumber
+                };
+                return transportation;
+            }
+            return null;
+
+        }
 
         private DateTime CreateDateOfDispatch(int length)
         {

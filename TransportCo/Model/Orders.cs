@@ -18,7 +18,6 @@ namespace TransportCo.Model
         public int Total_mass { get; set; }
         public int Total_cost { get; set; }
 
-        public string NameOfOperator { get; set; }
 
         public DateTime DateOfCreate { get; set; }
         public DateTime? DateOfComplete { get; set; }
@@ -27,7 +26,7 @@ namespace TransportCo.Model
         public string Addres { get; set; }
 
         public int transportationNum { get; set; } = -1;
-        public string DriverLicense { get; set; }
+        public string DriverLicense { get; set; } = "";
         public List<Product> Requare_Products { get; set; } = null;
 
         

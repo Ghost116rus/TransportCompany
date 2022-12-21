@@ -22,5 +22,7 @@ namespace TransportCompany.Aplication.BO
         public int TransportationNumber { get; set; }
         public IEnumerable<ProductExmpBO>? productsList { get; set;}
 
+        public string Driver_license_number { get; set; }
+
     }
 }

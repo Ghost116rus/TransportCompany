@@ -19,7 +19,6 @@ namespace TransportCo.Model
 
         public int OrderNumber { get; set; }
         public string RecievedAddres { get; set; }
-        public string SendAddres { get; set; }
 
 
         private RelayCommand? transportatioDetails;

@@ -16,6 +16,13 @@ namespace TransportCompany.WebApi.Controllers
             _transportationService = transportationService;
         }
 
+        [HttpGet("GetDetailInfoAboutTransportation")]
+        public async Task<IActionResult> GetDetailInfoAboutTransportation(int number)
+        {
+            var transportation = await _transportationService.GetDetailInfoAboutTransportation(number);
+            return Ok(transportation);
+        }
+
         [HttpGet("GetActiveTransportations")]
         public async Task<IActionResult> GetActiveTransportations()
         {

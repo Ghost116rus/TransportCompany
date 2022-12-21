@@ -90,7 +90,7 @@
                 <TabItem Name="Panding" FontFamily="Times New Roman" FontSize="16">
 
                     <TabItem.Header>
-                        <TextBlock Text="Нерассмотренные заявки" FontFamily="Russo One" FontSize="20"/>
+                        <TextBlock Text="Ожидающие перевозки заявки" FontFamily="Russo One" FontSize="20"/>
                     </TabItem.Header>
 
                     <ListView x:Name="ViewPanding" ItemsSource="{Binding PendingOrders,UpdateSourceTrigger=PropertyChanged}"

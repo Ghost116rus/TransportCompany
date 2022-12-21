@@ -15,10 +15,12 @@ namespace TransportCompany.Aplication.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly ITransportationRepository _transportationRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, ITransportationRepository transportationRepository)
         {
             _orderRepository = orderRepository;
+            _transportationRepository = transportationRepository;
         }
 
 
@@ -51,6 +53,8 @@ namespace TransportCompany.Aplication.Services
             if (orderFromDB.transportation != null)
             {
                 order.TransportationNumber = orderFromDB.transportation.Number;
+                var transportation = await _transportationRepository.GetDriverByTransportationId(order.TransportationNumber);
+                order.Driver_license_number = transportation.Driver.Driver_license_number;
             }
             else
             {

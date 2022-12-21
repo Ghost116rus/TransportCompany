@@ -22,6 +22,7 @@ namespace TransportCompany.DAL.Repository
         {
             var order = await _context.Requests
                 .Include(x => x.transportation)
+                    .ThenInclude(t => t.Driver)
                 .Include(x => x.RecievingStorage)
                     .ThenInclude(s => s.Location)
                 .Include(x => x.Requare_Products)
@@ -37,7 +38,7 @@ namespace TransportCompany.DAL.Repository
             var orders = await _context.Requests
                 .Include(x => x.RecievingStorage)
                     .ThenInclude(s => s.Location)
-                .OrderBy(x => x.DateOfCreate).ToListAsync();
+                .OrderByDescending(x => x.DateOfCreate).ToListAsync();
             return orders;
         }
 

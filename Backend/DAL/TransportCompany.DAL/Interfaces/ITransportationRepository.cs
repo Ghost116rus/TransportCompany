@@ -12,5 +12,7 @@ namespace TransportCompany.DAL.Interfaces
         Task CreateTransportation(Transportation transportation);
         Task<IEnumerable<Transportation>> GetActiveTransportation();
         Task<IEnumerable<Transportation>> GetAllTransportation();
+        Task<Transportation> GetDetailInfoAboutTransportation(int number);
+        Task<Transportation> GetDriverByTransportationId(int transportationNumber);
     }
 }

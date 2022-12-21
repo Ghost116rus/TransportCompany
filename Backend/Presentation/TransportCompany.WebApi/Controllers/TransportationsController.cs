@@ -28,7 +28,5 @@ namespace TransportCompany.WebApi.Controllers
             var transportations = await _transportationService.GetAllTransportations();
             return Ok(transportations);
         }
-
-
     }
 }

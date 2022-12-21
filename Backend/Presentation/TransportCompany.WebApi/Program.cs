@@ -29,6 +29,7 @@ services.AddScoped<IStorageRepository, StorageRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IOrderRepository, OrderRepository>();
 services.AddScoped<ITransportationRepository, TransportationRepository>();
+services.AddScoped<IDistancesRepository, DistanceRepository>();
 
 // Services
 services.AddScoped<IDriverService, DriverService>();

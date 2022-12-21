@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -18,9 +19,20 @@ namespace TransportCompany.DAL.Repository
             _context = context;
         }
 
-        public IEnumerable<Driver> GetDrivers()
+        public async Task<Driver> GetDetailDriverInfo(string Driver_license_number)
         {
-            var driversEntities = _context.Drivers.ToList();
+            var driver = await _context.Drivers
+                .Include(x => x.Transportations)
+                    .ThenInclude(x => x.Request)
+                        .ThenInclude(x => x.RecievingStorage)
+                            .ThenInclude(y => y.Location)
+                .FirstOrDefaultAsync(driver => driver.Driver_license_number == Driver_license_number);
+            return driver;
+        }
+
+        public async Task<IEnumerable<Driver>> GetDrivers()
+        {
+            var driversEntities = await _context.Drivers.ToListAsync();
             return driversEntities;
         }
     }

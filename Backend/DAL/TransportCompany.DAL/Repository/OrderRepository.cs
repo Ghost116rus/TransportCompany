@@ -21,6 +21,7 @@ namespace TransportCompany.DAL.Repository
         public async Task<Request> GetOrderByNumber(int number)
         {
             var order = await _context.Requests
+                .Include(x => x.transportation)
                 .Include(x => x.Requare_Products)
                     .ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync(x => x.Number == number);
@@ -39,11 +40,25 @@ namespace TransportCompany.DAL.Repository
         public async Task<IEnumerable<Request>> GetPandingOrder()
         {
             var pandingOrders = await _context.Requests.
-                Where(x => x.Status == "Сформирована")
+                Where(x => x.Status == "Сформирована" || x.Status == "Обрабатывается")
                 .OrderBy(x => x.DateOfCreate)
                 .ToListAsync();
 
             return pandingOrders;
+        }
+
+        public async Task<int> CreateOrder(Request order)
+        {
+            _context.Requests.Add(order);
+            await _context.SaveChangesAsync();
+            return order.Number;
+        }
+
+        public async Task CreateOrderList(Requare_product product)
+        {
+            _context.Requare_products.Add(product);
+            await _context.SaveChangesAsync();
+            return;
         }
     }
 }

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TransportCompany.Aplication.BO
+namespace TransportCompany.Aplication.Requests.Orders
 {
-    public class ProductListWithCountBO
+    public class ProductList
     {
         public string Сatalogue_number { get; set; }
-        public string Name { get; set; }
         public int Count { get; set; }
     }
 }

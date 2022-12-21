@@ -7,9 +7,9 @@ using TransportCompany.Aplication.BO;
 
 namespace TransportCompany.Aplication.Interfaces
 {
-    public interface IDriverService
+    public interface ITransportationService
     {
-        public Task<DriverBO> GetDetailDriverInfo(string Driver_license_number);
-        public Task<IEnumerable<DriverBO>> GetDrivers();
+        Task<IEnumerable<TransportationsBO>> GetActiveTransportations();
+        Task<IEnumerable<TransportationsBO>> GetAllTransportations();
     }
 }

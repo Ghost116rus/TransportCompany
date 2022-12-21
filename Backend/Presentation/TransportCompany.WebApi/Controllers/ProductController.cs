@@ -22,9 +22,30 @@ namespace TransportCompany.WebApi.Controllers
             return Ok(products);
         }
         [HttpGet("GetProductsByStorage")]
-        public async Task<IActionResult> GetStorageProductsHttp(int number)
+        public async Task<IActionResult> GetProductsByStorage(int number)
         {
             var products = await _productService.GetProductsForStorage(number);
+            return Ok(products);
+        }        
+        
+        [HttpGet("GetProductsByStorageOperator")]
+        public async Task<IActionResult> GetProductsByStorageOperator(int number)
+        {
+            var products = await _productService.GetProductsByStorageOperator(number);
+            return Ok(products);
+        }
+
+        [HttpGet("GetAllProductsForOrder")]
+        public async Task<IActionResult> GetAllProductsForOrder()
+        {
+            var products = await _productService.GetAllProductsForOrder();
+            return Ok(products);
+        }
+
+        [HttpGet("GetAllProductsForOrderByName")]
+        public async Task<IActionResult> GetAllProductsForOrderByName(string name)
+        {
+            var products = await _productService.GetProductsListByName(name);
             return Ok(products);
         }
     }

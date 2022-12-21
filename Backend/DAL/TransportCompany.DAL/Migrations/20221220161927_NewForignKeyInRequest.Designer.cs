@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportCompany.DAL;
 
@@ -11,9 +12,10 @@ using TransportCompany.DAL;
 namespace TransportCompany.DAL.Migrations
 {
     [DbContext(typeof(TransportCompanyContext))]
-    partial class TransportCompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221220161927_NewForignKeyInRequest")]
+    partial class NewForignKeyInRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -374,10 +376,7 @@ namespace TransportCompany.DAL.Migrations
 
                     b.HasIndex("DriverID");
 
-                    b.HasIndex("Num_Sending_storage");
-
-                    b.HasIndex("RequestNumber")
-                        .IsUnique();
+                    b.HasIndex("RequestNumber");
 
                     b.HasIndex("VehicleID");
 
@@ -435,22 +434,12 @@ namespace TransportCompany.DAL.Migrations
             modelBuilder.Entity("TransportCompany.Domain.Entities.Distance", b =>
                 {
                     b.HasOne("TransportCompany.Domain.Entities.Locations", "EndPoint")
-                        .WithMany("LocationsEndsPoints")
+                        .WithMany()
                         .HasForeignKey("EndP")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired()
-                        .HasConstraintName("FK_Distance_Locations_EndPoint");
-
-                    b.HasOne("TransportCompany.Domain.Entities.Locations", "StartPoint")
-                        .WithMany("LocationsStartPoints")
-                        .HasForeignKey("StartP")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired()
-                        .HasConstraintName("FK_Distance_Locations_StartPoint");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EndPoint");
-
-                    b.Navigation("StartPoint");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Product_exmp", b =>
@@ -493,13 +482,13 @@ namespace TransportCompany.DAL.Migrations
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
                 {
-                    b.HasOne("TransportCompany.Domain.Entities.Storage", "RecievingStorage")
+                    b.HasOne("TransportCompany.Domain.Entities.Storage", "Storage")
                         .WithMany()
                         .HasForeignKey("Num_Receiving_storage")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RecievingStorage");
+                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>
@@ -521,15 +510,9 @@ namespace TransportCompany.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TransportCompany.Domain.Entities.Storage", "SendingStorage")
-                        .WithMany()
-                        .HasForeignKey("Num_Sending_storage")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
                     b.HasOne("TransportCompany.Domain.Entities.Request", "Request")
-                        .WithOne("transportation")
-                        .HasForeignKey("TransportCompany.Domain.Entities.Transportation", "RequestNumber")
+                        .WithMany()
+                        .HasForeignKey("RequestNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -542,8 +525,6 @@ namespace TransportCompany.DAL.Migrations
                     b.Navigation("Driver");
 
                     b.Navigation("Request");
-
-                    b.Navigation("SendingStorage");
 
                     b.Navigation("vehicle");
                 });
@@ -570,10 +551,6 @@ namespace TransportCompany.DAL.Migrations
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Locations", b =>
                 {
-                    b.Navigation("LocationsEndsPoints");
-
-                    b.Navigation("LocationsStartPoints");
-
                     b.Navigation("Storages");
                 });
 
@@ -587,9 +564,6 @@ namespace TransportCompany.DAL.Migrations
             modelBuilder.Entity("TransportCompany.Domain.Entities.Request", b =>
                 {
                     b.Navigation("Requare_Products");
-
-                    b.Navigation("transportation")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TransportCompany.Domain.Entities.Storage", b =>

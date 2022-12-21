@@ -11,5 +11,6 @@ namespace TransportCompany.DAL.Interfaces
     {
         Task<IEnumerable<Product>> GetAllProducts();
         Task<IEnumerable<Product_exmp>> GetStorageProducts(int number);
+        Task<IEnumerable<Product>> GetProductsListByName(string name);
     }
 }

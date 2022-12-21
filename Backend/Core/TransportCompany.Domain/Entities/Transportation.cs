@@ -31,24 +31,24 @@ namespace TransportCompany.Domain.Entities
         [MaxLength(255)]
         public string Status { get; set; }
 
-
         public int RequestNumber { get; set; }
-
         [ForeignKey("RequestNumber")]
         public Request Request { get; set; }
 
 
         [Column(TypeName = "char(17)")]
         public string VehicleID { get; set; }
-
         [ForeignKey("VehicleID")]
         public Transport_vehicle vehicle { get; set; }
 
 
         [Column(TypeName = "char(10)")]
         public string DriverID { get; set; }
-
         [ForeignKey("DriverID")]
         public Driver Driver { get; set; }
+
+
+        [ForeignKey("Num_Sending_storage")]
+        public Storage SendingStorage { get; set; }
     }
 }

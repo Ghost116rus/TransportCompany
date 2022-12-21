@@ -7,9 +7,9 @@ using TransportCompany.Domain.Entities;
 
 namespace TransportCompany.DAL.Interfaces
 {
-    public interface IDriverRepository
+    public interface ITransportationRepository
     {
-        Task<Driver> GetDetailDriverInfo(string Driver_license_number);
-        Task<IEnumerable<Driver>> GetDrivers();
+        Task<IEnumerable<Transportation>> GetActiveTransportation();
+        Task<IEnumerable<Transportation>> GetAllTransportation();
     }
 }

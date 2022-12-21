@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.Orders;
 
 namespace TransportCompany.WebApi.Controllers
 {
@@ -14,6 +15,7 @@ namespace TransportCompany.WebApi.Controllers
         {
             _orderService = orderService;
         }
+
         [HttpGet("DetailInfo")]
         public async Task<IActionResult> GetDetailInfoAboutOrder(int number)
         {
@@ -34,5 +36,14 @@ namespace TransportCompany.WebApi.Controllers
             var orders = await _orderService.GetAllPandingOrder();
             return Ok(orders);
         }
+
+
+        [HttpPost("CreateOrder")]
+        public async Task<IActionResult> CreateOrder([FromBody] NewOrder newOrder)
+        {
+            var response = await _orderService.CreateOrder(newOrder);
+            return Ok(response);    
+        }
+
     }
 }

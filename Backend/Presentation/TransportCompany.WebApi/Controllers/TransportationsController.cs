@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.CreateTransportation;
 
 namespace TransportCompany.WebApi.Controllers
 {
@@ -28,5 +29,15 @@ namespace TransportCompany.WebApi.Controllers
             var transportations = await _transportationService.GetAllTransportations();
             return Ok(transportations);
         }
+
+
+        [HttpPost("CreateTransportation")]
+        public async Task<IActionResult> CreateTransportation([FromBody] RequestToCreateTransportation request)
+        {
+            var response = await _transportationService.CreateTransportation(request);
+            return Ok(response);
+            //return Ok();
+        }
+
     }
 }

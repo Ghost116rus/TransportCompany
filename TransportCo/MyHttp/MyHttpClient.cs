@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TransportCo.DTO;
+using TransportCo.DTO.Operator;
 using TransportCo.Model;
 using TransportCo.Model.Operator;
 
@@ -287,36 +288,6 @@ namespace TransportCo.MyHttp
 
 
             return driver;
-
-            //return new Driver()
-            //{
-            //    DriverLicense = "15896625",
-            //    FullName = "Калеев Д.А.",
-            //    Location = "Респ. Татарстан, г. Казань",
-            //    Status = "В рейсе",
-            //    Addres = "Респ. Татарстан, г. Казань, 3-я кленовая 9\"Б\" кв 56",
-            //    WorkExpirience = 15,
-            //    Phone_number = "89520406725",
-            //    Transportations = new List<Transportation>()
-            //    {
-            //        new Transportation()
-            //        {
-            //            Number = 1,
-            //            RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
-            //            Status = "Прошел г. Казань",
-            //            Date_dispatch = DateTime.Now
-            //        },
-            //        new Transportation()
-            //        {
-            //            Number = 2,
-            //            RecievedAddres = "г. Нижний Новгород, ул Чехова 3-а, д. 56",
-            //            Status = "Исполнена",
-            //            Date_dispatch = DateTime.Now,
-            //            Delivery_date = DateTime.Now,
-
-            //        },
-            //    }
-            //};
         }
 
         #endregion
@@ -436,32 +407,48 @@ namespace TransportCo.MyHttp
 
         #region Диспетчер
 
-        static int? storageNum;
+        static int? storageNum = 1;
         public static int max_volume = 30_000;
 
 
         public static List<ProductOperator> GetAllProductsByStorageNumber()
         {
+            HttpClient Client = new HttpClient();
 
-            return new List<ProductOperator>()
+            var response = Client.GetAsync($"http://localhost:5093/api/Product/GetProductsByStorageOperator?number={storageNum}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<ProductsByStorageDTO>>().Result;
+
+            var products = result.Select(p => new ProductOperator()
             {
-                new ProductOperator()
-                {
-                    Сatalogue_number = "1245689",
-                    Name = "Холодильник LG12-58",
-                    Type = "крупногабаритный",
-                    Cost = 32_500,
-                    Count = 15
-                },
-                new ProductOperator()
-                {
-                    Сatalogue_number = "6895123",
-                    Name = "Утюг LG8-32",
-                    Type = "малогабаритный",
-                    Cost = 8500,
-                    Count = 22
-                }
-            };
+                Сatalogue_number = p.Сatalogue_number,
+                Name = p.Name,
+                Type = p.Type,
+                Cost = p.Cost,
+                Count = p.Count
+            }).ToList();
+
+            return products;
+
+            //return new List<ProductOperator>()
+            //{
+            //    new ProductOperator()
+            //    {
+            //        Сatalogue_number = "1245689",
+            //        Name = "Холодильник LG12-58",
+            //        Type = "крупногабаритный",
+            //        Cost = 32_500,
+            //        Count = 15
+            //    },
+            //    new ProductOperator()
+            //    {
+            //        Сatalogue_number = "6895123",
+            //        Name = "Утюг LG8-32",
+            //        Type = "малогабаритный",
+            //        Cost = 8500,
+            //        Count = 22
+            //    }
+            //};
         }
 
         public static bool SaveChangesAboutCountInDB(string сatalogue_number, int count)
@@ -471,43 +458,44 @@ namespace TransportCo.MyHttp
 
         internal static List<ProductOrder> GetAllProductsForOrder()
         {
-            return new List<ProductOrder>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Product/GetAllProductsForOrder");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<ProductsForOrder>>().Result;
+
+            var products = result.Select(p => new ProductOrder()
             {
-                new ProductOrder()
-                {
-                    Сatalogue_number = "1245689",
-                    Name = "Холодильник LG12-58",
-                    Type = "крупногабаритный",
-                    Volume = 800*800*1600 / 1_000_000,
-                    Weight = 80,
-                    Cost = 32_500
-                },
-                new ProductOrder()
-                {
-                    Сatalogue_number = "6895123",
-                    Name = "Утюг LG8-32",
-                    Type = "малогабаритный",
-                    Volume = 400*400*200 / 1_000_000,
-                    Weight = 5,
-                    Cost = 8500
-                }
-            };
+                Сatalogue_number = p.Сatalogue_number,
+                Name = p.Name,
+                Type = p.Type,
+                Cost = p.Cost,
+                Volume = p.Volume,
+                Weight = p.Weight
+            }).ToList();
+
+            return products;
         }
 
         internal static List<ProductOrder> GetProductsListByName(string searchName)
         {
-            return new List<ProductOrder>()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Product/GetAllProductsForOrderByName?name={searchName}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<ProductsForOrder>>().Result;
+
+            var products = result.Select(p => new ProductOrder()
             {
-                new ProductOrder()
-                {
-                    Сatalogue_number = "1245689",
-                    Name = "Холодильник LG12-58",
-                    Type = "крупногабаритный",
-                    Volume = 800*800*1600/1000,
-                    Weight = 80,
-                    Cost = 32_500
-                }
-            };
+                Сatalogue_number = p.Сatalogue_number,
+                Name = p.Name,
+                Type = p.Type,
+                Cost = p.Cost,
+                Volume = p.Volume,
+                Weight = p.Weight
+            }).ToList();
+
+            return products;
         }
 
         public static bool CreateNewOrder(List<ProductOrder> orderProducts, int total_cost, int total_mass, int total_volume, ref string message)

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using TransportCo.DTO;
 using TransportCo.Model;
 using TransportCo.Model.Operator;
 
@@ -43,6 +46,25 @@ namespace TransportCo.MyHttp
 
         public static List<Orders> GetPendingOrders()
         {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/Order/PandingOrders");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OrderDTO>>().Result;
+            
+            var orders = result.Select(order => new OrderDTO
+            {
+                Number = order.Number,
+                Status = order.Status,
+                Num_Receiving_storage = order.Num_Receiving_storage,
+                Total_cost = order.Total_cost,
+                Total_mass = order.Total_mass,
+                Total_volume = order.Total_volume,
+                DateOfCreate = order.DateOfCreate,
+                DateOfComplete = order.DateOfComplete,
+                Add
+            }
+            );
 
             return new List<Orders>()
             {

@@ -22,7 +22,18 @@ namespace TransportCompany.DAL.Repository
         {
             var requare_products = await _context.Requare_products
                 .Where(p => p.RequestID == transportation.RequestNumber).ToListAsync();
-            
+
+            var request = await _context.Requests.Where(r => r.Number == transportation.RequestNumber)
+                .FirstOrDefaultAsync();
+            if (request == null)
+            {
+                throw new Exception();
+            }
+            else
+            {
+                request.Status = "Обрабатывается";
+                _context.Requests.Update(request);
+            }                          
             foreach (var product in requare_products)
             {
                 var product_exmp = await _context.Product_exmps.

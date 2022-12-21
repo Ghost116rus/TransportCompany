@@ -30,7 +30,6 @@ namespace TransportCompany.Aplication.Services
             {
                 return null;
             }
-
             var order = new RequestBO()
             {
                 Number = orderFromDB.Number,
@@ -41,7 +40,6 @@ namespace TransportCompany.Aplication.Services
                 Total_volume = orderFromDB.Total_volume,
                 DateOfCreate = orderFromDB.DateOfCreate,
                 DateOfComplete = orderFromDB.DateOfComplete,
-                TransportationNumber = orderFromDB.transportation.Number,
                 productsList = orderFromDB.Requare_Products.Select(x => new ProductExmpBO
                 {
                     Сatalogue_number = x.Сatalogue_number,
@@ -49,6 +47,14 @@ namespace TransportCompany.Aplication.Services
                     Count = x.Count
                 })
             };
+            if (orderFromDB.transportation != null)
+            {
+                order.TransportationNumber = orderFromDB.transportation.Number;
+            }
+            else
+            {
+                order.TransportationNumber = -1;
+            }
             return order;
         }
 

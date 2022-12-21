@@ -21,5 +21,12 @@ namespace TransportCompany.WebApi.Controllers
             var storages = await _storageService.GetAllStorages();
             return Ok(storages);
         }
+
+        [HttpGet("{requestId}")]
+        public async Task<IActionResult> GetStoragesRequest(int requestId)
+        {
+            var storages = await _storageService.GetStoragesRequest(requestId);
+            return Ok(storages.StoragesTransportations);
+        }
     }
 }

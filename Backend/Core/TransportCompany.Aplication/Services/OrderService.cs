@@ -41,7 +41,8 @@ namespace TransportCompany.Aplication.Services
                 Total_volume = orderFromDB.Total_volume,
                 DateOfCreate = orderFromDB.DateOfCreate,
                 DateOfComplete = orderFromDB.DateOfComplete,
-                productsList = orderFromDB.Requare_Products.Select(x => new ProductListWithCountBO
+                TransportationNumber = orderFromDB.transportation.Number,
+                productsList = orderFromDB.Requare_Products.Select(x => new ProductExmpBO
                 {
                     Сatalogue_number = x.Сatalogue_number,
                     Name = x.Product.Name,

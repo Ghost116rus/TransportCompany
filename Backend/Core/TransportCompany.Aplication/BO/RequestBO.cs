@@ -18,7 +18,8 @@ namespace TransportCompany.Aplication.BO
         public int Total_cost { get; set; }
         public DateTime DateOfCreate { get; set; }
         public DateTime? DateOfComplete { get; set; }
-        public IEnumerable<ProductListWithCountBO>? productsList { get; set;}
+        public int TransportationNumber { get; set; }
+        public IEnumerable<ProductExmpBO>? productsList { get; set;}
 
     }
 }

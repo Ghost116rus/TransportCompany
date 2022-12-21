@@ -21,6 +21,7 @@ namespace TransportCompany.DAL.Repository
         public async Task<Request> GetOrderByNumber(int number)
         {
             var order = await _context.Requests
+                .Include(x => x.transportation)
                 .Include(x => x.Requare_Products)
                     .ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync(x => x.Number == number);

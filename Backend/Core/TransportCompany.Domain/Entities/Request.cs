@@ -35,5 +35,6 @@ namespace TransportCompany.Domain.Entities
         public Storage RecievingStorage { get; set; }
 
         public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
+        public Transportation transportation { get; set; }
     }
 }

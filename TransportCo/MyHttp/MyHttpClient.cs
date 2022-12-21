@@ -11,8 +11,6 @@ namespace TransportCo.MyHttp
     public static class MyHttpClient
     {
         static int currentIdUser;
-        static int? storageNum;
-        public static int max_volume = 30_000;
 
         #region АВТОРИЗАЦИЯ
 
@@ -211,7 +209,7 @@ namespace TransportCo.MyHttp
 
         #region Работа со складами
 
-        internal static List<Product>? GetProductListForStorageByNumber(int number)
+        public static List<Product>? GetProductListForStorageByNumber(int number)
         {
             return new List<Product>()
             {
@@ -362,6 +360,12 @@ namespace TransportCo.MyHttp
             };
         }
 
+        public static bool RepairVehicle(string vehicle_identification_number)
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
 
         #region Работа с Перевозками
@@ -432,6 +436,10 @@ namespace TransportCo.MyHttp
 
 
         #region Диспетчер
+
+        static int? storageNum;
+        public static int max_volume = 30_000;
+
 
         public static List<ProductOperator> GetAllProductsByStorageNumber()
         {
@@ -507,13 +515,6 @@ namespace TransportCo.MyHttp
         {
             return true;
         }
-
-        internal static bool RepairVehicle(string vehicle_identification_number)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
 
         #endregion

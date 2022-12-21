@@ -24,6 +24,12 @@ namespace TransportCompany.DAL.Repository
             return products;
         }
 
+        public async Task<IEnumerable<Product>> GetProductsListByName(string name)
+        {
+            var productList = await _context.Products.Where(x => x.Name.Contains(name)).ToListAsync();
+            return productList;
+        }
+
         public async Task<IEnumerable<Product_exmp>> GetStorageProducts(int number)
         {
             var productList = await _context.Product_exmps.Where(x => x.Storage_number == number)

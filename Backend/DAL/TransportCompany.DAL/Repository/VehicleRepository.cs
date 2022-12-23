@@ -23,5 +23,11 @@ namespace TransportCompany.DAL.Repository
             var vehicles = await _context.Transport_vehicles.ToListAsync();
             return vehicles; 
         }
+
+        public async Task<Transport_vehicle> GetVehicleByNumber(string vehicle_identification_number)
+        {
+            var vehicle = await _context.Transport_vehicles.FirstOrDefaultAsync(vehicle => vehicle.Vehicle_identification_number == vehicle_identification_number);
+            return vehicle;
+        }
     }
 }

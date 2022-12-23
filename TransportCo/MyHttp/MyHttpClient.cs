@@ -295,36 +295,44 @@ namespace TransportCo.MyHttp
         #region Работа с машинами
         public static List<Transport_vehicle>? GetAllVehicles()
         {
-            return new List<Transport_vehicle>()
-            {
-                new Transport_vehicle()
-                {
-                    Vehicle_identification_number = "1BYS89116",
-                    Name = "Форд Бронко",
-                    Location = "Респб. Татарстан, г. Казань",
-                    Status = "Свободен"
-                },
-                new Transport_vehicle()
-                {
-                    Vehicle_identification_number = "1BYS12116",
-                    Name = "Форд Алгась",
-                    Location = "Респб. Татарстан, г. Казань",
-                    Status = "Свободен"
-                }
+            HttpClient Client = new HttpClient();
 
-            };
+            var response = Client.GetAsync("http://localhost:5093/api/Vehicle/GetAllVehicles");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<VehicleDTO>>().Result;
+
+            var vehicles = result.Select(ts => new Transport_vehicle
+            {
+                Vehicle_identification_number = ts.Vehicle_identification_number,
+                Name = ts.Name,
+                Location = ts.Location,
+                Status = ts.Status
+            }).ToList();
+
+            return vehicles;
         }
 
         public static Transport_vehicle GetDetailInfoAboutVehicle(string vehicle_identification_number)
         {
-            return new Transport_vehicle()
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Vehicle/GetVehicleByNumber?number={vehicle_identification_number}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<VehicleDTO>().Result;
+
+            var vehicle = new Transport_vehicle()
             {
-                Vehicle_identification_number = "1BYS12116",
-                Name = "Форд Алгась",
-                Location = "Респб. Татарстан, г. Казань",
-                Status = "Свободен",
-                Fuel_consumption = 15
+                Vehicle_identification_number = result.Vehicle_identification_number,
+                Name = result.Name,
+                Location = result.Location,
+                Load_capacity = result.Load_capacity,
+                Status = result.Status,
+                Fuel_consumption = result.Fuel_consumption,
+                Required_category = result.Required_category,
+                Transported_volume = result.Transported_volume
             };
+
+            return vehicle;
         }
 
         public static bool RepairVehicle(string vehicle_identification_number)

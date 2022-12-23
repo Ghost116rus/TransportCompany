@@ -79,7 +79,7 @@ namespace TransportCompany.DAL
 
             modelBuilder.Entity<Request>().HasCheckConstraint("Number", "Number > 0");
             modelBuilder.Entity<Request>()
-                .HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена' OR Status LIKE 'Прервана'");
+                .HasCheckConstraint("Status", "Status LIKE 'Обрабатывается' OR Status LIKE 'Сформирована' OR Status LIKE 'Доставляется' OR Status LIKE 'Выполнена' OR Status LIKE 'Прервана' OR Status LIKE 'Отказано'");
             modelBuilder.Entity<Request>().HasCheckConstraint("Num_Receiving_storage", "Num_Receiving_storage > 0");
             modelBuilder.Entity<Request>().HasCheckConstraint("Total_mass", "Total_mass > 0");
             modelBuilder.Entity<Request>().HasCheckConstraint("Total_cost", "Total_cost > 0");

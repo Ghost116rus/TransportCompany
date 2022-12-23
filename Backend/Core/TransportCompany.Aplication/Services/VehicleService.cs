@@ -28,12 +28,29 @@ namespace TransportCompany.Aplication.Services
                 Name = v.Name,
                 Location = v.Location,
                 Status = v.Status,
-                Transported_volume = v.Transported_volume,
-                Load_capacity = v.Load_capacity,
-                Fuel_consumption = v.Fuel_consumption,
-                Required_category = v.Required_category
+                //Transported_volume = v.Transported_volume,
+                //Load_capacity = v.Load_capacity,
+                //Fuel_consumption = v.Fuel_consumption,
+                //Required_category = v.Required_category
             });
             return vehicles;
+        }
+
+        public async Task<VehicleBO> GetVehicleByIdNumber(string vehicle_identification_number)
+        {
+            var vehicleFromDB = await _vehicleRepository.GetVehicleByNumber(vehicle_identification_number);
+            var vehicle = new VehicleBO()
+            {
+                Vehicle_identification_number = vehicleFromDB.Vehicle_identification_number,
+                Name = vehicleFromDB.Name,
+                Location = vehicleFromDB.Location,
+                Status = vehicleFromDB.Status,
+                Transported_volume = vehicleFromDB.Transported_volume,
+                Load_capacity = vehicleFromDB.Load_capacity,
+                Fuel_consumption = vehicleFromDB.Fuel_consumption,
+                Required_category = vehicleFromDB.Required_category
+            };
+            return vehicle;
         }
     }
 }

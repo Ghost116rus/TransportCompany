@@ -9,6 +9,7 @@ namespace TransportCompany.Aplication.Interfaces
 {
     public interface IVehicleService
     {
-        public Task<IEnumerable<VehicleBO>> GetAllVehicle(); 
+        public Task<IEnumerable<VehicleBO>> GetAllVehicle();
+        public Task<VehicleBO> GetVehicleByIdNumber(string vehicle_identification_number);
     }
 }

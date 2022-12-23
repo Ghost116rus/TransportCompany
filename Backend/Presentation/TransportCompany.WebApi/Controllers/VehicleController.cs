@@ -15,7 +15,14 @@ namespace TransportCompany.WebApi.Controllers
             _vehicleService = vehicleService;
         }
 
-        [HttpGet]
+        [HttpGet("GetVehicleByNumber")]
+        public async Task<IActionResult> GetVehicleByNumber(string number)
+        {
+            var vehicle = await _vehicleService.GetVehicleByIdNumber(number);
+            return Ok(vehicle);
+        }
+
+        [HttpGet("GetAllVehicles")]
         public async Task<IActionResult> GetAllVehicles()
         {
             var vehicles = await _vehicleService.GetAllVehicle();

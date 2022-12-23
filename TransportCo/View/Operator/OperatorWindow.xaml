@@ -39,8 +39,8 @@
 
 
             <TextBlock Grid.Column="3" Width="160" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="45,0,0,0">Склад №</TextBlock>
-            <TextBlock Grid.Column="3" Width="40" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Right">15</TextBlock>
-            <TextBlock Grid.Column="4" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center">Администратор1</TextBlock>
+            <TextBlock Grid.Column="3" Width="40" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding StorageNum, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="4" FontFamily="Russo One" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/> 
             <Button Grid.Column="5" FontSize="22" Grid.Row="0" FontFamily="Russo One" Width="150" HorizontalAlignment="Right" Background="{x:Null}" Command="{Binding GoOut}">Выйти</Button>
         </Grid>
         <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden">

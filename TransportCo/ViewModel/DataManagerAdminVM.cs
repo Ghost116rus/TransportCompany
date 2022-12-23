@@ -33,8 +33,8 @@ namespace TransportCo.ViewModel
 
         public DataManagerAdminVM()
         {
+            UserName = Model.User.CurrentUser.Name;
             allTransportations = MyHttp.MyHttpClient.GetAllTransportations();
-            userName = "Администратор 1";
             allProducts = MyHttp.MyHttpClient.GetAllProducts();
             allStorages = MyHttp.MyHttpClient.GetAllStorage();
 

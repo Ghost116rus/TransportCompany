@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TransportCo.Model;
+using TransportCo.Model.User;
 using TransportCo.View;
 
 namespace TransportCo.ViewModel
@@ -51,10 +52,11 @@ namespace TransportCo.ViewModel
                     {
                         string? error = null;
                         string? type = null;
+                        string? name = null;
 
-                        if (MyHttp.MyHttpClient.Authorizate(login, password, ref error, ref type))
+                        if (MyHttp.MyHttpClient.Authorizate(login, password, ref error))
                         {
-                            OpenWindow(type); return;
+                            OpenWindow(CurrentUser.typeOfAccount); return;
                         }
                         else
                         {

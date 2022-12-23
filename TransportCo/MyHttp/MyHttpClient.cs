@@ -6,7 +6,9 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 using TransportCo.DTO;
+using TransportCo.DTO.Authorizate;
 using TransportCo.DTO.Operator;
 using TransportCo.Model;
 using TransportCo.Model.Operator;
@@ -15,29 +17,64 @@ namespace TransportCo.MyHttp
 {
     public static class MyHttpClient
     {
-        static int currentIdUser;
+
 
         #region АВТОРИЗАЦИЯ
 
-        public static bool Authorizate(string login, string password, ref string error, ref string typeOfAccount)
+        public static bool Authorizate(string login, string password, ref string error)
         {
-            if (login == "admin" && password == "admin")
+            HttpClient Client = new HttpClient();
+
+            var request = new RequestLoginDTO()
             {
-                typeOfAccount = "Admin";
-                return true;
-            }
-            if (login == "driver" && password == "123")
+                Login = login,
+                Password = password,
+            };
+
+            try
             {
-                typeOfAccount = "Driver";
-                return true;
+                var response = Client.PostAsJsonAsync("http://localhost:5093/api/User/Authorizate", request)
+                    .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<ResponseLoginDTO>().Result;
+
+                switch(response.Type)
+                {
+                    case 0:
+                        Model.User.CurrentUser.typeOfAccount = "Admin";
+                        break;
+                    case 1:
+                        Model.User.CurrentUser.typeOfAccount = "Operator";
+                        break;
+                    case 2:
+
+                        Model.User.CurrentUser.typeOfAccount = "Driver";
+                        break;
+                    default:
+                        Model.User.CurrentUser.typeOfAccount = "Unknown";
+                        error = "Неизвестный тип аккаунта - повторите попытку";
+                        return false;
+                        break;
+                }
+                Model.User.CurrentUser.Name = response.UserName;
+
+                if (response.ForignKeyToStorage != null)
+                {
+                    storageNum = response.ForignKeyToStorage;
+                    Model.User.CurrentUser.ForignKeyToStorage = response.ForignKeyToStorage;
+                }
+                if (response.Driver_license_number != null)
+                {
+                    Model.User.CurrentUser.Driver_license_number = response.Driver_license_number;
+                }
+                
+                
+
+                return response.IsSuccess;
             }
-            if (login == "Operator" && password == "123")
+            catch (Exception)
             {
-                typeOfAccount = "Operator";
-                return true;
+                error = "Ошибка при запросе - неполадка с сетью(";
+                return false;
             }
-            error = "Аккаунт не найден!\n";
-            return false;
         }
 
         #endregion

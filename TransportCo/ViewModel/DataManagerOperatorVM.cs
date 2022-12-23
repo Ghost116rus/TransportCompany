@@ -18,6 +18,30 @@ namespace TransportCo.ViewModel
     {
         #region Главная страница
 
+        #region Начало работы
+
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; NotifyPropertyChanged("UserName"); }
+        }
+
+        private int? storageNum;
+        public int? StorageNum
+        {
+            get { return storageNum; }
+            set { storageNum = value; NotifyPropertyChanged("StorageNum"); }
+        }
+
+        public DataManagerOperatorVM()
+        {
+            UserName = Model.User.CurrentUser.Name;
+            StorageNum = Model.User.CurrentUser.ForignKeyToStorage;
+        }
+
+        #endregion
+
         public bool IsChangedProduct = false;
         public bool UserSayTrue = false;
         private bool Skip = false;
@@ -142,6 +166,7 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+
         #region Работа со списком на заявку
 
 
@@ -158,12 +183,10 @@ namespace TransportCo.ViewModel
         {
             OrderProducts.Remove(productOrder); RefreshProductList();
         }
-
         private void RefreshProductList()
         {
             OperatorWindow._createPage.ProductList.Items.Refresh();
         }
-
         private void CleanAllInCreateOrderPage()
         {
             foreach (var item in AllProducts)
@@ -284,8 +307,6 @@ namespace TransportCo.ViewModel
                     }));
             }
         }
-
-
 
         private RelayCommand? openCreateOrderPage;
         public RelayCommand OpenCreateOrderPage

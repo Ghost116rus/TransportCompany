@@ -47,7 +47,7 @@ namespace TransportCo.MyHttp
         #region Общие методы
 
         public static List<Orders> GetPendingOrders()
-        {
+            {
             HttpClient Client = new HttpClient();
 
             var response = Client.GetAsync("http://localhost:5093/api/Order/PandingOrders");

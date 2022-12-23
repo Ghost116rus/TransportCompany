@@ -30,6 +30,7 @@ services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IOrderRepository, OrderRepository>();
 services.AddScoped<ITransportationRepository, TransportationRepository>();
 services.AddScoped<IDistancesRepository, DistanceRepository>();
+services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 // Services
 services.AddScoped<IDriverService, DriverService>();
@@ -38,6 +39,8 @@ services.AddScoped<IStorageService, StorageService>();
 services.AddScoped<IUserService, UserService>();
 services.AddScoped<IOrderService, OrderService>();
 services.AddScoped<ITransportationService, TransportationService>();
+services.AddScoped<IVehicleService, VehicleService>();
+
 
 var app = builder.Build();
 

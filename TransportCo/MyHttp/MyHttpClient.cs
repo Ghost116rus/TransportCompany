@@ -517,7 +517,7 @@ namespace TransportCo.MyHttp
             //    Required_category = ts.Required_category
             //}).ToList();
 
-            return vehicles;
+            return null;
         }
 
         #endregion

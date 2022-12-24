@@ -11,5 +11,6 @@ namespace TransportCompany.DAL.Interfaces
     {
         Task<Driver> GetDetailDriverInfo(string Driver_license_number);
         Task<IEnumerable<Driver>> GetDrivers();
+        Task<IEnumerable<Driver>> GetDriversForOrder(string location, string requaredCategory);
     }
 }

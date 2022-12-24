@@ -17,7 +17,7 @@ namespace TransportCompany.WebApi.Controllers
             _driverService = driverService;
         }
 
-        [HttpGet]
+        [HttpGet("GetDetailInfo")]
         public async Task<IActionResult> GetDetailDriverInfo(string Driver_license_number)
         {
             var driver = await _driverService.GetDetailDriverInfo(Driver_license_number);

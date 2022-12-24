@@ -515,6 +515,32 @@ namespace TransportCo.MyHttp
             return vehicles;
         }
 
+        public static void CreateTransportation(CreateTrnspRequest createNewTransportationRequest, ref string message)
+        {
+            HttpClient Client = new HttpClient(); // 
+
+            var response = Client.PostAsJsonAsync("http://localhost:5093/api/Transportations/CreateTransportation", createNewTransportationRequest)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+            if (response.Error != null)
+            {
+                message = response.Error;
+            }
+            return;
+        }
+
+        #endregion
+
+        #region Диспетчеры в окне Администратора
+        public static List<OperatorsList> GetAllOperators()
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync("http://localhost:5093/api/User/GetAllOperators");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OperatorsList>>().Result;
+
+            return result;
+        }
         #endregion
 
         #endregion
@@ -625,20 +651,6 @@ namespace TransportCo.MyHttp
             message = response.Error;
             return response.IsSuccess;
         }
-
-        public static void CreateTransportation(CreateTrnspRequest createNewTransportationRequest, ref string message)
-        {
-            HttpClient Client = new HttpClient(); // 
-
-            var response = Client.PostAsJsonAsync("http://localhost:5093/api/Transportations/CreateTransportation", createNewTransportationRequest)
-                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
-            if (response.Error != null)
-            {
-                message = response.Error;
-            }
-            return;
-        }
-
 
 
         #endregion

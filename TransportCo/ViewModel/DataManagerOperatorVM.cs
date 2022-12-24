@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using TransportCo.Model;
 using TransportCo.Model.Operator;
 using TransportCo.View.Administrator;
+using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
 using TransportCo.View.Operator;
+using TransportCo.View.Operator.Pages;
 using TransportCo.View.Operator.YesOrNoWnd;
 
 namespace TransportCo.ViewModel
@@ -327,12 +330,27 @@ namespace TransportCo.ViewModel
             }
         }
 
+        private RelayCommand? openOrdersPage;
+        public RelayCommand OpenOrdersPage
+        {
+            get
+            {
+                return openOrdersPage ??
+                    (openOrdersPage = new RelayCommand(obj =>
+                    {
+                        //CleanAllInCreateOrderPage();
+                        AllOrders = MyHttp.MyHttpClient.GetAllOrders();
+                        OperatorWindow._mainFrame.Content = OperatorWindow._requestPage;
+
+                    }));
+            }
+        }
 
 
         #endregion
 
         #region Кнопки обновления данных
-        
+
         private RelayCommand? refreshMainP;
         public RelayCommand RefreshMainP
         {
@@ -348,6 +366,46 @@ namespace TransportCo.ViewModel
         }
 
         #endregion
+
+        #region Снова страница Заявок
+
+        private Orders? selectedOrder = null;
+        public Orders? SelectedOrder
+        {
+            get { return selectedOrder; }
+            set
+            {
+                selectedOrder = value;
+                if (value != null) { ViewOrder(selectedOrder.Number); }
+                else { OperatorRequestsPage._orderDetailFrame.Content = null; }
+
+                NotifyPropertyChanged("SelectedOrder");
+            }
+        }
+
+        private Orders? detailOrder;
+        public Orders? DetailOrder
+        {
+            get { return detailOrder; }
+            set { detailOrder = value; NotifyPropertyChanged("DetailOrder"); }
+        }
+
+        private List<Orders>? allOrders;
+        public List<Orders> AllOrders
+        {
+            get { return allOrders; }
+            set { allOrders = value; NotifyPropertyChanged("AllOrders"); }
+        }
+
+        public void ViewOrder(int number)
+        {
+            DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(number);
+
+            OperatorRequestsPage._orderDetailFrame.Content = OperatorRequestsPage._operatorOrderDetailPage;
+        }
+
+        #endregion
+
 
         #region Кнопка выйти
 

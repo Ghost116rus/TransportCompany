@@ -34,7 +34,8 @@
             <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" >
                 <Button FontFamily="Russo One" FontSize="22" Width="150"  Foreground="#FFF70000" Background="{x:Null}" Command="{Binding OpenMainPage}">Главная</Button>
                 <Button FontFamily="Russo One" FontSize="20" Background="{x:Null}" Command="{Binding OpenCreateOrderPage}">Сформировать заявку</Button>
-                <Button FontFamily="Russo One" FontSize="20" Background="{x:Null}">Просмотреть заявки</Button>
+                <Button FontFamily="Russo One" FontSize="20" Background="{x:Null}" Command="{Binding OpenOrdersPage}">Заявки</Button>
+                <Button FontFamily="Russo One" FontSize="20" Background="{x:Null}" Command="{Binding OpenOrdersPage}">Перевозки</Button>
             </StackPanel>
 
 

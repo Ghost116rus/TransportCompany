@@ -38,7 +38,7 @@ namespace TransportCo.ViewModel
             allProducts = MyHttp.MyHttpClient.GetAllProducts();
             allStorages = MyHttp.MyHttpClient.GetAllStorage();
 
-
+            allOperators = MyHttp.MyHttpClient.GetAllOperators();
             allDrivers = MyHttp.MyHttpClient.GetAllDrivers();
             allVehicles = MyHttp.MyHttpClient.GetAllVehicles();
         }
@@ -456,6 +456,17 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Диспетчеры
+
+        private List<OperatorsList> allOperators;
+        public List<OperatorsList> AllOperators
+        {
+            get { return allOperators; }
+            set { allOperators = value; NotifyPropertyChanged("AllOperators"); }
+        }
+
+        #endregion
+
         #region Работа с водителями
 
         private Driver selectedDriver;
@@ -672,6 +683,18 @@ namespace TransportCo.ViewModel
             }
         }
 
+        private RelayCommand? refreshOperatorsPage;
+        public RelayCommand RefreshOperatorsPage
+        {
+            get
+            {
+                return refreshOperatorsPage ??
+                    (refreshOperatorsPage = new RelayCommand(obj =>
+                    {
+                        AllOperators = MyHttp.MyHttpClient.GetAllOperators();
+                    }));
+            }
+        }
 
         private RelayCommand? refreshTransportationPage;
         public RelayCommand RefreshTransportationPage

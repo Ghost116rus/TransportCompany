@@ -13,6 +13,5 @@ namespace TransportCo.Model
         public string Password { get; set; }
         public int StorageNumber { get; set; }
         public string Addres { get; set; }
-        public string PhoneNumber { get; set; }
     }
 }

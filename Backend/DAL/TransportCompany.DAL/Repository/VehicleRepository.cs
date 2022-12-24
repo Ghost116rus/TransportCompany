@@ -29,5 +29,14 @@ namespace TransportCompany.DAL.Repository
             var vehicle = await _context.Transport_vehicles.FirstOrDefaultAsync(vehicle => vehicle.Vehicle_identification_number == vehicle_identification_number);
             return vehicle;
         }
+
+        public async Task<IEnumerable<Transport_vehicle>> GetVehicleForOrder(string Location, int TotalVolume, int TotalMass)
+        {
+            var vehicles = await _context.Transport_vehicles
+                .Where(v => v.Transported_volume >= TotalVolume && v.Load_capacity >= TotalMass && v.Status == "Свободен" && v.Location.Contains(Location))
+                .ToListAsync();
+            return vehicles;
+
+        }
     }
 }

@@ -35,5 +35,15 @@ namespace TransportCompany.DAL.Repository
             var driversEntities = await _context.Drivers.ToListAsync();
             return driversEntities;
         }
+
+        public async Task<IEnumerable<Driver>> GetDriversForOrder(string location, string requaredCategory)
+        {
+            var drivers = await _context.Drivers
+                .Include(d => d.Transportations)
+                .Where(d => d.Status == "Свободен" && d.Location.Contains(location)
+                && d.Driver_license_category.Contains(requaredCategory)).ToListAsync();
+
+            return drivers;
+        }
     }
 }

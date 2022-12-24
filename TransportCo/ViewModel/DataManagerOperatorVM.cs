@@ -262,13 +262,17 @@ namespace TransportCo.ViewModel
                 return сreateNewOrder ??
                     (сreateNewOrder = new RelayCommand(obj =>
                     {
-                        if (Total_volume < 2000)
+                        if (Total_volume < 500)
                         {
-                            MessageBox.Show("Слишком мало набранных товаров!\nНе отправлю такую заявку - возьмите больше товаров.");
+                            MessageBox.Show("Слишком мало набранных товаров!\nНе отправлю такую заявку - возьмите больше товаров. Нужно хотя бы 500л");
                         }
                         else if (Total_volume > MyHttp.MyHttpClient.max_volume)
                         {
                             MessageBox.Show("Слишком много товаров -  мы столько перевезти не способны.");
+                        }
+                        else if (Total_mass > MyHttp.MyHttpClient.maxWeight)
+                        {
+                            MessageBox.Show("Слишком тяжело -  ни одна машина не потянет.");
                         }
                         else
                         {

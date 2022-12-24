@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportCompany.Aplication.BO;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.Orders;
 using TransportCompany.DAL.Interfaces;
 
 
@@ -51,6 +52,21 @@ namespace TransportCompany.Aplication.Services
                 Required_category = vehicleFromDB.Required_category
             };
             return vehicle;
+        }
+        public async Task<IEnumerable<VehicleBO>> GetVehicleForOrder(VehicleForOrder request)
+        {
+            var vehiclesFromDB = await _vehicleRepository.GetVehicleForOrder(request.Location, request.TotalVolume, request.TotalMass);
+            var vehicleList = vehiclesFromDB.Select(v => new VehicleBO()
+            {
+                Vehicle_identification_number = v.Vehicle_identification_number,
+                Name = v.Name,
+                Location = v.Location,
+                Transported_volume = v.Transported_volume,
+                Load_capacity = v.Load_capacity,
+                Fuel_consumption = v.Fuel_consumption,
+                Required_category = v.Required_category
+            });
+            return vehicleList;
         }
     }
 }

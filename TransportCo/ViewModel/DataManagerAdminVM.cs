@@ -92,15 +92,15 @@ namespace TransportCo.ViewModel
         }
         public void CreateTransportation()
         {
+            CreateNewTransportationClass = new CreateNewTransportation(DetailOrder, AdministratorWindow._createTransportationPage);
             if (newUniversalWnd.IsActive)
             {
-
-                newUniversalWnd._universalFrame.Content = null;
+                newUniversalWnd._universalFrame.Content = AdministratorWindow._createTransportationPage;
             }
             else
             {
                 CreateNewWnd();
-                newUniversalWnd._universalFrame.Content = null;
+                newUniversalWnd._universalFrame.Content = AdministratorWindow._createTransportationPage;
 
                 newUniversalWnd.ShowDialog();
                 WndNowActive = false;
@@ -810,6 +810,22 @@ namespace TransportCo.ViewModel
             }
         }
 
+
+        #endregion
+
+
+        #region Раздел создания
+
+        #region Создание перевозки
+
+        private CreateNewTransportation? createNewTransportationClass;
+        public CreateNewTransportation CreateNewTransportationClass
+        {
+            get { return createNewTransportationClass; }
+            set { createNewTransportationClass = value; NotifyPropertyChanged("CreateNewTransportationClass"); }
+        }
+
+        #endregion
 
         #endregion
 

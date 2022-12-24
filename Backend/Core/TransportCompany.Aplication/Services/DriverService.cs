@@ -1,6 +1,7 @@
 ﻿
 using TransportCompany.Aplication.BO;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.Orders;
 using TransportCompany.DAL.Interfaces;
 
 namespace TransportCompany.Aplication.Services
@@ -66,6 +67,18 @@ namespace TransportCompany.Aplication.Services
             return driverBO;
         }
 
+        public async Task<IEnumerable<DriverForOrderBO>> GetDriversForOrder(DriverForOrder request)
+        {
+            var driversFromDB = await _driverRepository.GetDriversForOrder(request.Location, request.RequareCategory);
+            var drivers = driversFromDB.Select(driver => new DriverForOrderBO()
+            {
+                Driver_license_number = driver.Driver_license_number,
+                Fullname = driver.FirstName + " " + driver.SecondName[0] + "." + driver.Patronymic[0] + ".",
+                Expirience = int.Parse(GetExpirience(driver.Year_of_start_work)),
+                CountOfTransportation = driver.Transportations.Count()
+            });
 
+            return drivers;
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Xml.Linq;
 using TransportCo.DTO;
 using TransportCo.DTO.Authorizate;
+using TransportCo.DTO.CreateTransportation;
 using TransportCo.DTO.Operator;
 using TransportCo.Model;
 using TransportCo.Model.Operator;
@@ -300,7 +301,7 @@ namespace TransportCo.MyHttp
             }
             HttpClient Client = new HttpClient();
 
-            var response = Client.GetAsync($"http://localhost:5093/api/Drivers?Driver_license_number={driverLicense}");
+            var response = Client.GetAsync($"http://localhost:5093/api/Drivers/GetDetailInfo?Driver_license_number={driverLicense}");
 
             var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<DriverDTO>().Result;
 
@@ -447,6 +448,75 @@ namespace TransportCo.MyHttp
 
         #endregion
 
+        #region Создание Перевозки
+
+        public static List<SendingStoragesListDTO> GetStoragesByOrder(int requestId)
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Storages/{requestId}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<SendingStoragesListDTO>>().Result;
+
+            return result;
+        }
+
+        public static List<Vehicle> GetVehiclesForOrder(string Location, int TotalMass, int TotalVolume)
+        {
+            HttpClient Client = new HttpClient();
+
+
+            var request = new GetVehicleForOrderRequest()
+            {
+                Location = Location,
+                TotalMass = TotalMass,
+                TotalVolume = TotalVolume
+            };
+
+            var result = Client.PostAsJsonAsync("http://localhost:5093/api/Vehicle/GetVehicleForOrder", request)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<VehicleDTO>>().Result;
+
+            var vehicles = result.Select(ts => new Vehicle
+            {
+                Vehicle_identification_number = ts.Vehicle_identification_number,
+                Name = ts.Name,
+                Location = ts.Location,
+                Status = ts.Status,
+                Transported_volume = ts.Transported_volume,
+                Load_capacity = ts.Load_capacity,
+                Fuel_consumption = ts.Fuel_consumption,
+                Required_category = ts.Required_category
+            }).ToList();
+
+            return vehicles;
+        }
+
+        public static List<DriverForTrDTO> GetDriverForOrder(string Location, string Required_category)
+        {
+            HttpClient Client = new HttpClient();
+
+            var request = new GetDriverForOrderRequest()
+            {
+                location = Location,
+                requareCategory = Required_category
+            };
+
+            var result = Client.PostAsJsonAsync("http://localhost:5093/api/Drivers/GetDriversForOrder", request)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<DriverForTrDTO>>().Result;
+
+            var vehicles = result.Select(d => new DriverForTrDTO
+            {
+                Driver_license_number = d.Driver_license_number,
+                Fullname = d.Fullname,
+                CountOfTransportation = d.CountOfTransportation,
+                Expirience = d.Expirience
+            }).ToList();
+
+            return vehicles;
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -454,6 +524,7 @@ namespace TransportCo.MyHttp
 
         static int? storageNum = 1;
         public static int max_volume = 30_000;
+        public static int maxWeight = 30_000;
 
 
         public static List<ProductOperator> GetAllProductsByStorageNumber()
@@ -475,25 +546,6 @@ namespace TransportCo.MyHttp
 
             return products;
 
-            //return new List<ProductOperator>()
-            //{
-            //    new ProductOperator()
-            //    {
-            //        Сatalogue_number = "1245689",
-            //        Name = "Холодильник LG12-58",
-            //        Type = "крупногабаритный",
-            //        Cost = 32_500,
-            //        Count = 15
-            //    },
-            //    new ProductOperator()
-            //    {
-            //        Сatalogue_number = "6895123",
-            //        Name = "Утюг LG8-32",
-            //        Type = "малогабаритный",
-            //        Cost = 8500,
-            //        Count = 22
-            //    }
-            //};
         }
 
         public static bool SaveChangesAboutCountInDB(string сatalogue_number, int count)
@@ -545,8 +597,48 @@ namespace TransportCo.MyHttp
 
         public static bool CreateNewOrder(List<ProductOrder> orderProducts, int total_cost, int total_mass, int total_volume, ref string message)
         {
-            return true;
+            HttpClient Client = new HttpClient();
+
+
+            var request = new CreateOrderRequest()
+            {
+                num_Receiving_storage = (int)storageNum,
+                total_volume = total_volume,
+                total_mass = total_mass,
+                total_cost = total_cost,
+            };
+            var list = new List<ProductListForRequest>();
+            foreach (var p in orderProducts)
+            {
+                var element = new ProductListForRequest()
+                {
+                    сatalogue_number = p.Сatalogue_number,
+                    count = p.Count
+                };
+                list.Add(element);
+            }
+            request.productList = list;
+
+            var response = Client.PostAsJsonAsync("http://localhost:5093/api/Order/CreateOrder", request)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+
+            message = response.Error;
+            return response.IsSuccess;
         }
+
+        public static void CreateTransportation(CreateTrnspRequest createNewTransportationRequest, ref string message)
+        {
+            HttpClient Client = new HttpClient(); // 
+
+            var response = Client.PostAsJsonAsync("http://localhost:5093/api/Transportations/CreateTransportation", createNewTransportationRequest)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+            if (response.Error != null)
+            {
+                message = response.Error;
+            }
+            return;
+        }
+
 
 
         #endregion

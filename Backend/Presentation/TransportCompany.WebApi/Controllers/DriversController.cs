@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.Orders;
+using TransportCompany.Aplication.Services;
 
 namespace TransportCompany.WebApi.Controllers
 {
@@ -15,7 +17,7 @@ namespace TransportCompany.WebApi.Controllers
             _driverService = driverService;
         }
 
-        [HttpGet]
+        [HttpGet("GetDetailInfo")]
         public async Task<IActionResult> GetDetailDriverInfo(string Driver_license_number)
         {
             var driver = await _driverService.GetDetailDriverInfo(Driver_license_number);
@@ -27,6 +29,14 @@ namespace TransportCompany.WebApi.Controllers
         {
             var driversBO = await _driverService.GetDrivers();
             return Ok(driversBO);
+        }
+
+
+        [HttpPost("GetDriversForOrder")]
+        public async Task<IActionResult> GetDriversForOrder([FromBody] DriverForOrder request)
+        {
+            var driverList = await _driverService.GetDriversForOrder(request);
+            return Ok(driverList);
         }
     }
 }

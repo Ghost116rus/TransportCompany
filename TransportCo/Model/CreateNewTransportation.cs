@@ -64,6 +64,7 @@ namespace TransportCo.Model
 
         private List<SendingStoragesListDTO> StoragesList;
         public List<InfoObject> InfoStorageList { get; set; }      
+        public List<InfoObject> InfoVehicleList { get; set; }      
 
         private List<Vehicle> vehicleList;
 
@@ -78,7 +79,6 @@ namespace TransportCo.Model
             {
                 selectedStorageNum = value; NotifyPropertyChanged("InfoStorages");
                 StorageIsSelected();
-
             }
         }
 
@@ -89,7 +89,34 @@ namespace TransportCo.Model
             selectedStorage = StoragesList[_page.ComboboxStorage.SelectedIndex];
             Num_Sending_storage = selectedStorage.StorageID;
             Total_length = selectedStorage.TotalLength;
+
+            vehicleList = MyHttp.MyHttpClient.GetVehiclesForOrder(selectedStorage.Address.Substring(0,
+                selectedStorage.Address.IndexOf(',')), _order.Total_mass, _order.Total_volume);
+
+            InfoVehicleList = vehicleList.Select(ts => new InfoObject
+            {
+                FirstString = ts.Name,
+                SecondString = ts.Vehicle_identification_number
+            }).ToList();
+
+            _page.ComboboxVehicles.ItemsSource = InfoVehicleList;
+            _page.ComboboxVehicles.Items.Refresh();
+            _page.ComboboxVehicles.IsEnabled = true;
         }
+
+
+
+        private InfoObject selectedVehicleIndex;
+        public InfoObject SelectedVehicleIndex
+        {
+            get { return selectedVehicleIndex; }
+            set
+            {
+                selectedVehicleIndex = value; NotifyPropertyChanged("SelectedVehicleIndex");
+            }
+        }
+
+
 
 
         private int selectedVehicle;

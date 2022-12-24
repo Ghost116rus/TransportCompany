@@ -64,20 +64,20 @@
 
                 <TextBlock Height="25" Margin="0,20,0,0" FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_length}"/>
 
-                <!--<ComboBox Name="ComboboxVehicles" Height="20"
-                          ItemsSource="{Binding Path = VehicleList}"
-                          SelectedItem="{Binding SelectedVehicle, UpdateSourceTrigger=PropertyChanged}"
+                <ComboBox Name="ComboboxVehicles" Height="20"
+                          ItemsSource="{Binding Path = InfoVehicleList}"
+                          SelectedItem="{Binding SelectedVehicleIndex}"
                           Margin="0,20,5,0" IsEnabled="False">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Width="150" Text="{Binding Path=Name}"/>
+                                <TextBlock Width="150" Text="{Binding Path=FirstString}"/>
                                 <TextBlock Text=" номер тс: "/>
-                                <TextBlock Text="{Binding Path=Vehicle_identification_number}"/>
+                                <TextBlock Text="{Binding Path=SecondString}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
-                </ComboBox>-->
+                </ComboBox>
 
 
                 <!--<TextBlock Height="25"  FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_shipping_cost}"/>

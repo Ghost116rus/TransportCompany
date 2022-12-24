@@ -55,7 +55,7 @@
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E" Command="{Binding StorageP}">Склады</ToggleButton>
                 <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Диспетчеры</ToggleButton>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E" Command="{Binding OperatorP}">Диспетчеры</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E" Command="{Binding DriversP}">Водители</ToggleButton>
                 <Separator/>
@@ -81,7 +81,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center">Перевозки</TextBlock>
-            <Button Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Background="#FFB7F3D9" Command="{Binding UpdateOrders}">Обновить данные</Button>
+            <Button Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Background="#FFB7F3D9" Command="{Binding RefreshTransportationPage}">Обновить данные</Button>
             <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Russo One" FontSize="25" HorizontalAlignment="Center" Margin="40,0,0,0">Подробная информация о перевозке</TextBlock>
 
             <TabControl Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedTabItemTransportation}" Margin="0,0,0,5">

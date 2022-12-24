@@ -657,6 +657,35 @@ namespace TransportCo.ViewModel
             }
         }
 
+
+
+        private RelayCommand? refreshProductsPage;
+        public RelayCommand RefreshProductsPage
+        {
+            get
+            {
+                return refreshProductsPage ??
+                    (refreshProductsPage = new RelayCommand(obj =>
+                    {
+                        AllProducts = MyHttp.MyHttpClient.GetAllProducts();
+                    }));
+            }
+        }
+
+
+        private RelayCommand? refreshTransportationPage;
+        public RelayCommand RefreshTransportationPage
+        {
+            get
+            {
+                return refreshTransportationPage ??
+                    (refreshTransportationPage = new RelayCommand(obj =>
+                    {
+                        RefreshTransportations();
+                    }));
+            }
+        }
+
         private RelayCommand? refreshVehiclePage;
         public RelayCommand RefreshVehiclePage
         {
@@ -735,6 +764,18 @@ namespace TransportCo.ViewModel
                         //
                         SelectedStorage = null;                        
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._storagesPage;
+                    }));
+            }
+        }
+        private RelayCommand? operatorP;
+        public RelayCommand OperatorP
+        {
+            get
+            {
+                return operatorP ??
+                    (operatorP = new RelayCommand(obj =>
+                    {
+                        AdministratorWindow._mainFrame.Content = AdministratorWindow._operatorsPage;
                     }));
             }
         }

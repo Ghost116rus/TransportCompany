@@ -18,6 +18,16 @@ namespace TransportCompany.DAL.Repository
             _context = context;
         }
 
+        public async Task<IEnumerable<User>> GetOperators()
+        {
+            var users = await _context.Users
+                .Where(u => u.TypeOfUser == 1)
+                .Include(u => u.Storage)
+                    .ThenInclude(s => s.Location)
+                .ToListAsync();
+            return users;
+        }
+
         public async Task<User> Login(string login, string password)
         {
             var user = await _context.Users.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportCompany.Aplication.BO;
 using TransportCompany.Aplication.Interfaces;
 using TransportCompany.Aplication.Requests;
 using TransportCompany.Aplication.Responses.Login;
@@ -17,6 +18,20 @@ namespace TransportCompany.Aplication.Services
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+        }
+
+        public async Task<IEnumerable<OperatorsBO>> GetAllOperators()
+        {
+            var users = await _userRepository.GetOperators();
+            var operators = users.Select(u => new OperatorsBO
+            {
+                Login = u.Login,
+                Password = u.Password,
+                UserName = u.UserName,
+                StorageNumber = u.Storage.Storage_number,
+                Addres = u.Storage.Location.Addres
+            });
+            return operators;
         }
 
         public async Task<ResponseLogin> Login(RequestLogin requestLogin)

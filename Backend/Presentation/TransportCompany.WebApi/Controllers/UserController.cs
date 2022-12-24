@@ -22,5 +22,12 @@ namespace TransportCompany.WebApi.Controllers
             var result = await _userService.Login(requestlogin);
             return Ok(result);
         }
+
+        [HttpGet("GetAllOperators")]
+        public async Task<IActionResult> GetOperators()
+        {
+            var result = await _userService.GetAllOperators();
+            return Ok(result);
+        }
     }
 }

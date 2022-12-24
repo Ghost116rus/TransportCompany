@@ -68,7 +68,7 @@
             <Button Grid.Column="4" FontSize="22" Grid.Row="0" FontFamily="Russo One" Width="150" HorizontalAlignment="Right" Background="{x:Null}" Command="{Binding GoOut}">Выйти</Button>
         </Grid>
 
-        <Grid Grid.Row="1" Margin="15,0,0,0">
+        <Grid Grid.Row="1" Margin="15,0,0,80">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
@@ -78,19 +78,18 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="0.2*"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding AllStorages, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5"
-                      SelectedItem="{Binding SelectedStorage, UpdateSourceTrigger=PropertyChanged}">
+            <ListView ItemsSource="{Binding AllOperators, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="110" Header = "Имя"                      DisplayMemberBinding="{Binding Path=Name}"/>
-                        <GridViewColumn Width="110" Header = "Логин"                    DisplayMemberBinding="{Binding Path=Login}"/>
-                        <GridViewColumn Width="110" Header = "Пароль"                   DisplayMemberBinding="{Binding Path=Password}"/>
-                        <GridViewColumn Width="110" Header = "№ склада"                 DisplayMemberBinding="{Binding Path=StorageNumber}"/>
-                        <GridViewColumn Width="420" Header = "Адрес"                    DisplayMemberBinding="{Binding Path=Addres}"/>
-                        <GridViewColumn Width="180" Header = "Мобильный номер телефона" DisplayMemberBinding="{Binding Path=PhoneNumber}"/>
+                        <GridViewColumn Width="110" Header = "Имя"       DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Width="110" Header = "Логин"     DisplayMemberBinding="{Binding Path=Login}"/>
+                        <GridViewColumn Width="110" Header = "Пароль"    DisplayMemberBinding="{Binding Path=Password}"/>
+                        <GridViewColumn Width="110" Header = "№ склада"  DisplayMemberBinding="{Binding Path=StorageNumber}"/>
+                        <GridViewColumn Width="420" Header = "Адрес"     DisplayMemberBinding="{Binding Path=Addres}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
+        <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="45" Width="300" Margin="0,0,0,20" FontFamily="Russo One" FontSize="16">Добавить нового диспетчера</Button>
     </Grid>
 </Page>

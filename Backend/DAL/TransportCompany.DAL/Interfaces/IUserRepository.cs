@@ -10,5 +10,6 @@ namespace TransportCompany.DAL.Interfaces
     public interface IUserRepository
     {
         Task<User> Login(string login, string password);
+        Task<IEnumerable<User>> GetOperators();
     }
 }

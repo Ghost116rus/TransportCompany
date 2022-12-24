@@ -54,7 +54,7 @@
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FFC7E44E" Command="{Binding StorageP}">Склады</ToggleButton>
                 <Separator/>
-                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E">Диспетчеры</ToggleButton>
+                <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E" Command="{Binding OperatorP}">Диспетчеры</ToggleButton>
                 <Separator/>
                 <ToggleButton FontFamily="Russo One" FontSize="22" Foreground="#FF4EE45E" Command="{Binding DriversP}">Водители</ToggleButton>
                 <Separator/>
@@ -103,7 +103,7 @@
             </ListView>
             <Frame x:Name="ProductDetail" Grid.Column="2" Grid.Row="1" NavigationUIVisibility="Hidden" Margin="5,5,5,50"/>
 
-            <Button  Grid.Column="2" Grid.Row="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontFamily="Russo One" FontSize="14" Background="#FFB7F3D9"  Margin="40,0,0,5">Обновить данные о товарах</Button>
+            <Button  Grid.Column="2" Grid.Row="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontFamily="Russo One" FontSize="14" Background="#FFB7F3D9"  Margin="40,0,0,5" Command="{Binding RefreshProductsPage}">Обновить данные о товарах</Button>
             <Button  Grid.Column="2" Grid.Row="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="Russo One" FontSize="14" Background="White" Margin="0,0,40,5">Добавить новый товар</Button>
 
         </Grid>

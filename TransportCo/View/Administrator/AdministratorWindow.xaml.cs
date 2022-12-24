@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TransportCo.View.Administrator.Pages.Drivers;
 using TransportCo.View.Administrator.Pages.Main;
+using TransportCo.View.Administrator.Pages.Operators;
 using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
 using TransportCo.View.Administrator.Pages.StoragesP;
@@ -36,6 +37,7 @@ namespace TransportCo.View.Administrator
         public static OrdersPage _ordersPage { get; set; }
         public static ProductsPage _productsPage { get; set; }
         public static StoragesPage _storagesPage { get; set; }
+        public static OperatorsPage _operatorsPage { get; set; }
         public static DriversPage _driversPage { get; set; }
         public static TransportVehiclePage _transportVehiclePage { get; set; }
         public static TransportationPage _transportationPage { get; set; }
@@ -59,6 +61,7 @@ namespace TransportCo.View.Administrator
             _ordersPage = new OrdersPage();
             _productsPage = new ProductsPage();
             _storagesPage = new StoragesPage();
+            _operatorsPage = new OperatorsPage();
             _driversPage = new DriversPage();
             _transportVehiclePage = new TransportVehiclePage();
 

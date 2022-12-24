@@ -23,6 +23,7 @@ namespace TransportCo.View.Administrator.Pages.Operators
         public OperatorsPage()
         {
             InitializeComponent();
+            DataContext = AdministratorWindow._mng;
         }
     }
 }

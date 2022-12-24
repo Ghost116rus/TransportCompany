@@ -529,6 +529,7 @@ namespace TransportCo.MyHttp
 
         static int? storageNum = 1;
         public static int max_volume = 30_000;
+        public static int maxWeight = 30_000;
 
 
         public static List<ProductOperator> GetAllProductsByStorageNumber()
@@ -550,25 +551,6 @@ namespace TransportCo.MyHttp
 
             return products;
 
-            //return new List<ProductOperator>()
-            //{
-            //    new ProductOperator()
-            //    {
-            //        Сatalogue_number = "1245689",
-            //        Name = "Холодильник LG12-58",
-            //        Type = "крупногабаритный",
-            //        Cost = 32_500,
-            //        Count = 15
-            //    },
-            //    new ProductOperator()
-            //    {
-            //        Сatalogue_number = "6895123",
-            //        Name = "Утюг LG8-32",
-            //        Type = "малогабаритный",
-            //        Cost = 8500,
-            //        Count = 22
-            //    }
-            //};
         }
 
         public static bool SaveChangesAboutCountInDB(string сatalogue_number, int count)
@@ -620,7 +602,33 @@ namespace TransportCo.MyHttp
 
         public static bool CreateNewOrder(List<ProductOrder> orderProducts, int total_cost, int total_mass, int total_volume, ref string message)
         {
-            return true;
+            HttpClient Client = new HttpClient();
+
+
+            var request = new CreateOrderRequest()
+            {
+                num_Receiving_storage = (int)storageNum,
+                total_volume = total_volume,
+                total_mass = total_mass,
+                total_cost = total_cost,
+            };
+            var list = new List<ProductListForRequest>();
+            foreach (var p in orderProducts)
+            {
+                var element = new ProductListForRequest()
+                {
+                    сatalogue_number = p.Сatalogue_number,
+                    count = p.Count
+                };
+                list.Add(element);
+            }
+            request.productList = list;
+
+            var response = Client.PostAsJsonAsync("http://localhost:5093/api/Order/CreateOrder", request)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+
+            message = response.Error;
+            return response.IsSuccess;
         }
 
 

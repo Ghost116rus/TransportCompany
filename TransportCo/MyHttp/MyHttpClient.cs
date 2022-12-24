@@ -481,13 +481,44 @@ namespace TransportCo.MyHttp
                 Vehicle_identification_number = ts.Vehicle_identification_number,
                 Name = ts.Name,
                 Location = ts.Location,
-                Status = ts.Status
+                Status = ts.Status,
+                Transported_volume = ts.Transported_volume,
+                Load_capacity = ts.Load_capacity,
+                Fuel_consumption = ts.Fuel_consumption,
+                Required_category = ts.Required_category
             }).ToList();
 
             return vehicles;
         }
 
+        public static List<Vehicle> GetDriverForOrder(string Location, string Required_category)
+        {
+            HttpClient Client = new HttpClient();
 
+
+            var request = new GetDriverForOrderRequest()
+            {
+                Location = Location,
+                Required_category = Required_category
+            };
+
+            //var result = Client.PostAsJsonAsync("http://localhost:5093/api/Vehicle/GetVehicleForOrder", request)
+            //    .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<VehicleDTO>>().Result;
+
+            //var vehicles = result.Select(ts => new Vehicle
+            //{
+            //    Vehicle_identification_number = ts.Vehicle_identification_number,
+            //    Name = ts.Name,
+            //    Location = ts.Location,
+            //    Status = ts.Status,
+            //    Transported_volume = ts.Transported_volume,
+            //    Load_capacity = ts.Load_capacity,
+            //    Fuel_consumption = ts.Fuel_consumption,
+            //    Required_category = ts.Required_category
+            //}).ToList();
+
+            return vehicles;
+        }
 
         #endregion
 

@@ -27,6 +27,8 @@ namespace TransportCo.Model
         private string vehicleID;
         private string vriverId;
 
+        private string vehicleName;
+        private string vehicleId;
 
         // зона свойств
         public string RecievingAddres { get; set; }
@@ -42,6 +44,22 @@ namespace TransportCo.Model
             set { total_length = value; NotifyPropertyChanged("Total_length"); }
         }
 
+        public int Car_load
+        {
+            get { return car_load; }
+            set { car_load = value; NotifyPropertyChanged("Сar_load"); }
+        }
+
+        public string VehicleName
+        {
+            get { return vehicleName; }
+            set { vehicleName = value; NotifyPropertyChanged("VehicleName"); }
+        }
+        public string VehicleId
+        {
+            get { return vehicleId; }
+            set { vehicleId = value; NotifyPropertyChanged("VehicleId"); }
+        }
 
         public CreateNewTransportation(Orders order, CreateTransportationPage page)
         {
@@ -77,7 +95,7 @@ namespace TransportCo.Model
             get { return selectedStorageNum; }
             set
             {
-                selectedStorageNum = value; NotifyPropertyChanged("InfoStorages");
+                selectedStorageNum = value;
                 StorageIsSelected();
             }
         }
@@ -112,24 +130,28 @@ namespace TransportCo.Model
             get { return selectedVehicleIndex; }
             set
             {
-                selectedVehicleIndex = value; NotifyPropertyChanged("SelectedVehicleIndex");
+                selectedVehicleIndex = value;
+                if (value != null) { VehicleIsSelected(); }
+                else
+                {
+                    Car_load = 0;
+                    VehicleName = "";
+                    VehicleId = "";
+                }
             }
         }
+        private Vehicle ts;
 
-
-
-
-        private int selectedVehicle;
-        public int SelectedVehicle
+        private void VehicleIsSelected()
         {
-            get { return selectedVehicle; }
-            set
-            {
-                selectedVehicle = value;
+            ts = vehicleList[_page.ComboboxVehicles.SelectedIndex];
+            VehicleName = ts.Name;
+            VehicleId = ts.Vehicle_identification_number;
+            Car_load = (_order.Total_volume / ts.Transported_volume) * 100;
 
-                NotifyPropertyChanged("SelectedVehicle");
-            }
         }
+
+
 
 
         public event PropertyChangedEventHandler? PropertyChanged;

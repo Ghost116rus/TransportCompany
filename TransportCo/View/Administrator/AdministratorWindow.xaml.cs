@@ -39,6 +39,7 @@ namespace TransportCo.View.Administrator
         public static DriversPage _driversPage { get; set; }
         public static TransportVehiclePage _transportVehiclePage { get; set; }
         public static TransportationPage _transportationPage { get; set; }
+        public static CreateTransportationPage _createTransportationPage { get; set; }
 
         public static bool exit { get; set; } = false;
 
@@ -62,6 +63,7 @@ namespace TransportCo.View.Administrator
             _transportVehiclePage = new TransportVehiclePage();
 
             _transportationPage = new TransportationPage();
+            _createTransportationPage = new CreateTransportationPage();
 
             //_mainFrame.Content = mainPage;
             _mainFrame.Content = _mainPage;

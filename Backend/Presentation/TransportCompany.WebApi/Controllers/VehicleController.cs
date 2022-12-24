@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests.Orders;
 
 namespace TransportCompany.WebApi.Controllers
 {
@@ -14,6 +15,14 @@ namespace TransportCompany.WebApi.Controllers
         {
             _vehicleService = vehicleService;
         }
+
+        [HttpPost("GetVehicleForOrder")]
+        public async Task<IActionResult> GetVehicleForOrder([FromBody] VehicleForOrder request)
+        {
+            var vehicleList = await _vehicleService.GetVehicleForOrder(request);
+            return Ok(vehicleList);
+        }
+
 
         [HttpGet("GetVehicleByNumber")]
         public async Task<IActionResult> GetVehicleByNumber(string number)

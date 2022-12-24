@@ -9,6 +9,7 @@ using System.Windows;
 using System.Xml.Linq;
 using TransportCo.DTO;
 using TransportCo.DTO.Authorizate;
+using TransportCo.DTO.CreateTransportation;
 using TransportCo.DTO.Operator;
 using TransportCo.Model;
 using TransportCo.Model.Operator;
@@ -447,6 +448,49 @@ namespace TransportCo.MyHttp
 
         #endregion
 
+        #region Создание Перевозки
+
+        public static List<SendingStoragesListDTO> GetStoragesByOrder(int requestId)
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Storages/{requestId}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<SendingStoragesListDTO>>().Result;
+
+            return result;
+        }
+
+        public static List<Vehicle> GetVehiclesForOrder(string Location, int TotalMass, int TotalVolume)
+        {
+            HttpClient Client = new HttpClient();
+
+
+            var request = new GetVehicleForOrderRequest()
+            {
+                Location = Location,
+                TotalMass = TotalMass,
+                TotalVolume = TotalVolume
+            };
+
+            var result = Client.PostAsJsonAsync("http://localhost:5093/api/Vehicle/GetVehicleForOrder", request)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<VehicleDTO>>().Result;
+
+            var vehicles = result.Select(ts => new Vehicle
+            {
+                Vehicle_identification_number = ts.Vehicle_identification_number,
+                Name = ts.Name,
+                Location = ts.Location,
+                Status = ts.Status
+            }).ToList();
+
+            return vehicles;
+        }
+
+
+
+        #endregion
+
         #endregion
 
 
@@ -547,6 +591,7 @@ namespace TransportCo.MyHttp
         {
             return true;
         }
+
 
 
         #endregion

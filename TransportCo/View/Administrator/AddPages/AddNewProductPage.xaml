@@ -45,11 +45,11 @@
                 <TextBox Margin="5,10,20,10" TextAlignment="Center" Text="{Binding Type}"/>
             </StackPanel>
             <StackPanel  Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
-                <TextBox Margin="5,18,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Length}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Width}"  TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Height}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Weight}" TextAlignment="Right"/>
-                <TextBox Margin="5,10,0,10" PreviewTextInput = "PreviewTextInput" Text="{Binding Cost}"   TextAlignment="Right"/>
+                <TextBox PreviewTextInput = "PreviewTextInput" Margin="5,18,0,10"  Text="{Binding Length}" TextAlignment="Right"/>
+                <TextBox PreviewTextInput = "PreviewTextInput" Margin="5,10,0,10"  Text="{Binding Width}"  TextAlignment="Right"/>
+                <TextBox PreviewTextInput = "PreviewTextInput" Margin="5,10,0,10"  Text="{Binding Height}" TextAlignment="Right"/>
+                <TextBox PreviewTextInput = "PreviewTextInput" Margin="5,10,0,10"  Text="{Binding Weight}" TextAlignment="Right"/>
+                <TextBox PreviewTextInput = "PreviewTextInput" Margin="5,10,0,10"  Text="{Binding Cost}"   TextAlignment="Right"/>
             </StackPanel>
             <StackPanel  Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
                 <TextBlock Height="18" Margin="5,18,0,10" FontFamily="Russo One">мм.</TextBlock>

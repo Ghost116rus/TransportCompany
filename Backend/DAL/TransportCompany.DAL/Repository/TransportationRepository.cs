@@ -33,7 +33,29 @@ namespace TransportCompany.DAL.Repository
             {
                 request.Status = "Обрабатывается";
                 _context.Requests.Update(request);
-            }                          
+            }
+            var driver = await _context.Drivers.Where(d => d.Driver_license_number == transportation.DriverID).FirstOrDefaultAsync();
+            if (driver == null)
+            {
+                throw new Exception();
+            }
+            else
+            {
+                driver.Status = "В рейсе";
+                _context.Drivers.Update(driver);
+            }
+
+            var vehicle = await _context.Transport_vehicles.Where(v => v.Vehicle_identification_number == transportation.VehicleID).FirstOrDefaultAsync();
+            if (vehicle == null)
+            {
+                throw new Exception();
+            }
+            else
+            {
+                vehicle.Status = "В рейсе";
+                _context.Transport_vehicles.Update(vehicle);
+            }
+
             foreach (var product in requare_products)
             {
                 var product_exmp = await _context.Product_exmps.
@@ -60,7 +82,7 @@ namespace TransportCompany.DAL.Repository
                 .Include(x => x.Request)
                     .ThenInclude(r => r.RecievingStorage)
                         .ThenInclude(s => s.Location)
-                .Where(r => r.Request.Status == "Сформирована" || r.Request.Status == "Доставляется")
+                .Where(r => r.Request.Status == "Обрабатывается" || r.Request.Status == "Доставляется")
                 .OrderBy(x => x.Request.DateOfCreate).ToListAsync();
                 
             return Transportations;

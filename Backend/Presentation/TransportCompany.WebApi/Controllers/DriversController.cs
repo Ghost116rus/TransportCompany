@@ -33,10 +33,10 @@ namespace TransportCompany.WebApi.Controllers
 
 
         [HttpPost("GetDriversForOrder")]
-        public async Task<IActionResult> GetVehicleForOrder([FromBody] DriverForOrder request)
+        public async Task<IActionResult> GetDriversForOrder([FromBody] DriverForOrder request)
         {
-            var vehicleList = await _driverService.GetDriversForOrder(request);
-            return Ok(vehicleList);
+            var driverList = await _driverService.GetDriversForOrder(request);
+            return Ok(driverList);
         }
     }
 }

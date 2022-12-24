@@ -818,8 +818,6 @@ namespace TransportCo.ViewModel
 
         #region Создание перевозки
 
-
-
         private CreateNewTransportation? createNewTransportationClass;
         public CreateNewTransportation CreateNewTransportationClass
         {

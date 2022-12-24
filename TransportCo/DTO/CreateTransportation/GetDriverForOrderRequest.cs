@@ -8,8 +8,8 @@ namespace TransportCo.DTO.CreateTransportation
 {
     public class GetDriverForOrderRequest
     {
-        public string Location { get; set; }
-        public string Required_category { get; set; }
+        public string location { get; set; }
+        public string requareCategory { get; set; }
 
     }
 }

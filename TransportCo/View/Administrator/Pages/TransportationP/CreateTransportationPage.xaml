@@ -81,28 +81,31 @@
 
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,10,0,0" Text="{Binding VehicleName}"/>
                 <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16" Margin="0,0,0,0" Text="{Binding VehicleId}"/>
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Car_load}"/>
+                <TextBlock Name="CarLoadLabel"  Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Car_load}"/>
 
                 <ComboBox Name="ComboboxDrivers" Height="20"
-                          ItemsSource="{Binding Path = InfoVehicleList}"
-                          SelectedItem="{Binding SelectedVehicleIndex}"
+                          ItemsSource="{Binding Path = InfoDriverList}"
+                          SelectedItem="{Binding SelectedDriverIndex}"
                           Margin="0,20,5,0" IsEnabled="False">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Width="150" Text="{Binding Path=FirstString}"/>
-                                <TextBlock Text=" номер тс: "/>
+                                <TextBlock Text="{Binding Path=FirstString}"/>
+                                <TextBlock Text="   Стаж: "/>
                                 <TextBlock Text="{Binding Path=SecondString}"/>
+                                <TextBlock Text=" лет Общее количество перевозок: "/>
+                                <TextBlock Text="{Binding Path=ThirdString}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,10,0,0" Text="{Binding DriverFullName}"/>
+                <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Margin="0,10,0,0" Text="{Binding DriverName}"/>
 
-                <TextBlock Height="25"  FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_shipping_cost}" Margin="0,20,0,0"/>
+                <TextBlock Name="TotalLabel" Height="25"  FontFamily="Times New Roman" FontSize="16" Text="{Binding Total_shipping_cost}" Margin="0,20,0,0"/>
             </StackPanel>
         </Grid>
-        <Button Grid.Row="1" Width="220" FontFamily="Russo One" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,10">Создать перевозку</Button>
+        <Button Grid.Row="1" Width="220" FontFamily="Russo One" FontSize="20" HorizontalAlignment="Center" Margin="0,0,250,10" DataContext="{Binding CreateNewTransportationClass}" Command="{Binding CreateTrnsp}">Создать перевозку</Button>
+        <Button Grid.Row="1" Width="220" FontFamily="Russo One" FontSize="20" HorizontalAlignment="Center" Margin="250,0,0,10">Отменить заявку</Button>
     </Grid>
 </Page>

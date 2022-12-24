@@ -38,7 +38,7 @@ namespace TransportCompany.Aplication.Services
                     DriverID = request.DriverID,
                     VehicleID = request.VehicleID,
 
-                    Status = "Ожидает подтверждение Оператора склада-получателя",
+                    Status = "Ожидает подтверждение Оператора склада-отправителя",
                     Date_dispatch = DateTime.Now.AddDays(2),
                     Delivery_date = CreateDateOfDispatch(request.Total_length)
                 };

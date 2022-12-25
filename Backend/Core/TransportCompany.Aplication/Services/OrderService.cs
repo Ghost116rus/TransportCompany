@@ -87,6 +87,30 @@ namespace TransportCompany.Aplication.Services
             return orders;
         }
 
+        public async Task<IEnumerable<RequestBO>> GetAllOrdersByStorageNumber(int number)
+        {
+            var ordersFromDB = await _orderRepository.GetAllOrderByStorageNumber(number);
+
+            if (ordersFromDB == null)
+            {
+                return null;
+            }
+
+            var orders = ordersFromDB.Select(order => new RequestBO
+            {
+                Number = order.Number,
+                Status = order.Status,
+                Num_Receiving_storage = order.Num_Receiving_storage,
+                Addres = order.RecievingStorage.Location.Addres,
+                Total_cost = order.Total_cost,
+                Total_mass = order.Total_mass,
+                Total_volume = order.Total_volume,
+                DateOfCreate = order.DateOfCreate,
+                DateOfComplete = order.DateOfComplete
+            });
+            return orders;
+        }
+
         public async Task<IEnumerable<RequestBO>> GetAllPandingOrder()
         {
             var ordersFromDB = await _orderRepository.GetPandingOrder();
@@ -150,6 +174,22 @@ namespace TransportCompany.Aplication.Services
                 return response;
             }
             response.IsSuccess = true;
+            return response;
+        }
+
+        public async Task<BasicResponse> CancelOrder(int number)
+        {
+            BasicResponse response = new BasicResponse();
+            response.IsSuccess = false;
+            try
+            {
+                await _orderRepository.CancelOrder(number);
+                response.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+                response.Error = "Ошибка при попытке изменить статус заявки";
+            }
             return response;
         }
     }

@@ -30,6 +30,13 @@ namespace TransportCompany.WebApi.Controllers
             return Ok(orders);
         }
 
+        [HttpGet("GetAllOrdersByStorageNumber")]
+        public async Task<IActionResult> GetAllOrdersByStorageNumber(int number)
+        {
+            var orders = await _orderService.GetAllOrdersByStorageNumber(number);
+            return Ok(orders);
+        }
+
         [HttpGet("PandingOrders")]
         public async Task<IActionResult> GetPandingsOrders()
         {
@@ -45,5 +52,12 @@ namespace TransportCompany.WebApi.Controllers
             return Ok(response);    
         }
 
+
+        [HttpGet("CancelOrder")]
+        public async Task<IActionResult> CancelOrder(int number)
+        {
+            var result = await _orderService.CancelOrder(number);
+            return Ok(result);
+        }
     }
 }

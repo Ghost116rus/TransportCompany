@@ -15,7 +15,9 @@ namespace TransportCompany.Aplication.Interfaces
     {
         Task<RequestBO> GetOrderByNumber(int number);
         Task<IEnumerable<RequestBO>> GetAllOrders();
+        Task<IEnumerable<RequestBO>> GetAllOrdersByStorageNumber(int number);
         Task<IEnumerable<RequestBO>> GetAllPandingOrder();
         Task<BasicResponse> CreateOrder(NewOrder newOrder);
+        Task<BasicResponse> CancelOrder(int number);
     }
 }

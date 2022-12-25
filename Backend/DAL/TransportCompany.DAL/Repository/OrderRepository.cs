@@ -68,5 +68,26 @@ namespace TransportCompany.DAL.Repository
             await _context.SaveChangesAsync();
             return;
         }
+
+        public async Task CancelOrder(int number)
+        {
+            var request = await _context.Requests.FirstOrDefaultAsync(x => x.Number == number);
+            request.Status = "Отказано";
+            _context.Requests.Update(request);
+
+            await _context.SaveChangesAsync();
+
+            return;
+        }
+
+        public async Task<IEnumerable<Request>> GetAllOrderByStorageNumber(int number)
+        {
+            var orders = await _context.Requests
+                .Include(x => x.RecievingStorage)
+                    .ThenInclude(s => s.Location)
+                .Where(x => x.Num_Receiving_storage == number)
+                .OrderByDescending(x => x.DateOfCreate).ToListAsync();
+            return orders;
+        }
     }
 }

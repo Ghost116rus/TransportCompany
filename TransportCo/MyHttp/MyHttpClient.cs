@@ -135,6 +135,21 @@ namespace TransportCo.MyHttp
             return transportations;
         }
 
+        public static void CancelOrder(int number, ref string message)
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Order/CancelOrder?number={storageNum}")
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+
+            if (response.IsSuccess) { message = "Операция выполнена успешно"; }
+            else
+            {
+                message = response.Error;
+            }
+            return;
+        }
+
         #endregion
 
         #region Работа с Заявками
@@ -651,6 +666,33 @@ namespace TransportCo.MyHttp
             message = response.Error;
             return response.IsSuccess;
         }
+
+        public static List<Orders> GetAllOrdersByStoragNumber()
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Order/GetAllOrdersByStorageNumber?number={storageNum}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OrderDTO>>().Result;
+
+            List<Orders> orders = result.Select(order => new Orders
+            {
+                Number = order.Number,
+                Status = order.Status,
+                Num_Receiving_storage = order.Num_Receiving_storage,
+                Total_cost = order.Total_cost,
+                Total_mass = order.Total_mass,
+                Total_volume = order.Total_volume,
+                DateOfCreate = order.DateOfCreate,
+                DateOfComplete = order.DateOfComplete,
+                Addres = order.Addres,
+            }
+            ).ToList();
+
+            return orders;
+        }
+
+
 
 
         #endregion

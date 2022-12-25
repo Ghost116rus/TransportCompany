@@ -15,5 +15,7 @@ namespace TransportCompany.DAL.Interfaces
         Task<IEnumerable<Request>> GetPandingOrder();
         Task<int> CreateOrder(Request order);
         Task CreateOrderList(Requare_product product);
+        Task CancelOrder(int number);
+        Task<IEnumerable<Request>> GetAllOrderByStorageNumber(int number);
     }
 }

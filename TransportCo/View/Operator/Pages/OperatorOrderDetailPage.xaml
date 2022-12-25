@@ -64,6 +64,6 @@
                 </ListView.View>
             </ListView>
         </Grid>
-        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Command="{Binding OpenWndTranspDetail}">Отменить заявку</Button>
+        <Button Height="40" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Command="{Binding CancelRequest}">Отменить заявку</Button>
     </Grid>
 </Page>

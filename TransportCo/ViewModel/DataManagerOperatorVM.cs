@@ -339,7 +339,7 @@ namespace TransportCo.ViewModel
                     (openOrdersPage = new RelayCommand(obj =>
                     {
                         //CleanAllInCreateOrderPage();
-                        AllOrders = MyHttp.MyHttpClient.GetAllOrders();
+                        AllOrders = MyHttp.MyHttpClient.GetAllOrdersByStoragNumber();
                         OperatorWindow._mainFrame.Content = OperatorWindow._requestPage;
 
                     }));
@@ -361,6 +361,19 @@ namespace TransportCo.ViewModel
                     {
                         RefreshDataAboutProduct();
                         GetAllPRoducts();
+                    }));
+            }
+        }
+
+        private RelayCommand? refreshOrders;
+        public RelayCommand RefreshOrders
+        {
+            get
+            {
+                return refreshOrders ??
+                    (refreshOrders = new RelayCommand(obj =>
+                    {
+                        AllOrders = MyHttp.MyHttpClient.GetAllOrdersByStoragNumber();
                     }));
             }
         }
@@ -402,6 +415,30 @@ namespace TransportCo.ViewModel
             DetailOrder = MyHttp.MyHttpClient.GetDetailOrderInfo(number);
 
             OperatorRequestsPage._orderDetailFrame.Content = OperatorRequestsPage._operatorOrderDetailPage;
+        }
+
+
+        private RelayCommand? cancelRequest;
+        public RelayCommand CancelRequest
+        {
+            get
+            {
+                return cancelRequest ??
+                    (cancelRequest = new RelayCommand(obj =>
+                    {
+                        string message = "";
+                        if (DetailOrder.Status == "Обрабатывается")
+                        {
+                            MyHttp.MyHttpClient.CancelOrder(DetailOrder.Number, ref message);
+                        }
+                        else
+                        {
+                            message = "Невозможно отменить заявку, которую уже рассмотрели";
+                        }
+                        MessageBox.Show(message);                       
+
+                    }));
+            }
         }
 
         #endregion

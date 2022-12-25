@@ -239,6 +239,27 @@ namespace TransportCo.Model
             }
         }
 
+        private RelayCommand? cancelOrder;
+        public RelayCommand CancelOrder
+        {
+            get
+            {
+                return cancelOrder ??
+                    (cancelOrder = new RelayCommand(obj =>
+                    {
+                        string message = "";
+                        MyHttp.MyHttpClient.CancelOrder(_order.Number, ref message);
+                        MessageBox.Show(message);
+                        if (message == "Операция выполнена успешно")
+                        {
+                            AdministratorWindow._mng.CloseUniversalWnd();
+                        }
+                    }
+                    ));
+            }
+        }
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

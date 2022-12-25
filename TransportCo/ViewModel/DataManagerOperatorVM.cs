@@ -427,7 +427,7 @@ namespace TransportCo.ViewModel
                     (cancelRequest = new RelayCommand(obj =>
                     {
                         string message = "";
-                        if (DetailOrder.Status == "Обрабатывается")
+                        if (DetailOrder.Status == "Сформирована")
                         {
                             MyHttp.MyHttpClient.CancelOrder(DetailOrder.Number, ref message);
                         }

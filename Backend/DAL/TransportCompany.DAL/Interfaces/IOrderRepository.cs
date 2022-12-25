@@ -13,6 +13,7 @@ namespace TransportCompany.DAL.Interfaces
         Task<Request> GetOrderByNumber(int number);
         Task<IEnumerable<Request>> GetAllOrder();
         Task<IEnumerable<Request>> GetPandingOrder();
+        Task<IEnumerable<Request>> GetNoPandingOrder();
         Task<int> CreateOrder(Request order);
         Task CreateOrderList(Requare_product product);
         Task CancelOrder(int number);

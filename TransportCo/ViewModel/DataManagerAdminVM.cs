@@ -48,6 +48,7 @@ namespace TransportCo.ViewModel
         #region Общие методы
 
         private bool WndNowActive = false;
+        private bool BtnCanWork = false;
 
         private UniversalWindow newUniversalWnd = new UniversalWindow();
 
@@ -74,6 +75,7 @@ namespace TransportCo.ViewModel
             if (newUniversalWnd.IsInitialized == true)
             {
                 newUniversalWnd.Close();
+                MainRefresh();
             }
         }
 
@@ -86,7 +88,26 @@ namespace TransportCo.ViewModel
                     (createTransportationbtn = new RelayCommand(obj =>
                     {
                         CreateTransportation();
-                    }
+                    },
+                    e => BtnCanWork)); 
+            }
+        }
+
+        private RelayCommand? disApproveTransportationBtn;
+        public RelayCommand DisApproveTransportationBtn
+        {
+            get
+            {
+                return disApproveTransportationBtn ??
+                    (disApproveTransportationBtn = new RelayCommand(obj =>
+                    {
+                        string message = "";
+                        MyHttp.MyHttpClient.CancelOrder(DetailOrder.Number, ref message);
+                        CloseUniversalWnd();
+                        MainRefresh();
+                        MessageBox.Show(message);
+                    },
+                    e => BtnCanWork
                     ));
             }
         }
@@ -210,7 +231,7 @@ namespace TransportCo.ViewModel
             }
         }
 
-        private List<Orders> mainPageOrders = MyHttp.MyHttpClient.GetPendingOrders();
+        private List<Orders> mainPageOrders = MyHttp.MyHttpClient.GetNotPandingOrders();
 
         public List<Orders> MainPageOrders
         {
@@ -253,7 +274,17 @@ namespace TransportCo.ViewModel
         public Orders? DetailOrder
         {
             get { return detailOrder; }
-            set { detailOrder = value; NotifyPropertyChanged("DetailOrder"); }
+            set
+            {
+                detailOrder = value; NotifyPropertyChanged("DetailOrder");
+                if (value != null)
+                {
+                    if (detailOrder.Status == "Сформирована") { BtnCanWork = true; }
+                    else { BtnCanWork = false; }
+
+                }
+                else { BtnCanWork = false; }
+            }
         }
 
         private List<Orders>? pendingOrders;
@@ -330,7 +361,11 @@ namespace TransportCo.ViewModel
             }
         }
         
-
+        public void MainRefresh()
+        {
+            MainPageOrders = MyHttp.MyHttpClient.GetNotPandingOrders();
+            ActiveTransportations = MyHttp.MyHttpClient.GetActiveTransportations();
+        }
         private void RefreshOrders()
         {
             PendingOrders = MyHttp.MyHttpClient.GetPendingOrders();
@@ -654,6 +689,20 @@ namespace TransportCo.ViewModel
         #endregion
 
         #region Кнопки Обновить данные
+
+        private RelayCommand? refreshMain;
+        public RelayCommand RefreshMain
+        {
+            get
+            {
+                return refreshMain ??
+                    (refreshMain = new RelayCommand(obj =>
+                    {
+                        MainRefresh();
+                    }));
+            }
+        }
+
 
         private RelayCommand? updateOrders;
         public RelayCommand UpdateOrders

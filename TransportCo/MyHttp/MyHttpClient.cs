@@ -84,11 +84,11 @@ namespace TransportCo.MyHttp
 
         #region Общие методы
 
-        public static List<Orders> GetPendingOrders()
+        public static List<Orders> GetNotPandingOrders()
             {
             HttpClient Client = new HttpClient();
 
-            var response = Client.GetAsync("http://localhost:5093/api/Order/PandingOrders");
+            var response = Client.GetAsync("http://localhost:5093/api/Order/NoPandingOrders");
 
             var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OrderDTO>>().Result;
 
@@ -139,7 +139,7 @@ namespace TransportCo.MyHttp
         {
             HttpClient Client = new HttpClient();
 
-            var response = Client.GetAsync($"http://localhost:5093/api/Order/CancelOrder?number={storageNum}")
+            var response = Client.GetAsync($"http://localhost:5093/api/Order/CancelOrder?number={number}")
                 .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
 
             if (response.IsSuccess) { message = "Операция выполнена успешно"; }
@@ -154,7 +154,31 @@ namespace TransportCo.MyHttp
 
         #region Работа с Заявками
 
+        public static List<Orders> GetPendingOrders()
+        {
+            HttpClient Client = new HttpClient();
 
+            var response = Client.GetAsync("http://localhost:5093/api/Order/PandingOrders");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OrderDTO>>().Result;
+
+            List<Orders> orders = result.Select(order => new Orders
+            {
+                Number = order.Number,
+                Status = order.Status,
+                Num_Receiving_storage = order.Num_Receiving_storage,
+                Total_cost = order.Total_cost,
+                Total_mass = order.Total_mass,
+                Total_volume = order.Total_volume,
+                DateOfCreate = order.DateOfCreate,
+                DateOfComplete = order.DateOfComplete,
+                Addres = order.Addres,
+                DriverLicense = order.Driver_license_number
+            }
+            ).ToList();
+
+            return orders;
+        }
         public static List<Orders> GetAllOrders()
         {
 

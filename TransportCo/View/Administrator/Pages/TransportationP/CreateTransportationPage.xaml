@@ -106,6 +106,6 @@
             </StackPanel>
         </Grid>
         <Button Grid.Row="1" Width="220" FontFamily="Russo One" FontSize="20" HorizontalAlignment="Center" Margin="0,0,250,10" DataContext="{Binding CreateNewTransportationClass}" Command="{Binding CreateTrnsp}">Создать перевозку</Button>
-        <Button Grid.Row="1" Width="220" FontFamily="Russo One" FontSize="20" HorizontalAlignment="Center" Margin="250,0,0,10">Отменить заявку</Button>
+        <Button Grid.Row="1" Width="220" FontFamily="Russo One" FontSize="20" HorizontalAlignment="Center" Margin="250,0,0,10" DataContext="{Binding CreateNewTransportationClass}" Command="{Binding CancelOrder}">Отменить заявку</Button>
     </Grid>
 </Page>

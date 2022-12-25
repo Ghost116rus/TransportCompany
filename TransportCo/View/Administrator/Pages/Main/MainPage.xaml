@@ -76,8 +76,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Foreground="#FF292929" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="40,5,0,0">Необработанные заявки</TextBlock>
-                    <Button Foreground="#FF292929" Width="250" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="0,2,0,0" HorizontalAlignment="Right" Background="#FFB7F3D9">Обновить данные</Button>
-                    <ListView ItemsSource="{Binding MainPageOrders, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,0">
+                    <Button Foreground="#FF292929" Width="250" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="0,2,0,0" HorizontalAlignment="Right" Background="#FFB7F3D9" Command="{Binding RefreshMain}">Обновить данные</Button>
+                    <ListView x:Name="Panding" ItemsSource="{Binding MainPageOrders, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,0">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="50" Header = "№"                     DisplayMemberBinding="{Binding Path=Number}"/>
@@ -110,7 +110,7 @@
                     </Grid.ContextMenu>
                     <TextBlock Foreground="#FF882525" FontSize="25" Grid.Row="0" FontFamily="Russo One" Margin="30,5,0,0">Активные перевозки</TextBlock>
                     <Button FontSize="25" Grid.Row="0" FontFamily="Russo One" Width="100" HorizontalAlignment="Right" Command="{Binding GoOut}">Выйти</Button>
-                    <ListView ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0"
+                    <ListView Name="Active" ItemsSource="{Binding ActiveTransportations, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Background="White" Margin="3,0,5,0"
                               SelectedItem="{Binding SelectedTransportation}">
                         <ListView.View>
                             <GridView>

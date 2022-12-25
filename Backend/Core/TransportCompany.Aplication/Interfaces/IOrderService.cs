@@ -19,5 +19,6 @@ namespace TransportCompany.Aplication.Interfaces
         Task<IEnumerable<RequestBO>> GetAllPandingOrder();
         Task<BasicResponse> CreateOrder(NewOrder newOrder);
         Task<BasicResponse> CancelOrder(int number);
+        Task<IEnumerable<RequestBO>> GetNoPandingOrder();
     }
 }

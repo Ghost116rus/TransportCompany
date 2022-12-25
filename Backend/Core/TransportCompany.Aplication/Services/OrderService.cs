@@ -192,5 +192,23 @@ namespace TransportCompany.Aplication.Services
             }
             return response;
         }
+
+        public async Task<IEnumerable<RequestBO>> GetNoPandingOrder()
+        {
+            var ordersFromDB = await _orderRepository.GetNoPandingOrder();
+            var orders = ordersFromDB.Select(order => new RequestBO
+            {
+                Number = order.Number,
+                Status = order.Status,
+                Num_Receiving_storage = order.Num_Receiving_storage,
+                Addres = order.RecievingStorage.Location.Addres,
+                Total_cost = order.Total_cost,
+                Total_mass = order.Total_mass,
+                Total_volume = order.Total_volume,
+                DateOfCreate = order.DateOfCreate,
+                DateOfComplete = order.DateOfComplete
+            });
+            return orders;
+        }
     }
 }

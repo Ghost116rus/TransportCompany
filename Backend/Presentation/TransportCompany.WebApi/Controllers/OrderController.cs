@@ -37,6 +37,13 @@ namespace TransportCompany.WebApi.Controllers
             return Ok(orders);
         }
 
+        [HttpGet("NoPandingOrders")]
+        public async Task<IActionResult> GetNoPandingsOrders()
+        {
+            var orders = await _orderService.GetNoPandingOrder();
+            return Ok(orders);
+        }
+
         [HttpGet("PandingOrders")]
         public async Task<IActionResult> GetPandingsOrders()
         {

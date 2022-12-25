@@ -89,5 +89,17 @@ namespace TransportCompany.DAL.Repository
                 .OrderByDescending(x => x.DateOfCreate).ToListAsync();
             return orders;
         }
+
+        public async Task<IEnumerable<Request>> GetNoPandingOrder()
+        {
+            var pandingOrders = await _context.Requests.
+                Where(x => x.Status == "Сформирована")
+                .Include(x => x.RecievingStorage)
+                    .ThenInclude(s => s.Location)
+                .OrderBy(x => x.DateOfCreate)
+                .ToListAsync();
+
+            return pandingOrders;
+        }
     }
 }

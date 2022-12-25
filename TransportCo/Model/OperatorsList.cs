@@ -8,7 +8,7 @@ namespace TransportCo.Model
 {
     public class OperatorsList
     {
-        public string Name { get; set; }
+        public string UserName { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public int StorageNumber { get; set; }

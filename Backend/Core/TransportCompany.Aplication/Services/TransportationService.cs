@@ -156,6 +156,7 @@ namespace TransportCompany.Aplication.Services
                     Number = transFromDB.Number,
                     Num_Sending_storage = transFromDB.Num_Sending_storage,
                     Status = transFromDB.Status,
+                    RequestStatus = transFromDB.Request.Status,
                     Date_dispatch = transFromDB.Date_dispatch,
 
                     Vehicle_identification_number = transFromDB.vehicle.Vehicle_identification_number,

@@ -271,11 +271,21 @@ namespace TransportCompany.DAL.Repository
                     .FirstOrDefaultAsync();
                 if (product_exmp == null)
                 {
-                    throw new Exception();
+                    var new_product = new Product_exmp()
+                    {
+                        Сatalogue_number = product.Сatalogue_number,
+                        Storage_number = Transportation.Request.Num_Receiving_storage,
+                        Count = product.Count
+                    };
+                    _context.Product_exmps.Add(new_product);
                 }
-                product_exmp.Count = product_exmp.Count + product.Count;
+                else
+                {
+                    product_exmp.Count = product_exmp.Count + product.Count;
 
-                _context.Product_exmps.Update(product_exmp);
+                    _context.Product_exmps.Update(product_exmp);
+                }
+
             }
 
             await _context.SaveChangesAsync();

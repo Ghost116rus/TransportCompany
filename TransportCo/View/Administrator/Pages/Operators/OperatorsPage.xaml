@@ -81,7 +81,7 @@
             <ListView ItemsSource="{Binding AllOperators, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Background="White" FontFamily="Times New Roman" FontSize="16" Margin="5,0,3,5">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="110" Header = "Имя"       DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Width="110" Header = "Имя"       DisplayMemberBinding="{Binding Path=UserName}"/>
                         <GridViewColumn Width="110" Header = "Логин"     DisplayMemberBinding="{Binding Path=Login}"/>
                         <GridViewColumn Width="110" Header = "Пароль"    DisplayMemberBinding="{Binding Path=Password}"/>
                         <GridViewColumn Width="110" Header = "№ склада"  DisplayMemberBinding="{Binding Path=StorageNumber}"/>
@@ -91,6 +91,6 @@
             </ListView>
         </Grid>
         <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="45" Width="300" Margin="0,0,450,20" FontFamily="Russo One" FontSize="16">Добавить нового диспетчера</Button>
-        <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="45" Width="300" Margin="450,0,0,20" FontFamily="Russo One" FontSize="16">Обновить данные</Button>
+        <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="45" Width="300" Margin="450,0,0,20" FontFamily="Russo One" FontSize="16" Command="{Binding RefreshOperators}">Обновить данные</Button>
     </Grid>
 </Page>

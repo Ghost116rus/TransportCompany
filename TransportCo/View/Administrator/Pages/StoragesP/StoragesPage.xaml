@@ -92,7 +92,7 @@
             </ListView>
             <Frame x:Name="ProductList" Grid.Column="2" Grid.Row="1" NavigationUIVisibility="Hidden" Margin="5,5,5,50"/>
 
-            <Button  Grid.Column="2" Grid.Row="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="Russo One" FontSize="14" Background="#FFB7F3D9"  Margin="0,0,0,5">Обновить данные</Button>
+            <Button  Grid.Column="2" Grid.Row="1" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="Russo One" FontSize="14" Background="#FFB7F3D9"  Margin="0,0,0,5" Command="{Binding RefreshStorages}">Обновить данные</Button>
 
         </Grid>
     </Grid>

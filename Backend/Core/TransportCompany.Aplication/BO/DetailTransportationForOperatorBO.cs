@@ -11,6 +11,7 @@ namespace TransportCompany.Aplication.BO
         public int Number { get; set; }
         public int Num_Sending_storage { get; set; }
         public string Status { get; set; }
+        public string RequestStatus { get; set; }
         public DateTime Date_dispatch { get; set; }
 
         public string Vehicle_identification_number { get; set; }

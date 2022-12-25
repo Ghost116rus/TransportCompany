@@ -65,7 +65,7 @@
             </ListView>
         </Grid>
 
-        <Button Height="40" DataContext="{Binding DetailTransportation}" Width="220" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,250,15" Command="{Binding Agree}" Background="#FFC6EF96">Подтвердить наличие товаров</Button>
-        <Button Height="40" DataContext="{Binding DetailTransportation}" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,15" Command="{Binding Cancel}" Background="#FFF16C6C">Отказать в выдаче</Button>
+        <Button Height="40" DataContext="{Binding DetailTransportation}" Width="220" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,250,15" Command="{Binding SendProducts}" Background="#FFC6EF96">Подтвердить наличие товаров</Button>
+        <Button Height="40" DataContext="{Binding DetailTransportation}" Width="200" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,15" Command="{Binding CancelTransportation}" Background="#FFF16C6C">Отказать в выдаче</Button>
     </Grid>
 </Page>

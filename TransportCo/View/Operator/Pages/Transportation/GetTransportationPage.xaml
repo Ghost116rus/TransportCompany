@@ -66,6 +66,6 @@
             </ListView>
         </Grid>
 
-        <Button Height="40" DataContext="{Binding DetailTransportation}" Width="220" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding GetProducts}" Background="#FFC6EF96">Принять товары</Button>
+        <Button Height="40" DataContext="{Binding DetailTransportation}" Width="220" FontFamily="Times New Roman" FontSize="16" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding RecieveProducts}" Background="#FFC6EF96">Принять товары</Button>
     </Grid>
 </Page>

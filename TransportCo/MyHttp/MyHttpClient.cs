@@ -66,8 +66,8 @@ namespace TransportCo.MyHttp
                 {
                     Model.User.CurrentUser.Driver_license_number = response.Driver_license_number;
                 }
-                
-                
+
+                error = response.Error;
 
                 return response.IsSuccess;
             }
@@ -588,9 +588,6 @@ namespace TransportCo.MyHttp
         #region Диспетчер
 
         public static int? storageNum = 3;
-        public static int max_volume = 30_000;
-        public static int maxWeight = 30_000;
-        public static int min_value = 200;
 
         public static List<ProductOperator> GetAllProductsByStorageNumber()
         {
@@ -773,34 +770,52 @@ namespace TransportCo.MyHttp
             var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetDetailTransportationInfoForOperator?number={number}");
 
             var transportation = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<OperatorDetailTransportaion>().Result;
-
-            //Orders detailInfoOrder = new Orders()
-            //{
-            //    Number = order.Number,
-            //    Status = order.Status,
-            //    Num_Receiving_storage = order.Num_Receiving_storage,
-            //    Total_cost = order.Total_cost,
-            //    Total_mass = order.Total_mass,
-            //    Total_volume = order.Total_volume,
-            //    DateOfCreate = order.DateOfCreate,
-            //    DateOfComplete = order.DateOfComplete,
-            //    Addres = order.Addres,
-            //    transportationNum = order.TransportationNumber,
-            //    DriverLicense = order.Driver_license_number,
-            //    Requare_Products = order.productsList.Select(p => new Product
-            //    {
-            //        Сatalogue_number = p.Сatalogue_number,
-            //        Name = p.Name,
-            //        Count = p.Count
-            //    }).ToList()
-            //};
-
-
+            transportation.phoneNumber = "+7" + transportation.phoneNumber;
+            
             return transportation;
         }
 
+        public static void RecieveProducts(int transportationNumber, ref string message)
+        {
+            HttpClient Client = new HttpClient(); // 
 
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/CompleteTransportation?transportationNumber={transportationNumber}")
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+            if (response.Error != null)
+            {
+                message = response.Error;
+            }
 
+            return;
+        }
+
+        public static void SendProducts(int transportationNumber, ref string message)
+        {
+            HttpClient Client = new HttpClient(); // 
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/SendProducts?transportationNumber={transportationNumber}")
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+            if (response.Error != null)
+            {
+                message = response.Error;
+            }
+
+            return;
+        }
+
+        public static void CancelTransportation(int transportationNumber, ref string message)
+        {
+            HttpClient Client = new HttpClient(); // 
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/CancelTransportation?transportationNumber={transportationNumber}")
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+            if (response.Error != null)
+            {
+                message = response.Error;
+            }
+
+            return;
+        }
 
         #endregion
     }

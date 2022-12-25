@@ -489,6 +489,11 @@ namespace TransportCo.ViewModel
             StoragesPage._productListFrame.Content = StoragesPage._productListPage;
         }
 
+        private void RefreshStoragePage()
+        {
+            AllStorages = MyHttp.MyHttpClient.GetAllStorage();
+        }
+
         #endregion
 
         #region Диспетчеры
@@ -717,7 +722,18 @@ namespace TransportCo.ViewModel
             }
         }
 
-
+        private RelayCommand? refreshOperators;
+        public RelayCommand RefreshOperators
+        {
+            get
+            {
+                return refreshOperators ??
+                    (refreshOperators = new RelayCommand(obj =>
+                    {
+                        AllOperators = MyHttp.MyHttpClient.GetAllOperators();
+                    }));
+            }
+        }
 
         private RelayCommand? refreshProductsPage;
         public RelayCommand RefreshProductsPage
@@ -728,6 +744,20 @@ namespace TransportCo.ViewModel
                     (refreshProductsPage = new RelayCommand(obj =>
                     {
                         AllProducts = MyHttp.MyHttpClient.GetAllProducts();
+                    }));
+            }
+        }
+
+        //RefreshStorages
+        private RelayCommand? refreshStorages;
+        public RelayCommand RefreshStorages
+        {
+            get
+            {
+                return refreshStorages ??
+                    (refreshStorages = new RelayCommand(obj =>
+                    {
+                        RefreshStoragePage();
                     }));
             }
         }
@@ -771,7 +801,29 @@ namespace TransportCo.ViewModel
             }
         }
 
+        private void RefresDrivers()
+        {
+            AllDrivers = MyHttp.MyHttpClient.GetAllDrivers();
+            if (DetailVehicleInfo != null)
+            {
+                ViewDetailDriverInfo(DetailDriverInfo.DriverLicense);
+            }
+        }
 
+        // RefreshDrivers
+
+        private RelayCommand? refreshDrivers;
+        public RelayCommand RefreshDrivers
+        {
+            get
+            {
+                return refreshDrivers ??
+                    (refreshDrivers = new RelayCommand(obj =>
+                    {
+                        RefresDrivers();
+                    }));
+            }
+        }
 
         #endregion
 
@@ -861,7 +913,8 @@ namespace TransportCo.ViewModel
                 return driversP ??
                     (driversP = new RelayCommand(obj =>
                     {
-                        SelectedDriver = null;                      
+                        SelectedDriver = null;
+                        RefresDrivers();
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._driversPage;
                     }));
             }
@@ -875,7 +928,8 @@ namespace TransportCo.ViewModel
                 return vehicleP ??
                     (vehicleP = new RelayCommand(obj =>
                     {
-                        //                        
+                        //
+                        RefreshVehicles();
                         AdministratorWindow._mainFrame.Content = AdministratorWindow._transportVehiclePage;
                     }));
             }

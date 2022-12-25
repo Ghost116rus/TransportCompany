@@ -20,10 +20,12 @@ namespace TransportCo.View.Driver
     /// </summary>
     public partial class DriverWindow : Window
     {
+        public static DriverWindow _wnd { get; set; }
         public DriverWindow()
         {
             InitializeComponent();
             DataContext = new DataManagerDriverVM();
+            _wnd = this;
         }
     }
 }

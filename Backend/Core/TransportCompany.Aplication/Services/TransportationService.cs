@@ -280,5 +280,52 @@ namespace TransportCompany.Aplication.Services
             }
             return basicResponse;
         }
+
+
+        public async Task<DetailTransportationBO> GetDetailInfoByLicenseNumber(string license)
+        {
+            var transFromDB = await transportationRepository.GetDetailInfoByLicenseNumber(license);
+            if (transFromDB != null)
+            {
+                var transportation = new DetailTransportationBO()
+                {
+                    Number = transFromDB.Number,
+                    Num_Sending_storage = transFromDB.Num_Sending_storage,
+                    Status = transFromDB.Status,
+                    Sending_storage_Addres = transFromDB.SendingStorage.Location.Addres,
+                    Date_dispatch = transFromDB.Date_dispatch,
+                    DeliveryAddres = transFromDB.Request.RecievingStorage.Location.Addres,
+                    Total_length = transFromDB.Total_length,
+                    Total_shipping_cost = transFromDB.Total_shipping_cost,
+                    Vehicle_identification_number = transFromDB.vehicle.Vehicle_identification_number,
+                    Name = transFromDB.vehicle.Name,
+                    Car_load = transFromDB.Car_load,
+                    FullName = transFromDB.Driver.FirstName + " " + transFromDB.Driver.SecondName[0] + ". " + transFromDB.Driver.Patronymic[0] + ".",
+                    Driver_license_number = transFromDB.Driver.Driver_license_number,
+                    Delivery_date = transFromDB.Delivery_date,
+                    RequestNumber = transFromDB.RequestNumber
+                };
+                return transportation;
+            }
+            return null;
+
+        }
+
+        public async Task<BasicResponse> ChangeStatus(RequestChangeStatusTransportation request)
+        {
+            BasicResponse basicResponse = new BasicResponse();
+            basicResponse.IsSuccess = false;
+            try
+            {
+                await transportationRepository.ChangeStatus(request.TransportationNumber, request.Status);
+                basicResponse.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+
+                basicResponse.Error = "Не изменить статус";
+            }
+            return basicResponse;
+        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TransportCompany.Aplication.BO;
 using TransportCompany.Aplication.Interfaces;
+using TransportCompany.Aplication.Requests;
 using TransportCompany.Aplication.Requests.CreateTransportation;
+using TransportCompany.Aplication.Services;
 
 namespace TransportCompany.WebApi.Controllers
 {
@@ -22,7 +25,14 @@ namespace TransportCompany.WebApi.Controllers
             var transportation = await _transportationService.GetDetailInfoAboutTransportation(number);
             return Ok(transportation);
         }
-        
+
+        [HttpGet("GetDetailInfoByLicenseNumber")]
+        public async Task<IActionResult> GetDetailInfoAboutTransportation(string license)
+        {
+            var transportation = await _transportationService.GetDetailInfoByLicenseNumber(license);
+            return Ok(transportation);
+        }
+
         [HttpGet("GetDetailTransportationInfoForOperator")]
         public async Task<IActionResult> GetDetailTransportationInfoForOperator(int number)
         {
@@ -89,5 +99,12 @@ namespace TransportCompany.WebApi.Controllers
             return Ok(result);
         }
 
+
+        [HttpPost("ChangeStatus")]
+        public async Task<IActionResult> ChangeStatus([FromBody] RequestChangeStatusTransportation request)
+        {
+            var result = await _transportationService.ChangeStatus(request);
+            return Ok(result);
+        }
     }
 }

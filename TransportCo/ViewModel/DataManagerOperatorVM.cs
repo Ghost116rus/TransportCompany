@@ -453,7 +453,7 @@ namespace TransportCo.ViewModel
             {
                 return;
             }
-            if (DetailTransportation.Num_Sending_storage == MyHttp.MyHttpClient.storageNum)
+            if (DetailTransportation.Num_Sending_storage == Model.User.CurrentUser.ForignKeyToStorage)
             {
                 TransportationsPage._transportationDetailFrame.Content = TransportationsPage._SendTransportationPage;
             }

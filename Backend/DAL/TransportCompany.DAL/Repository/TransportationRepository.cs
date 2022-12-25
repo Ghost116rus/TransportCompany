@@ -290,5 +290,28 @@ namespace TransportCompany.DAL.Repository
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Transportation> GetDetailInfoByLicenseNumber(string license)
+        {
+            var transportation = await _context.Transportations
+                .Include(t => t.Request)
+                    .ThenInclude(r => r.RecievingStorage)
+                        .ThenInclude(s => s.Location)
+                .Where(t=> t.Request.Status == "Доставляется")
+                .Include(t => t.Driver)
+                .Include(t => t.vehicle)
+                .Include(t => t.SendingStorage)
+                    .ThenInclude(s => s.Location)
+                .FirstOrDefaultAsync(t => t.Driver.Driver_license_number == license);
+            return transportation;
+        }
+
+        public async Task ChangeStatus(int transportationNumber, string status)
+        {
+            var transportation = await _context.Transportations.FirstOrDefaultAsync(t => t.Number == transportationNumber);
+            transportation.Status = status;
+            _context.Transportations.Update(transportation);
+            await _context.SaveChangesAsync();
+        }
     }
 }

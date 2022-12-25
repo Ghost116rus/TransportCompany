@@ -59,7 +59,7 @@ namespace TransportCo.MyHttp
 
                 if (response.ForignKeyToStorage != null)
                 {
-                    storageNum = response.ForignKeyToStorage;
+
                     Model.User.CurrentUser.ForignKeyToStorage = response.ForignKeyToStorage;
                 }
                 if (response.Driver_license_number != null)
@@ -587,13 +587,12 @@ namespace TransportCo.MyHttp
 
         #region Диспетчер
 
-        public static int? storageNum = 3;
 
         public static List<ProductOperator> GetAllProductsByStorageNumber()
         {
             HttpClient Client = new HttpClient();
 
-            var response = Client.GetAsync($"http://localhost:5093/api/Product/GetProductsByStorageOperator?number={storageNum}");
+            var response = Client.GetAsync($"http://localhost:5093/api/Product/GetProductsByStorageOperator?number={Model.User.CurrentUser.ForignKeyToStorage}");
 
             var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<ProductsByStorageDTO>>().Result;
 
@@ -664,7 +663,7 @@ namespace TransportCo.MyHttp
 
             var request = new CreateOrderRequest()
             {
-                num_Receiving_storage = (int)storageNum,
+                num_Receiving_storage = (int)Model.User.CurrentUser.ForignKeyToStorage,
                 total_volume = total_volume,
                 total_mass = total_mass,
                 total_cost = total_cost,
@@ -692,7 +691,7 @@ namespace TransportCo.MyHttp
         {
             HttpClient Client = new HttpClient();
 
-            var response = Client.GetAsync($"http://localhost:5093/api/Order/GetAllOrdersByStorageNumber?number={storageNum}");
+            var response = Client.GetAsync($"http://localhost:5093/api/Order/GetAllOrdersByStorageNumber?number={Model.User.CurrentUser.ForignKeyToStorage}");
 
             var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<OrderDTO>>().Result;
 
@@ -717,7 +716,7 @@ namespace TransportCo.MyHttp
         {
             HttpClient Client = new HttpClient();
 
-            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetGetTransportation?storageNumber={storageNum}");
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetGetTransportation?storageNumber={Model.User.CurrentUser.ForignKeyToStorage}");
 
             var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<TRansportationDTO>>().Result;
 
@@ -742,7 +741,7 @@ namespace TransportCo.MyHttp
         {
             HttpClient Client = new HttpClient();
 
-            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetSendTransportation?storageNumber={storageNum}");
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetSendTransportation?storageNumber={Model.User.CurrentUser.ForignKeyToStorage}");
 
             var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<TRansportationDTO>>().Result;
 
@@ -815,6 +814,66 @@ namespace TransportCo.MyHttp
             }
 
             return;
+        }
+
+        #endregion
+
+        #region Водитель
+
+        public static string ChangeStatus(int TrnspNum, string status)
+        {
+            HttpClient Client = new HttpClient();
+
+            var request = new ChangeStatusClass()
+            {
+                Status = status,
+                TransportationNumber = TrnspNum
+            };
+            var response = Client.PostAsJsonAsync("http://localhost:5093/api/Transportations/ChangeStatus", request)
+                .Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BasicResponse>().Result;
+
+            var message = "Успешно выполнено";
+
+            if (!response.IsSuccess) { message = response.Error; }
+
+            return message;
+
+        }
+
+        public static Transportation GetDetailTransportationInfoByLicenseNumber(string licenseNumber)
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetDetailInfoByLicenseNumber?license={licenseNumber}");
+
+            var transportation = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<DetailTransportationDTO>().Result;
+
+            Transportation detailInfoTransportation = new Transportation()
+            {
+                Number = transportation.Number,
+                Num_Sending_storage = transportation.Num_Sending_storage,
+                Status = transportation.Status,
+                Sending_storage_Addres = transportation.Sending_storage_Addres,
+                Date_dispatch = transportation.Date_dispatch,
+                RecievedAddres = transportation.DeliveryAddres,
+                Delivery_date = transportation.Delivery_date,
+                Total_length = transportation.Total_length,
+                Total_shipping_cost = transportation.Total_shipping_cost,
+                Car_load = transportation.Car_load,
+                vehicle = new Transport_vehicle()
+                {
+                    Vehicle_identification_number = transportation.Vehicle_identification_number,
+                    Name = transportation.Name,
+                },
+                OrderNumber = transportation.RequestNumber,
+                driver = new Driver()
+                {
+                    FullName = transportation.FullName,
+                    DriverLicense = transportation.Driver_license_number
+                }
+            };
+
+            return detailInfoTransportation;
         }
 
         #endregion

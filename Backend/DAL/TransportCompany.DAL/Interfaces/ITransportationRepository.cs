@@ -10,11 +10,13 @@ namespace TransportCompany.DAL.Interfaces
     public interface ITransportationRepository
     {
         Task CancelTransportation(int number);
+        Task ChangeStatus(int transportationNumber, string status);
         Task CompleteTransportation(int number);
         Task CreateTransportation(Transportation transportation);
         Task<IEnumerable<Transportation>> GetActiveTransportation();
         Task<IEnumerable<Transportation>> GetAllTransportation();
         Task<Transportation> GetDetailInfoAboutTransportation(int number);
+        Task<Transportation> GetDetailInfoByLicenseNumber(string license);
         Task<Transportation> GetDetailTransportationInfoForOperator(int number);
         Task<Transportation> GetDriverByTransportationId(int transportationNumber);
 

@@ -22,5 +22,8 @@ namespace TransportCompany.Aplication.Interfaces
         Task<BasicResponse> SendProducts(int number);
         Task<BasicResponse> CompleteTransportation(int number);
         Task<BasicResponse> CancelTransportation(int number);
+
+        Task<DetailTransportationBO> GetDetailInfoByLicenseNumber(string license);
+        Task<BasicResponse> ChangeStatus(RequestChangeStatusTransportation request);
     }
 }

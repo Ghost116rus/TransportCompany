@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TransportCo.ViewModel;
 
 namespace TransportCo.View.Driver
 {
@@ -22,6 +23,7 @@ namespace TransportCo.View.Driver
         public DriverWindow()
         {
             InitializeComponent();
+            DataContext = new DataManagerDriverVM();
         }
     }
 }

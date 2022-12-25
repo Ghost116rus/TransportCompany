@@ -8,5 +8,6 @@ namespace TransportCo.ViewModel
 {
     public class DataManagerDriverVM
     {
+
     }
 }

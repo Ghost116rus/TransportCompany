@@ -234,5 +234,51 @@ namespace TransportCompany.DAL.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task CompleteTransportation(int number)
+        {
+            var Transportation = await _context.Transportations
+                .Include(t => t.Request)
+                    .ThenInclude(r => r.RecievingStorage)
+                        .ThenInclude( s => s.Location)
+                .Include(t => t.Driver)
+                .Include(t => t.vehicle)
+                .FirstOrDefaultAsync(t => t.Number == number);
+
+            if (Transportation == null)
+            {
+                throw new Exception();
+            }
+
+            Transportation.Status = "Завершена";
+            Transportation.Request.Status = "Выполнена";
+            Transportation.Request.DateOfComplete = DateTime.Now;
+            Transportation.vehicle.Status = "Свободен";
+            Transportation.Driver.Status = "Свободен";
+            Transportation.vehicle.Location = Transportation.Request.RecievingStorage.Location.Addres;
+            Transportation.Driver.Location = Transportation.Request.RecievingStorage.Location.Addres;
+
+            _context.Requests.Update(Transportation.Request);
+            _context.Transport_vehicles.Update(Transportation.vehicle);
+            _context.Drivers.Update(Transportation.Driver);
+            _context.Transportations.Update(Transportation);
+
+            var productList = await _context.Requare_products.Where(p => p.RequestID == Transportation.RequestNumber).ToListAsync();
+
+            foreach (var product in productList)
+            {
+                var product_exmp = await _context.Product_exmps.
+                    Where(p => p.Сatalogue_number == product.Сatalogue_number && p.Storage_number == Transportation.Request.Num_Receiving_storage)
+                    .FirstOrDefaultAsync();
+                if (product_exmp == null)
+                {
+                    throw new Exception();
+                }
+                product_exmp.Count = product_exmp.Count + product.Count;
+
+                _context.Product_exmps.Update(product_exmp);
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

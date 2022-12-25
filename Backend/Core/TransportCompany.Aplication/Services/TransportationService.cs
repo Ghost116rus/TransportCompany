@@ -245,9 +245,22 @@ namespace TransportCompany.Aplication.Services
             return basicResponse;
         }
 
-        public Task<BasicResponse> GetProducts(int number)
+        public async Task<BasicResponse> CompleteTransportation(int number)
         {
-            throw new NotImplementedException();
+            BasicResponse basicResponse = new BasicResponse();
+            basicResponse.IsSuccess = false;
+
+            try
+            {
+                await transportationRepository.CompleteTransportation(number);
+                basicResponse.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+
+                basicResponse.Error = "Не удалось завершить перевозку";
+            }
+            return basicResponse;
         }
 
         public async Task<BasicResponse> CancelTransportation(int number)
@@ -262,7 +275,7 @@ namespace TransportCompany.Aplication.Services
             catch (Exception)
             {
 
-                basicResponse.Error = "Не удалось сохранить информацию о выдаче товаров";
+                basicResponse.Error = "Не удалось отменить перевозку";
             }
             return basicResponse;
         }

@@ -20,7 +20,7 @@ namespace TransportCompany.Aplication.Interfaces
         Task<DetailTransportationForOperatorBO> GetDetailTransportationInfoForOperator(int number);
 
         Task<BasicResponse> SendProducts(int number);
-        Task<BasicResponse> GetProducts(int number);
+        Task<BasicResponse> CompleteTransportation(int number);
         Task<BasicResponse> CancelTransportation(int number);
     }
 }

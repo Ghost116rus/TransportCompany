@@ -67,6 +67,7 @@ namespace TransportCompany.WebApi.Controllers
             return Ok(transportation);
         }
 
+
         [HttpGet("SendProducts")]
         public async Task<IActionResult> SendProducts(int transportationNumber)
         {
@@ -78,6 +79,13 @@ namespace TransportCompany.WebApi.Controllers
         public async Task<IActionResult> CancelTransportation(int transportationNumber)
         {
             var result = await _transportationService.CancelTransportation(transportationNumber);
+            return Ok(result);
+        }
+
+        [HttpGet("CompleteTransportation")]
+        public async Task<IActionResult> CompleteTransportation(int transportationNumber)
+        {
+            var result = await _transportationService.CompleteTransportation(transportationNumber);
             return Ok(result);
         }
 

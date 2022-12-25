@@ -227,5 +227,44 @@ namespace TransportCompany.Aplication.Services
             int days = length / 300;
             return DateTime.Now.AddDays(days + 2);
         }
+
+        public async Task<BasicResponse> SendProducts(int number)
+        {
+            BasicResponse basicResponse = new BasicResponse();
+            basicResponse.IsSuccess = false;
+            try
+            {
+                await transportationRepository.SendProducts(number);
+                basicResponse.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+
+                basicResponse.Error = "Не удалось сохранить информацию о выдаче товаров";
+            }
+            return basicResponse;
+        }
+
+        public Task<BasicResponse> GetProducts(int number)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<BasicResponse> CancelTransportation(int number)
+        {
+            BasicResponse basicResponse = new BasicResponse();
+            basicResponse.IsSuccess = false;
+            try
+            {
+                await transportationRepository.CancelTransportation(number);
+                basicResponse.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+
+                basicResponse.Error = "Не удалось сохранить информацию о выдаче товаров";
+            }
+            return basicResponse;
+        }
     }
 }

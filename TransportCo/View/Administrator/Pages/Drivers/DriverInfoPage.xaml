@@ -10,7 +10,7 @@
 
     <Grid Background="#FFFFF7EA">
         <Grid.RowDefinitions>
-            <RowDefinition Height="380"/>
+            <RowDefinition Height="415"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
@@ -30,7 +30,7 @@
                 <TextBlock Height="80" FontFamily="Times New Roman" FontSize="16">Домашний адрес:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Водительские категории:</TextBlock>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16">Опыт работы:</TextBlock>
-                <TextBlock Height="45" FontFamily="Times New Roman" FontSize="16">Текущее расположение:</TextBlock>
+                <TextBlock Height="80" FontFamily="Times New Roman" FontSize="16">Текущее расположение:</TextBlock>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2"  DataContext="{Binding DetailDriverInfo}" >
                 <TextBlock Height="50" FontFamily="Times New Roman" FontSize="16" Margin="0,80,0,0" Text="{Binding DriverLicense}"/>
@@ -40,7 +40,7 @@
                 <TextBlock Height="80" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Addres}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding Driver_license_category}"/>
                 <TextBlock Height="25" FontFamily="Times New Roman" FontSize="16" Text="{Binding WorkExpirience}"/>
-                <TextBlock Height="45" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Location}"/>
+                <TextBlock Height="80" MaxWidth="250" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="16" Text="{Binding Location}"/>
             </StackPanel>
         </Grid>
 

@@ -18,6 +18,7 @@ namespace TransportCompany.DAL.Repository
             _context = context;
         }
 
+
         public async Task CreateTransportation(Transportation transportation)
         {
             var requare_products = await _context.Requare_products
@@ -161,5 +162,77 @@ namespace TransportCompany.DAL.Repository
 
             return Transportations;
         }
+
+
+        public async Task SendProducts(int number)
+        {
+            var Transportation = await _context.Transportations
+                .Include(t => t.SendingStorage)
+                    .ThenInclude(s => s.Location)
+                .Include(t => t.Request)
+                .Include(t => t.Driver)
+                .Include(t => t.vehicle)
+                .FirstOrDefaultAsync(t => t.Number == number);
+            if (Transportation == null)
+            {
+                throw new Exception();
+            }
+
+            Transportation.Status = "Товары выданы со склада-отправителя";
+            Transportation.Request.Status = "Доставляется";
+            Transportation.vehicle.Location = Transportation.SendingStorage.Location.Addres;
+            Transportation.Driver.Location = "Получены товары на складе: " + Transportation.SendingStorage.Location.Addres;
+
+            _context.Requests.Update(Transportation.Request);
+            _context.Transport_vehicles.Update(Transportation.vehicle);
+            _context.Drivers.Update(Transportation.Driver);
+            _context.Transportations.Update(Transportation);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task CancelTransportation(int number)
+        {
+            var Transportation = await _context.Transportations
+                .Include(t => t.SendingStorage)
+                    .ThenInclude(s => s.Location)
+                .Include(t => t.Request)
+                    .ThenInclude(r => r.Requare_Products)
+                .Include(t => t.Driver)
+                .Include(t => t.vehicle)
+                .FirstOrDefaultAsync(t => t.Number == number);
+
+            if (Transportation == null)
+            {
+                throw new Exception();
+            }
+
+            Transportation.Status = "Товары отсутсвуют на складе-отправителя";
+            Transportation.Request.Status = "Отказано";
+            Transportation.vehicle.Status = "Свободен";
+            Transportation.Driver.Status = "Свободен";
+
+            _context.Requests.Update(Transportation.Request);
+            _context.Transport_vehicles.Update(Transportation.vehicle);
+            _context.Drivers.Update(Transportation.Driver);
+            _context.Transportations.Update(Transportation);
+
+            foreach (var product in Transportation.Request.Requare_Products)
+            {
+                var product_exmp = await _context.Product_exmps.
+                    Where(p => p.Сatalogue_number == product.Сatalogue_number && p.Storage_number == Transportation.Num_Sending_storage)
+                    .FirstOrDefaultAsync();
+                if (product_exmp == null)
+                {
+                    throw new Exception();
+                }
+                product_exmp.Count = product_exmp.Count + product.Count;
+
+                _context.Product_exmps.Update(product_exmp);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

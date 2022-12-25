@@ -18,5 +18,9 @@ namespace TransportCompany.Aplication.Interfaces
         Task<IEnumerable<TransportationsBO>> GetSendTransportation(int storageNumber);
         Task<DetailTransportationBO> GetDetailInfoAboutTransportation(int number);
         Task<DetailTransportationForOperatorBO> GetDetailTransportationInfoForOperator(int number);
+
+        Task<BasicResponse> SendProducts(int number);
+        Task<BasicResponse> GetProducts(int number);
+        Task<BasicResponse> CancelTransportation(int number);
     }
 }

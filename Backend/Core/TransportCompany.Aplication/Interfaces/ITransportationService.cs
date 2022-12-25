@@ -14,6 +14,9 @@ namespace TransportCompany.Aplication.Interfaces
         Task <BasicResponse> CreateTransportation(RequestToCreateTransportation request);
         Task<IEnumerable<TransportationsBO>> GetActiveTransportations();
         Task<IEnumerable<TransportationsBO>> GetAllTransportations();
+        Task<IEnumerable<TransportationsBO>> GetGetTransportation(int storageNumber);
+        Task<IEnumerable<TransportationsBO>> GetSendTransportation(int storageNumber);
         Task<DetailTransportationBO> GetDetailInfoAboutTransportation(int number);
+        Task<DetailTransportationForOperatorBO> GetDetailTransportationInfoForOperator(int number);
     }
 }

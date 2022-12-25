@@ -22,6 +22,13 @@ namespace TransportCompany.WebApi.Controllers
             var transportation = await _transportationService.GetDetailInfoAboutTransportation(number);
             return Ok(transportation);
         }
+        
+        [HttpGet("GetDetailTransportationInfoForOperator")]
+        public async Task<IActionResult> GetDetailTransportationInfoForOperator(int number)
+        {
+            var transportation = await _transportationService.GetDetailTransportationInfoForOperator(number);
+            return Ok(transportation);
+        }
 
         [HttpGet("GetActiveTransportations")]
         public async Task<IActionResult> GetActiveTransportations()
@@ -44,6 +51,20 @@ namespace TransportCompany.WebApi.Controllers
             var response = await _transportationService.CreateTransportation(request);
             return Ok(response);
             //return Ok();
+        }
+
+        [HttpGet("GetGetTransportation")]
+        public async Task<IActionResult> GetGetTransportation(int storageNumber)
+        {
+            var transportation = await _transportationService.GetGetTransportation(storageNumber);
+            return Ok(transportation);
+        }
+
+        [HttpGet("GetSendTransportation")]
+        public async Task<IActionResult> GetSendTransportation(int storageNumber)
+        {
+            var transportation = await _transportationService.GetSendTransportation(storageNumber);
+            return Ok(transportation);
         }
 
     }

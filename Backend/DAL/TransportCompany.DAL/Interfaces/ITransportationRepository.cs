@@ -13,6 +13,10 @@ namespace TransportCompany.DAL.Interfaces
         Task<IEnumerable<Transportation>> GetActiveTransportation();
         Task<IEnumerable<Transportation>> GetAllTransportation();
         Task<Transportation> GetDetailInfoAboutTransportation(int number);
+        Task<Transportation> GetDetailTransportationInfoForOperator(int number);
         Task<Transportation> GetDriverByTransportationId(int transportationNumber);
+
+        Task<IEnumerable<Transportation>> GetGetTransportation(int storageNumber);
+        Task<IEnumerable<Transportation>> GetSendTransportation(int storageNumber);
     }
 }

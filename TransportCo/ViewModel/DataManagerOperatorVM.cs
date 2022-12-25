@@ -11,8 +11,10 @@ using TransportCo.Model.Operator;
 using TransportCo.View.Administrator;
 using TransportCo.View.Administrator.Pages.OrdersP;
 using TransportCo.View.Administrator.Pages.Products;
+using TransportCo.View.Administrator.Pages.TransportationP;
 using TransportCo.View.Operator;
 using TransportCo.View.Operator.Pages;
+using TransportCo.View.Operator.Pages.Transportation;
 using TransportCo.View.Operator.YesOrNoWnd;
 
 namespace TransportCo.ViewModel
@@ -265,7 +267,7 @@ namespace TransportCo.ViewModel
                 return сreateNewOrder ??
                     (сreateNewOrder = new RelayCommand(obj =>
                     {
-                        if (Total_volume < 500)
+                        if (Total_volume < MyHttp.MyHttpClient.min_value)
                         {
                             MessageBox.Show("Слишком мало набранных товаров!\nНе отправлю такую заявку - возьмите больше товаров. Нужно хотя бы 500л");
                         }
@@ -297,58 +299,6 @@ namespace TransportCo.ViewModel
 
         #endregion
 
-        #region Переход между страницами
-
-
-        private RelayCommand? openMainPage;
-        public RelayCommand OpenMainPage
-        {
-            get
-            {
-                return openMainPage ??
-                    (openMainPage = new RelayCommand(obj =>
-                    {
-                        CleanAllInCreateOrderPage();
-                        OperatorWindow._mainFrame.Content = OperatorWindow._mainPage;
-
-                    }));
-            }
-        }
-
-        private RelayCommand? openCreateOrderPage;
-        public RelayCommand OpenCreateOrderPage
-        {
-            get
-            {
-                return openCreateOrderPage ??
-                    (openCreateOrderPage = new RelayCommand(obj =>
-                    {
-                        //CleanAllInCreateOrderPage();
-                        OperatorWindow._mainFrame.Content = OperatorWindow._createPage;
-
-                    }));
-            }
-        }
-
-        private RelayCommand? openOrdersPage;
-        public RelayCommand OpenOrdersPage
-        {
-            get
-            {
-                return openOrdersPage ??
-                    (openOrdersPage = new RelayCommand(obj =>
-                    {
-                        //CleanAllInCreateOrderPage();
-                        AllOrders = MyHttp.MyHttpClient.GetAllOrdersByStoragNumber();
-                        OperatorWindow._mainFrame.Content = OperatorWindow._requestPage;
-
-                    }));
-            }
-        }
-
-
-        #endregion
-
         #region Кнопки обновления данных
 
         private RelayCommand? refreshMainP;
@@ -365,6 +315,7 @@ namespace TransportCo.ViewModel
             }
         }
 
+
         private RelayCommand? refreshOrders;
         public RelayCommand RefreshOrders
         {
@@ -374,6 +325,21 @@ namespace TransportCo.ViewModel
                     (refreshOrders = new RelayCommand(obj =>
                     {
                         AllOrders = MyHttp.MyHttpClient.GetAllOrdersByStoragNumber();
+                    }));
+            }
+        }
+
+
+        private RelayCommand? refreshTransportationPage;
+        public RelayCommand RefreshTransportationPage
+        {
+            get
+            {
+                return refreshTransportationPage ??
+                    (refreshTransportationPage = new RelayCommand(obj =>
+                    {
+                        GetTransportations = MyHttp.MyHttpClient.GetGetTransportations();
+                        SendTransportations = MyHttp.MyHttpClient.GetSendTransportations();
                     }));
             }
         }
@@ -443,6 +409,132 @@ namespace TransportCo.ViewModel
 
         #endregion
 
+        #region Снова страница перевозок
+
+        private List<Transportation> getTransportations;
+        public List<Transportation> GetTransportations
+        {
+            get { return getTransportations; }
+            set { getTransportations = value; NotifyPropertyChanged("GetTransportations"); }
+        }
+
+        private List<Transportation> sendTransportations;
+        public List<Transportation> SendTransportations
+        {
+            get { return sendTransportations; }
+            set { sendTransportations = value; NotifyPropertyChanged("SendTransportations"); }
+        }
+
+        private OperatorDetailTransportaion? detailTransportation;
+        public OperatorDetailTransportaion DetailTransportation
+        {
+            get { return detailTransportation; }
+            set { detailTransportation = value; NotifyPropertyChanged("DetailTransportation"); }
+        }
+
+        private Transportation? selectedTransportation = null;
+        public Transportation? SelectedTransportation
+        {
+            get { return selectedTransportation; }
+            set
+            {
+                selectedTransportation = value;
+                if (value != null) { ViewTransportatioDetails(selectedTransportation.Number); }
+                else { TransportationsPage._transportationDetailFrame.Content = null; }
+
+                NotifyPropertyChanged("SelectedTransportation");
+            }
+        }
+
+        public void ViewTransportatioDetails(int number)
+        {
+            DetailTransportation = MyHttp.MyHttpClient.GetDetailTransportationInfoForOperator(number);
+            if (DetailTransportation == null)
+            {
+                return;
+            }
+            if (DetailTransportation.Num_Sending_storage == MyHttp.MyHttpClient.storageNum)
+            {
+                TransportationsPage._transportationDetailFrame.Content = TransportationsPage._SendTransportationPage;
+            }
+            else
+            {
+                TransportationsPage._transportationDetailFrame.Content = TransportationsPage._GetTransportationPage;
+            }
+
+        }
+
+        #endregion
+
+        #region Переход между страницами
+
+
+        private RelayCommand? openMainPage;
+        public RelayCommand OpenMainPage
+        {
+            get
+            {
+                return openMainPage ??
+                    (openMainPage = new RelayCommand(obj =>
+                    {
+                        CleanAllInCreateOrderPage();
+                        OperatorWindow._mainFrame.Content = OperatorWindow._mainPage;
+
+                    }));
+            }
+        }
+
+        private RelayCommand? openCreateOrderPage;
+        public RelayCommand OpenCreateOrderPage
+        {
+            get
+            {
+                return openCreateOrderPage ??
+                    (openCreateOrderPage = new RelayCommand(obj =>
+                    {
+                        //CleanAllInCreateOrderPage();
+                        OperatorWindow._mainFrame.Content = OperatorWindow._createPage;
+
+                    }));
+            }
+        }
+
+        private RelayCommand? openOrdersPage;
+        public RelayCommand OpenOrdersPage
+        {
+            get
+            {
+                return openOrdersPage ??
+                    (openOrdersPage = new RelayCommand(obj =>
+                    {
+                        //CleanAllInCreateOrderPage();
+                        AllOrders = MyHttp.MyHttpClient.GetAllOrdersByStoragNumber();
+                        OperatorWindow._mainFrame.Content = OperatorWindow._requestPage;
+
+                    }));
+            }
+        }
+
+        private RelayCommand? openTransporationPage;
+        public RelayCommand OpenTransporationPage
+        {
+            get
+            {
+                return openTransporationPage ??
+                    (openTransporationPage = new RelayCommand(obj =>
+                    {
+                        //CleanAllInCreateOrderPage();
+                        //AllOrders = MyHttp.MyHttpClient.GetAllOrdersByStoragNumber();
+                        GetTransportations = MyHttp.MyHttpClient.GetGetTransportations();
+                        SendTransportations = MyHttp.MyHttpClient.GetSendTransportations();
+                        OperatorWindow._mainFrame.Content = OperatorWindow._transportationsPage;
+
+                    }));
+            }
+        }
+
+
+        #endregion
 
         #region Кнопка выйти
 

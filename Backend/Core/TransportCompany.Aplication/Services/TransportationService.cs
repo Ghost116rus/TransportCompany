@@ -131,6 +131,97 @@ namespace TransportCompany.Aplication.Services
 
         }
 
+        private IEnumerable<ProductExmpBO> GetProductList(IEnumerable<Requare_product> list)
+        {
+            IEnumerable<ProductExmpBO> result = null;
+            if (list != null)
+            {
+                result = list.Select(x => new ProductExmpBO
+                {
+                    Сatalogue_number = x.Сatalogue_number,
+                    Name = x.Product.Name,
+                    Count = x.Count
+                });
+            }
+            return result;
+        }
+
+        public async Task<DetailTransportationForOperatorBO> GetDetailTransportationInfoForOperator(int number)
+        {
+            var transFromDB = await transportationRepository.GetDetailTransportationInfoForOperator(number);
+            if (transFromDB != null)
+            {
+                var transportation = new DetailTransportationForOperatorBO()
+                {
+                    Number = transFromDB.Number,
+                    Num_Sending_storage = transFromDB.Num_Sending_storage,
+                    Status = transFromDB.Status,
+                    Date_dispatch = transFromDB.Date_dispatch,
+
+                    Vehicle_identification_number = transFromDB.vehicle.Vehicle_identification_number,
+                    Name = transFromDB.vehicle.Name,
+
+                    FullName = transFromDB.Driver.FirstName + " " + transFromDB.Driver.SecondName[0] + ". " + transFromDB.Driver.Patronymic[0] + ".",
+                    PhoneNumber = transFromDB.Driver.Phone_number,
+
+
+                    productsList = GetProductList(transFromDB.Request.Requare_Products)
+
+
+                };
+                return transportation;
+            }
+            return null;
+        }
+
+
+
+        public async Task<IEnumerable<TransportationsBO>> GetGetTransportation(int storageNumber)
+        {
+            var transpFromDb = await transportationRepository.GetGetTransportation(storageNumber);
+
+            if (transpFromDb == null)
+            {
+                return null;
+            }
+
+            var transportations = transpFromDb.Select(t => new TransportationsBO
+            {
+                Number = t.Number,
+                Status = t.Status,
+                Date_dispatch = t.Date_dispatch,
+                Delivery_date = t.Delivery_date,
+                DeliveryAddres = t.Request.RecievingStorage.Location.Addres,
+                FullName = t.Driver.FirstName + " " + t.Driver.SecondName[0] + ". " + t.Driver.Patronymic[0] + ".",
+                RequestNumber = t.RequestNumber
+            });
+
+            return transportations;
+        }
+
+        public async Task<IEnumerable<TransportationsBO>> GetSendTransportation(int storageNumber)
+        {
+            var transpFromDb = await transportationRepository.GetSendTransportation(storageNumber);
+
+            if (transpFromDb == null)
+            {
+                return null;
+            }
+
+            var transportations = transpFromDb.Select(t => new TransportationsBO
+            {
+                Number = t.Number,
+                Status = t.Status,
+                Date_dispatch = t.Date_dispatch,
+                Delivery_date = t.Delivery_date,
+                DeliveryAddres = t.Request.RecievingStorage.Location.Addres,
+                FullName = t.Driver.FirstName + " " + t.Driver.SecondName[0] + ". " + t.Driver.Patronymic[0] + ".",
+                RequestNumber = t.RequestNumber
+            });
+
+            return transportations;
+        }
+
         private DateTime CreateDateOfDispatch(int length)
         {
             int days = length / 300;

@@ -303,7 +303,7 @@ namespace TransportCo.MyHttp
             {
                 Number = p.Storage_number,
                 Addres = p.Addres,
-                PhoneNumber = p.Phone_number
+                PhoneNumber = "+7" + p.Phone_number
             }).ToList();
 
             return storages;
@@ -349,7 +349,7 @@ namespace TransportCo.MyHttp
                 DriverLicense = result.Driver_license_number,
                 FullName = result.FIO,
                 Addres = result.Addres,
-                Phone_number = result.Phone_number,
+                Phone_number = "+7" + result.Phone_number,
                 Driver_license_category = result.Driver_license_category,
                 WorkExpirience = result.Expirience,
                 Location = result.Location,
@@ -587,10 +587,10 @@ namespace TransportCo.MyHttp
 
         #region Диспетчер
 
-        static int? storageNum = 1;
+        public static int? storageNum = 3;
         public static int max_volume = 30_000;
         public static int maxWeight = 30_000;
-
+        public static int min_value = 200;
 
         public static List<ProductOperator> GetAllProductsByStorageNumber()
         {
@@ -714,6 +714,89 @@ namespace TransportCo.MyHttp
             ).ToList();
 
             return orders;
+        }
+
+        internal static List<Transportation> GetGetTransportations()
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetGetTransportation?storageNumber={storageNum}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<TRansportationDTO>>().Result;
+
+            List<Transportation> transportations = result.Select(t => new Transportation
+            {
+                Number = t.Number,
+                RecievedAddres = t.DeliveryAddres,
+                Status = t.Status,
+                Date_dispatch = t.Date_dispatch,
+                Delivery_date = t.Delivery_date,
+                driver = new Driver()
+                {
+                    FullName = t.FullName
+                }
+            }
+            ).ToList();
+
+            return transportations;
+        }
+
+        internal static List<Transportation> GetSendTransportations()
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetSendTransportation?storageNumber={storageNum}");
+
+            var result = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<List<TRansportationDTO>>().Result;
+
+            List<Transportation> transportations = result.Select(t => new Transportation
+            {
+                Number = t.Number,
+                RecievedAddres = t.DeliveryAddres,
+                Status = t.Status,
+                Date_dispatch = t.Date_dispatch,
+                Delivery_date = t.Delivery_date,
+                driver = new Driver()
+                {
+                    FullName = t.FullName
+                }
+            }
+            ).ToList();
+
+            return transportations;
+        }
+
+        internal static OperatorDetailTransportaion GetDetailTransportationInfoForOperator(int number)
+        {
+            HttpClient Client = new HttpClient();
+
+            var response = Client.GetAsync($"http://localhost:5093/api/Transportations/GetDetailTransportationInfoForOperator?number={number}");
+
+            var transportation = response.Result.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<OperatorDetailTransportaion>().Result;
+
+            //Orders detailInfoOrder = new Orders()
+            //{
+            //    Number = order.Number,
+            //    Status = order.Status,
+            //    Num_Receiving_storage = order.Num_Receiving_storage,
+            //    Total_cost = order.Total_cost,
+            //    Total_mass = order.Total_mass,
+            //    Total_volume = order.Total_volume,
+            //    DateOfCreate = order.DateOfCreate,
+            //    DateOfComplete = order.DateOfComplete,
+            //    Addres = order.Addres,
+            //    transportationNum = order.TransportationNumber,
+            //    DriverLicense = order.Driver_license_number,
+            //    Requare_Products = order.productsList.Select(p => new Product
+            //    {
+            //        Сatalogue_number = p.Сatalogue_number,
+            //        Name = p.Name,
+            //        Count = p.Count
+            //    }).ToList()
+            //};
+
+
+            return transportation;
         }
 
 

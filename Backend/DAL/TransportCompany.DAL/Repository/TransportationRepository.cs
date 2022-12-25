@@ -100,6 +100,8 @@ namespace TransportCompany.DAL.Repository
             return Transportations;
         }
 
+
+
         public async Task<Transportation> GetDetailInfoAboutTransportation(int number)
         {
             var transportation = await _context.Transportations
@@ -114,6 +116,18 @@ namespace TransportCompany.DAL.Repository
             return transportation;
         }
 
+        public async Task<Transportation> GetDetailTransportationInfoForOperator(int number)
+        {
+            var transportation = await _context.Transportations
+                .Include(t => t.Driver)
+                .Include(t => t.vehicle)
+                .Include(t => t.Request)
+                    .ThenInclude(r => r.Requare_Products)
+                        .ThenInclude(p => p.Product)
+                .FirstOrDefaultAsync(t => t.Number == number);
+            return transportation;
+        }
+
         public async Task<Transportation> GetDriverByTransportationId(int transportationNumber)
         {
             var transportation = await _context.Transportations
@@ -121,6 +135,31 @@ namespace TransportCompany.DAL.Repository
                 .Where(t => t.Number == transportationNumber)
                 .FirstOrDefaultAsync();
             return transportation;
+        }
+
+        public async Task<IEnumerable<Transportation>> GetGetTransportation(int storageNumber)
+        {
+            var Transportations = await _context.Transportations
+                .Include(x => x.Driver)
+                .Include(x => x.Request)
+                    .ThenInclude(r => r.RecievingStorage)
+                        .ThenInclude(s => s.Location)
+                .Where(r => r.Request.Num_Receiving_storage == storageNumber)
+                .OrderByDescending(x => x.Request.DateOfCreate).ToListAsync();
+
+            return Transportations;
+        }
+        public async Task<IEnumerable<Transportation>> GetSendTransportation(int storageNumber)
+        {
+            var Transportations = await _context.Transportations
+                .Where(t => t.Num_Sending_storage == storageNumber)
+                .Include(x => x.Driver)
+                .Include(x => x.Request)
+                    .ThenInclude(r => r.RecievingStorage)
+                        .ThenInclude(s => s.Location)
+                 .OrderByDescending(x => x.Request.DateOfCreate).ToListAsync();
+
+            return Transportations;
         }
     }
 }

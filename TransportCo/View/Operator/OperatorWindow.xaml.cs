@@ -15,6 +15,8 @@ using TransportCo.View.Operator.Pages;
 using TransportCo.View.Administrator;
 using TransportCo.ViewModel;
 using System.Text.RegularExpressions;
+using TransportCo.View.Operator.Pages.Transportation;
+using TransportCo.View.Administrator.Pages.TransportationP;
 
 namespace TransportCo.View.Operator
 {
@@ -31,6 +33,7 @@ namespace TransportCo.View.Operator
         public static MainPagexaml _mainPage { get; set; }
         public static CreateOrderPage _createPage { get; set; }
         public static OperatorRequestsPage _requestPage { get; set; }
+        public static TransportationsPage _transportationsPage { get; set; }
         public OperatorWindow()
         {
             InitializeComponent();
@@ -45,6 +48,7 @@ namespace TransportCo.View.Operator
             _mainPage = new MainPagexaml();
             _createPage = new CreateOrderPage();
             _requestPage = new OperatorRequestsPage();
+            _transportationsPage = new TransportationsPage();
 
             //_mainFrame.Content = mainPage;
             _mainFrame.Content = _mainPage;

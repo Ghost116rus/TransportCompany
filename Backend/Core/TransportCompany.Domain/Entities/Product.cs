@@ -34,13 +34,7 @@ namespace TransportCompany.Domain.Entities
         [Required]
         public int Cost { get; set; }
 
-
         public IEnumerable<Requare_product> Requare_Products { get; set; } = new List<Requare_product>();
-
-        //public IEnumerable<Request> Requests { get; set; } = new List<Request>();
-
         public IEnumerable<Product_exmp> Product_Exmps { get; set; } = new List<Product_exmp>();
-
-        //public IEnumerable<Storage> Storages { get; set; } = new List<Storage>();
     }
 }

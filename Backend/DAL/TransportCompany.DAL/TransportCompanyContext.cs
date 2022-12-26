@@ -131,7 +131,6 @@ namespace TransportCompany.DAL
 
             modelBuilder.Entity<Product_exmp>()
                 .HasCheckConstraint("Storage_number", "Storage_number > 0");
-
             modelBuilder.Entity<Requare_product>().HasCheckConstraint("RequestID", "RequestID > 0");
 
             // вспомогательные таблицы

@@ -23,7 +23,5 @@ namespace TransportCompany.Domain.Entities
         public string Phone_number { get; set;}
 
         public IEnumerable<Product_exmp> Product_Exmps { get; set; } = new List<Product_exmp>();
-
-        //public IEnumerable<Product> Products { get; set; } = new List<Product>();
     }
 }

@@ -60,6 +60,7 @@ namespace TransportCompany.Aplication.Services
                 Driver_license_number = driver.Driver_license_number,
                 FIO = driver.FirstName + " " + driver.SecondName[0] + "." + driver.Patronymic[0] + ".",
                 Addres = driver.Addres,
+                Location = driver.Location,
                 Phone_number = driver.Phone_number,
                 Status = driver.Status,
             });
